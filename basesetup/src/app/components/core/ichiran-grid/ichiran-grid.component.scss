@@ -1,0 +1,209 @@
+@use "../../../shared/scss/buttons.scss";
+
+$color1: #e19981;
+$color2: #000000;
+$color3: #01abaa;
+$colorErr: #ff0000;
+$color-edit: #d8efd8;
+$color-error: #fbd3d3;
+$color-editable: #c2deff;
+$color-disabled: #eeeeee;
+
+p-table {
+  font-size: 14px;
+  position: relative;
+
+  th {
+    background-color: white;
+    color: $color3;
+
+    ::ng-deep svg {
+      width: 14px;
+      height: 14px;
+      color: $color1;
+    }
+  }
+
+  td {
+    overflow: visible;
+    user-select: none;
+    div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .inputDiv {
+      padding: 7.5px 8px;
+      height: 34px;
+    }
+
+    input {
+      width: -webkit-fill-available;
+      outline: none;
+      border: none;
+      padding: 4px 8px;
+      height: 33px;
+      background: white;
+      border-radius: 0;
+    }
+
+    ::ng-deep .p-datepicker {
+      input {
+        background: white;
+        border: none;
+        border-radius: 0;
+        width: calc(-webkit-fill-available - 25px);
+      }
+    }
+
+    .p-select {
+      outline: none;
+      border: none;
+      height: 33px;
+      background: white;
+      border-radius: 0;
+
+      ::ng-deep .p-select-label {
+        padding: 6.5px 8px !important;
+      }
+    }
+
+    .iconBtn {
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .iconBtn:disabled {
+      i {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .selectable {
+    user-select: text;
+  }
+
+  .cellDisabled {
+    background-color: $color-disabled;
+  }
+
+  .addedRow td {
+    color: green;
+    background-color: $color-edit;
+  }
+
+  .row-selected td {
+    background-color: lightblue !important;
+  }
+
+  .bi-hand-index::before {
+    font-size: 19px !important;
+  }
+
+  .editedTD {
+    color: blue;
+    background-color: $color-editable;
+  }
+
+  .referenceTd {
+    font-weight: bold;
+  }
+
+  .errorTD {
+    display: block;
+    color: red !important;
+    font-size: 12px;
+    padding: 0px 8px;
+  }
+
+  .selected-cell {
+    background-color: lightblue !important;
+  }
+  ::ng-deep {
+    .p-paginator-left-content {
+      width: 100%;
+    }
+
+    .p-paginator-content-start {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  .footer-panel {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .footer-panel-buttons {
+    display: flex;
+    gap: 10px; // Adjust the gap as needed
+    align-items: center;
+  }
+
+  .paginator-content-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.vertical-line {
+  height: 24px;
+  width: 1px;
+  background-color: #8e8e8e;
+}
+
+.bi-funnel.cancel-line {
+  position: relative;
+  color: $color1;
+  cursor: pointer;
+}
+
+.bi-funnel.cancel-line::after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 90%;
+  border-bottom: 2px solid $color1;
+  transform: rotate(45deg);
+  transform-origin: center;
+  background-color: white;
+  padding: 1px;
+}
+
+.bi-filter {
+  position: relative;
+  font-size: 22px;
+}
+
+.bi-filter.cancel-line::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 0;
+  width: 90%;
+  border-bottom: 2px solid white;
+  transform: rotate(45deg);
+  transform-origin: center;
+  background-color: white;
+}
+
+/* Show FirstDiv (menu) when screen is <= 700px, hide SecondDiv */
+@media (max-width: 1350px) {
+  .SecondDiv {
+    display: none;
+  }
+}
+
+/* Show SecondDiv (buttons) when screen is > 700px, hide FirstDiv */
+@media (min-width: 1350px) {
+  .FirstDiv {
+    display: none;
+  }
+}

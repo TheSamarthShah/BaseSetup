@@ -1,0 +1,62 @@
+@use "../../../shared/scss/buttons.scss";
+
+$color1: #e19981;
+$color2: #000000;
+$color3: #01abaa;
+$colorErr: #ff0000;
+$color-edit: #5dd95d54;
+$color-error: #fbd3d3;
+$color-editable-col: #ffdd8454;
+
+.p-inputtext,
+::ng-deep .p-datepicker input,
+::ng-deep .p-inputnumber input {
+  height: 31px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+::ng-deep .p-datepicker input {
+  //width: 130px;
+}
+
+.filterDiv {
+  // Filter Title Styles
+  .filterTitle {
+    font-size: 22px;
+    font-weight: 600;
+    border-bottom: 2px solid $color3;
+
+    .pageTitle {
+      color: $color3;
+    }
+
+    i {
+      color: $color3;
+      font-size: 20px;
+    }
+  }
+
+  // Filter Inputs Styles
+  .filterInputs {
+    font-size: 14px;
+    border-bottom: 2px solid $color3;
+
+    .form-label {
+      margin-top: 5px;
+      width: 100px;
+    }
+
+    .refReplacement {
+      width: 35px;
+    }
+    .inputDiv {
+      width: 260px;
+    }
+    .selectorDiv {
+      width: 190px;
+    }
+  }
+}

@@ -1,0 +1,489 @@
+<p-table
+  #dt
+  [value]="_dataList()"
+  showGridlines
+  [paginator]="true"
+  [scrollable]="true"
+  showCurrentPageReport="true"
+  currentPageReportTemplate="{currentPage} of {totalPages}"
+  [rows]="rows()"
+  [tableStyle]="{ 'min-width': '10rem', width: 'max-content' }"
+  [size]="'small'"
+  [resizableColumns]="true"
+  columnResizeMode="expand"
+  pageLinks="3"
+  rowHover="true"
+  showJumpToPageInput="false"
+  paginatorDropdownAppendTo="body"
+  (onColResize)="colResizeEvent($event)"
+  [customSort]="true"
+  (sortFunction)="customSort($event)"
+  (onPage)="pageChange($event)"
+  (onFilter)="onGridFilter($event)"
+  (onSort)="onGridSort($event)"
+>
+  <ng-template #header>
+    <tr>
+      <th
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        style="width: 50px; text-align: right"
+      >
+        NO.
+      </th>
+      @if(printCheckBox()){
+      <th
+        style="cursor: pointer"
+        (click)="toggleSelectAllPrint()"
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+      >
+        {{ textContent().BTN_TEXT.SELECTALL }}
+      </th>
+      } @for (column of dataGrid(); track $index) { @if(column.visible){
+      @if(column.frozen){
+      <th
+        pResizableColumn
+        pSortableColumn="{{ column.name }}"
+        pFrozenColumn
+        [frozen]="true"
+        alignFrozen="left"
+        [style.width]="column.width"
+        [style.text-align]="
+          column.dataType === '2' || column.dataType === '3' ? 'right' : 'left'
+        "
+      >
+        {{ column.displayName }}
+        <p-sortIcon [field]="column.name" />
+      </th>
+      }@else {
+      <th
+        pResizableColumn
+        pSortableColumn="{{ column.name }}"
+        [style.width]="column.width"
+        [style.text-align]="
+          column.dataType === '2' || column.dataType === '3' ? 'right' : 'left'
+        "
+      >
+        {{ column.displayName }}
+        <p-sortIcon [field]="column.name" />
+      </th>
+      } } }
+    </tr>
+    @if(gridFilterShow()){
+    <tr class="filterRow">
+      <th
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        style="text-align: center; font-size: 23px"
+      >
+        <i class="bi bi-funnel cancel-line" (click)="clearAllFilters()"></i>
+      </th>
+      @if(printCheckBox()){
+      <th pFrozenColumn alignFrozen="left" [frozen]="true"></th>
+      }@for (column of dataGrid(); track $index) { @if(column.visible){
+      @if(column.frozen){ @if(column.dataType === '4'){
+      <th
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        style="padding-right: 5px !important"
+      >
+        <p-columnFilter
+          type="text"
+          field="{{ column.name }}"
+          [showMenu]="false"
+          matchMode="in"
+          showClearButton="false"
+        >
+          <ng-template pTemplate="filter" let-filter="filterCallback">
+            <div>
+              <p-multiSelect
+                [options]="column.memberList"
+                [(ngModel)]="multiSelectValues[column.name]"
+                optionLabel="value"
+                (onChange)="filter($event.value)"
+                appendTo="body"
+                filter="false"
+                [selectedItemsLabel]="'{0} items'"
+                [maxSelectedLabels]="1"
+                size="small"
+              ></p-multiSelect>
+            </div>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+
+      } @else {
+      <th pFrozenColumn alignFrozen="left" [frozen]="true">
+        <p-columnFilter
+          type="text"
+          field="{{ column.name }}"
+          [matchModeOptions]="
+            column.dataType === '2'
+              ? matchModeOptionsNum
+              : column.dataType === '3'
+              ? matchModeOptionsDate
+              : matchModeOptionsStr
+          "
+          [matchMode]="
+            column.dataType === '2'
+              ? matchModeOptionsNum[0].value
+              : column.dataType === '3'
+              ? matchModeOptionsDate[0].value
+              : matchModeOptionsStr[0].value
+          "
+          showClearButton="false"
+          showMatchModes="false"
+        >
+          @if(column.dataType === '3'){
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <div>
+              <p-datepicker
+                showButtonBar
+                (onSelect)="filter($event)"
+                size="small"
+                showIcon
+                iconDisplay="input"
+                appendTo="body"
+                [ngModel]="value"
+                (ngModelChange)="filter($event)"
+                [style]="{ width: '100%' }"
+              />
+            </div>
+          </ng-template>
+          } @else {
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <input
+              type="text"
+              size="small"
+              pInputText
+              [ngModel]="value"
+              (ngModelChange)="filter($event)"
+              [appMaxLength]="column.name"
+              [style]="{ width: '100%' }"
+              [style.text-align]="column.dataType === '2' ? 'right' : 'left'"
+            />
+          </ng-template>
+          }</p-columnFilter
+        >
+      </th>
+
+      } }@else { @if(column.dataType === '4'){
+      <th style="padding-right: 5px !important">
+        <p-columnFilter
+          type="text"
+          field="{{ column.name }}"
+          [showMenu]="false"
+          matchMode="in"
+          showClearButton="false"
+        >
+          <ng-template pTemplate="filter" let-filter="filterCallback">
+            <div>
+              <p-multiSelect
+                [options]="column.memberList"
+                [(ngModel)]="multiSelectValues[column.name]"
+                optionLabel="value"
+                (onChange)="filter($event.value)"
+                appendTo="body"
+                filter="false"
+                [selectedItemsLabel]="'{0} items'"
+                [maxSelectedLabels]="1"
+                size="small"
+              ></p-multiSelect>
+            </div>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+
+      } @else {
+      <th>
+        <p-columnFilter
+          type="text"
+          field="{{ column.name }}"
+          [matchModeOptions]="
+            column.dataType === '2'
+              ? matchModeOptionsNum
+              : column.dataType === '3'
+              ? matchModeOptionsDate
+              : matchModeOptionsStr
+          "
+          [matchMode]="
+            column.dataType === '2'
+              ? matchModeOptionsNum[0].value
+              : column.dataType === '3'
+              ? matchModeOptionsDate[0].value
+              : matchModeOptionsStr[0].value
+          "
+          showClearButton="false"
+          showMatchModes="false"
+        >
+          @if(column.dataType === '3'){
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <div>
+              <p-datepicker
+                showButtonBar
+                (onSelect)="filter($event)"
+                size="small"
+                showIcon
+                iconDisplay="input"
+                appendTo="body"
+                [ngModel]="value"
+                (ngModelChange)="filter($event)"
+                [style]="{ width: '100%' }"
+              />
+            </div>
+          </ng-template>
+          } @else {
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <input
+              type="text"
+              size="small"
+              pInputText
+              [ngModel]="value"
+              (ngModelChange)="filter($event)"
+              [appMaxLength]="column.name"
+              [style]="{ width: '100%' }"
+              [style.text-align]="column.dataType === '2' ? 'right' : 'left'"
+            />
+          </ng-template>
+          }</p-columnFilter
+        >
+      </th>
+
+      } } } }
+    </tr>
+    }
+  </ng-template>
+
+  <ng-template
+    #body
+    let-data
+    let-editing="editing"
+    let-rowIndex="rowIndex"
+    let-first="first"
+    let-rows="rows"
+  >
+    <tr>
+      <td
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        style="text-align: right"
+        (click)="onRowSelect(data)"
+      >
+        <div
+          style="display: flex; align-items: center; justify-content: flex-end"
+        >
+          @if (isRowSelected(data)) {
+          <i
+            class="bi bi-hand-index"
+            style="
+              transform: rotate(90deg);
+              display: inline-block;
+              margin-right: 3px;
+              color: #334155;
+            "
+          ></i>
+          }@else {
+          {{ rowIndex + 1 }}
+          }
+        </div>
+      </td>
+      @if(printCheckBox()){
+      <td
+        style="text-align: center"
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        (click)="onRowSelect(data)"
+      >
+        <p-checkbox [(ngModel)]="data.printChecked" [binary]="true" />
+      </td>
+      } @for (column of dataGrid(); track $index) { @if(column.visible){
+      @if(column.frozen){
+      <td
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        [style.text-align]="
+          column.dataType === '2' || column.dataType === '3' ? 'right' : 'left'
+        "
+        [pEditableColumn]="data[column.name]"
+        [class.selected-cell]="isSelected(rowIndex, column.name)"
+        (mousedown)="onCellClick(data, column, rowIndex, $event)"
+        (mouseenter)="onCellMouseEnter(rowIndex, column.name)"
+        [class.selectable]="isCellModeEnabled()"
+        (click)="onRowSelect(data)"
+      >
+        {{
+          column.dataType === "4"
+            ? getKBNNm(data[column.name], column.memberList)?.value
+            : column.dataType === "3" && data[column.name] != null
+            ? getDateFormat(data[column.name])
+            : data[column.name]
+        }}
+      </td>
+      }@else {
+      <td
+        [style.text-align]="
+          column.dataType === '2' || column.dataType === '3' ? 'right' : 'left'
+        "
+        [class.selected-cell]="isSelected(rowIndex, column.name)"
+        (mousedown)="onCellClick(data, column, rowIndex, $event)"
+        (mouseenter)="onCellMouseEnter(rowIndex, column.name)"
+        [class.selectable]="isCellModeEnabled()"
+        (click)="onRowSelect(data)"
+      >
+        {{
+          column.dataType === "4"
+            ? getKBNNm(data[column.name], column.memberList)?.value
+            : column.dataType === "3" && data[column.name] != null
+            ? getDateFormat(data[column.name])
+            : data[column.name]
+        }}
+      </td>
+      } } }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorleft">
+    <div class="footer-panel">
+      <div class="footer-panel-buttons">
+        @if(gridFilterShowInp()){
+        <button
+          class="btn btn-sm mainBtn d-flex align-items-center"
+          (click)="toggleGridFilter()"
+          style="padding: 0px 5px; width: 97px"
+        >
+          <i class="bi bi-filter" [class.cancel-line]="gridFilterShow()"> </i>
+          <div class="ms-1 me-1">
+            {{
+              gridFilterShow()
+                ? textContent().BTN_TEXT.HIDE
+                : textContent().BTN_TEXT.SHOW
+            }}
+          </div>
+        </button>
+        } @if(this.isCellSummary()){
+        <app-cell-summary
+          (summaryChanged)="onSymmaryChanged($event)"
+          [selectedValues]="selectedValues()"
+        />
+        } @if(this.isTableOptions()){
+        <app-table-options
+          [exportURL]="exportURL()"
+          [exportData]="this.searchList()"
+          [gridColumnList]="gridColumnNameAndDisplayNameList()"
+          [gridColumnListAll]="gridColumnNameAndDisplayNameListAll()"
+          [formId]="formId()"
+          [exportBtn]="exportBtn()"
+          [sortDataBtn]="sortDataBtn()"
+          [swapColBtn]="swapColBtn()"
+          [isBackgroundLoading]="isBackgroundLoading()"
+          [hidefilterbtn] = "hidefilterbtn()"
+          (isLoading)="isLoadingStateChange($event)"
+          (swapDataUpdated)="onSwapDataUpdate($event)"
+          (sortDataChnaged)="onSortDataChange()"
+          (hideFilterKBNOut)="hideFilterKBNChanged($event)"
+        />
+        } @if(showSanshoModeBtn() || showHenshuModeBtn() || showAddModeBtn() || showCopyModeBtn()){
+        <div class="vertical-line"></div>
+
+        <div class="expandedButtons">
+          @if(showSanshoModeBtn()){
+          <p-splitButton
+            appendTo="body"
+            [label]="textContent().TOROKU.REF"
+            [model]="torokuOpenWith_0"
+            [disabled]="selectedRowData() == null"
+            [class.disabledSplitBtn]="selectedRowData() == null"
+            (onClick)="navigateWithEncodedMode(0)"
+            dropdownIcon="bi bi-caret-down-fill"
+          />
+          } @if(showHenshuModeBtn()){
+          <p-splitButton
+            appendTo="body"
+            [label]="textContent().TOROKU.UPDATE"
+            [model]="torokuOpenWith_2"
+            [disabled]="selectedRowData() == null"
+            [class.disabledSplitBtn]="selectedRowData() == null"
+          (onClick)="navigateWithEncodedMode(2)"
+          dropdownIcon="bi bi-caret-down-fill"
+        />
+        } @if(showAddModeBtn()){
+        <p-splitButton
+          appendTo="body"
+          [label]="textContent().TOROKU.ADD"
+          [model]="torokuOpenWith_1"
+          (onClick)="navigateWithEncodedMode(1)"
+          dropdownIcon="bi bi-caret-down-fill"
+        />
+          }@if(showCopyModeBtn()){
+            <p-splitButton
+            appendTo="body"
+            [label]="textContent().TOROKU.COPY"
+            [model]="torokuOpenWith_3"
+            [disabled]="selectedRowData() == null"
+            [class.disabledSplitBtn]="selectedRowData() == null"
+            (onClick)="navigateWithEncodedMode(5)"
+            dropdownIcon="bi bi-caret-down-fill"
+          />
+          }
+        </div>
+
+        <div class="collapsedButtons">
+          <button
+            (click)="menu.toggle($event)"
+            class="btn btn-sm mainBtn d-flex align-items-center"
+          >
+            <i class="bi bi-ui-radios-grid"></i>
+            <div style="margin-left: 5px">
+              {{ textContent().BTN_TEXT.MORE }}
+            </div>
+          </button>
+          <p-tieredmenu
+            #menu
+            [model]="torokuTieredMenu"
+            [popup]="true"
+            appendTo="body"
+            autoDisplay="false"
+            popup="true"
+            (onShow)="onTieredMenuShow()"
+          />
+        </div>
+        }
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorright">
+    <div class="d-flex align-items-center">
+      <p-select
+        #dropdownRef
+        [options]="pageSize()"
+        [(ngModel)]="pageSizeDrpDown"
+        [editable]="true"
+        (onChange)="OnRowChange($event)"
+        [style]="{ width: '85px' }"
+      />
+      @if(isBackgroundLoading()){
+      <div class="LoadingOn d-flex ms-1">
+        <p-progress-spinner
+          strokeWidth="8"
+          fill="transparent"
+          animationDuration=".5s"
+          [style]="{ width: '25px', height: '25px', }"
+          styleClass="LoadingOn"
+        />
+        <div style="margin: 2px 0 0 5px">抽出中です. . .</div>
+      </div>
+      } @else{
+      <div class="ms-1">総計 {{ getTotalRecords() }} 件</div>
+      }
+    </div>
+  </ng-template>
+</p-table>

@@ -1,0 +1,231 @@
+<div class="filterDiv">
+  <div class="filterTitle d-flex justify-content-between px-3 py-1">
+    <div class="pageTitle">{{ filter_title() }}</div>
+    <div>
+      <i
+        class="bi bi-funnel-fill filterBtn"
+        (click)="toggleFilter()"
+        style="cursor: pointer"
+      ></i>
+    </div>
+  </div>
+  @if(isShowFilter()){
+  <div class="filterInputs p-2">
+    <div class="row p-0 m-0" style="max-height: 400px; overflow-y: auto">
+      @for(filter of searchList(); track $index){ @if(filter.visible){
+      <div class="col-12 mb-2 d-flex row">
+        <div class="col-2 col-xl-1" style="width: 150px">
+          <label class="form-label mb-0">
+            {{ filter.displayName }}
+            @if(filter.required){
+            <span style="color: red">*</span>
+            }
+          </label>
+        </div>
+
+        @if(filter.data_type === '4'){
+        <div class="d-flex flex-wrap gap-2 col-10" style="margin-top: 5px">
+          @for(member of filter.memberList; track $index) {
+          <div class="flex-grow-0 me-3 mb-2">
+            <p-checkbox
+              inputId="{{ filter.name }}_{{ $index }}"
+              name="{{ filter.name }}"
+              value="{{ member.key }}"
+              [(ngModel)]="filter.value_from"
+              size="small"
+            />
+            <label for="{{ filter.name }}_{{ $index }}" class="ms-2">
+              {{ member.value }}
+            </label>
+          </div>
+          }
+        </div>
+        } @else {
+        <div class="col-10 row gap-1">
+          @if(filter.data_type === '3'){
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <p-datepicker
+              name="{{ filter.name }}_from"
+              [(ngModel)]="filter.value_from"
+              showButtonBar
+              dataType="string"
+              size="small"
+              showIcon
+              iconDisplay="input"
+              [class.invalid]="filter.required && filter.invalidInput"
+              (input)="filter.required ? OnInputEvent(filter.name) : null"
+              (onSelect)="filter.required ? OnInputEvent(filter.name) : null"
+              appendTo="body"
+            />
+            <div class="refReplacement"></div>
+          </div>
+          } @else if (filter.data_type === '2') {
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <input
+              name="{{ filter.name }}_from"
+              type="text"
+              [(ngModel)]="filter.value_from"
+              pInputText
+              pSize="small"
+              [class.invalid]="filter.required && filter.invalidInput"
+              (input)="filter.required ? OnInputEvent(filter.name) : null"
+              [appMaxLength]="filter.name"
+              style="text-align: right"
+            />
+            @if(filter.isReferenceScreen){
+            <app-reference-screen-button
+              [tableName]="filter.refTableName ?? ''"
+              [tableJPName]="filter.refTableJPName ?? ''"
+              [columns]="filter.refColumns ?? []"
+              [selectedValue]="filter.value_from"
+              [formId]="formID()"
+              refForColumn="{{ filter.name }}_from"
+              (referenceSelected)="onReferenceSelected($event)"
+            />
+            }@else {
+            <div class="refReplacement"></div>
+            }
+          </div>
+          } @else{
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <input
+              name="{{ filter.name }}_from"
+              type="text"
+              [(ngModel)]="filter.value_from"
+              pInputText
+              pSize="small"
+              [class.invalid]="filter.required && filter.invalidInput"
+              (input)="filter.required ? OnInputEvent(filter.name) : null"
+              [appMaxLength]="filter.name"
+            />
+            @if(filter.isReferenceScreen){
+            <app-reference-screen-button
+              [tableName]="filter.refTableName ?? ''"
+              [tableJPName]="filter.refTableJPName ?? ''"
+              [formId]="formID()"
+              [columns]="filter.refColumns ?? []"
+              [selectedValue]="filter.value_from"
+              refForColumn="{{ filter.name }}_from"
+              (referenceSelected)="onReferenceSelected($event)"
+            />
+            }@else {
+            <div class="refReplacement"></div>
+            }
+          </div>
+          }
+          <div class="col-2 col-lg-3 col-xl-2 selectorDiv">
+            <p-select
+              [options]="
+                filter.data_type === '1'
+                  ? match_options_string()
+                  : match_options_number()
+              "
+              optionLabel="value"
+              optionValue="key"
+              [(ngModel)]="filter.match_type"
+              size="small"
+              [style]="{ width: '130px' }"
+              appendTo="body"
+            ></p-select>
+          </div>
+          @if(filter.match_type === '1'){ @if(filter.data_type === '3'){
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <p-datepicker
+              name="{{ filter.name }}_to"
+              [(ngModel)]="filter.value_to"
+              showButtonBar
+              dataType="string"
+              size="small"
+              showIcon
+              iconDisplay="input"
+              appendTo="body"
+            />
+            <div class="refReplacement"></div>
+          </div>
+          } @else if (filter.data_type === '2') {
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <input
+              name="{{ filter.name }}_to"
+              type="text"
+              [(ngModel)]="filter.value_to"
+              pInputText
+              pSize="small"
+              [appMaxLength]="filter.name"
+              style="text-align: right"
+            />
+            @if(filter.isReferenceScreen){
+            <app-reference-screen-button
+              [tableName]="filter.refTableName ?? ''"
+              [tableJPName]="filter.refTableJPName ?? ''"
+              [formId]="formID()"
+              [columns]="filter.refColumns ?? []"
+              [selectedValue]="filter.value_to"
+              refForColumn="{{ filter.name }}_to"
+              (referenceSelected)="onReferenceSelected($event)"
+            />
+            } @else {
+            <div class="refReplacement"></div>
+            }
+          </div>
+          } @else{
+          <div class="d-flex col-4 col-lg-4 col-xl-3 inputDiv">
+            <input
+              name="{{ filter.name }}_to"
+              type="text"
+              [(ngModel)]="filter.value_to"
+              pInputText
+              pSize="small"
+              [appMaxLength]="filter.name"
+            />
+            @if(filter.isReferenceScreen){
+            <app-reference-screen-button
+              [tableName]="filter.refTableName ?? ''"
+              [tableJPName]="filter.refTableJPName ?? ''"
+              [formId]="formID()"
+              [columns]="filter.refColumns ?? []"
+              [selectedValue]="filter.value_to"
+              refForColumn="{{ filter.name }}_to"
+              (referenceSelected)="onReferenceSelected($event)"
+            />
+            }@else {
+            <div class="refReplacement"></div>
+            }
+          </div>
+          }}
+        </div>
+        }
+      </div>
+      } }
+    </div>
+    <div class="d-flex my-1 ms-1">
+      <button
+        class="btn btn-sm ms-2 mainBtn"
+        (click)="getData()"
+        [disabled]="isBackGroundOn()"
+        [class.disabledBtn]="isBackGroundOn()"
+      >
+        {{ textContent().BTN_TEXT.SEARCH }}
+      </button>
+      <button
+        class="btn btn-sm ms-2 mainBtn"
+        (click)="resetFilter()"
+        [disabled]="isBackGroundOn()"
+        [class.disabledBtn]="isBackGroundOn()"
+      >
+        {{ textContent().BTN_TEXT.CLEAR }}
+      </button>
+      @if(showConditionSetting()){
+      <app-condition-settings
+        (conditionAdjustmentKBNOut)="conditionAdjustmentKBNChanged($event)"
+        [searchCols]="searchList()"
+        [isBackGroundOn]="isBackGroundOn()"
+        (loadTriggered)="conditionSettingsLoad($event)"
+        [formID]="formID()"
+        [confirmGridChanges]="confirmGridChanges()"
+        (getDataTrigger)="onGetDataTriggered($event)"
+      ></app-condition-settings>
+      }
+    </div>
+  </div>
+  }
+</div>
