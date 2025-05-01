@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "BaseSetup.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "Login/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "BaseSetup.Model.Page.LoginModel\u002BSearch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

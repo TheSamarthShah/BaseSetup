@@ -1,0 +1,642 @@
+$color1: #e19981;
+$color2: #000000;
+$color3: #01abaa;
+
+.p-datepicker input,
+.p-inputnumber input {
+  text-align: right !important;
+}
+
+.p-inputnumber input {
+  width: 90%;
+}
+
+// input related common styling
+.p-inputtext:not(.p-password-input):not(.p-datepicker-input):not(
+    .p-inputnumber-input
+  ),
+.p-datepicker input,
+.p-inputnumber input,
+.p-password input,
+.p-select {
+  border-color: $color3 !important;
+}
+
+.p-inputtext:not(.p-password-input):not(.p-datepicker-input):not(
+    .p-inputnumber-input
+  ).invalid,
+p-password.invalid .p-inputtext,
+p-datepicker.invalid .p-inputtext,
+p-inputnumber.invalid .p-inputtext {
+  border-color: red !important;
+  background-color: rgb(241, 229, 229);
+}
+
+.p-inputtext:not(.p-password-input):not(.p-datepicker-input):not(
+    .p-inputnumber-input
+  ):not(.invalid):enabled:not(:focus-visible):hover,
+p-password:not(.invalid) input:enabled:not(:focus-visible):hover,
+p-datepicker:not(.invalid) input:enabled:not(:focus-visible):hover,
+p-inputnumber:not(.invalid) input:enabled:not(:focus-visible):hover {
+  outline: none !important;
+  border-color: $color3 !important;
+}
+
+.p-inputtext:not(.p-password-input):not(.p-datepicker-input):not(
+    .p-inputnumber-input
+  ):enabled:focus-visible,
+p-password input:enabled:focus-visible,
+p-datepicker input:enabled:focus-visible,
+p-inputnumber input:enabled:focus-visible {
+  outline: none !important;
+  border-color: $color1 !important;
+}
+
+p-select:active {
+  outline: none !important;
+  border-color: $color1 !important;
+}
+
+//password input style
+.p-password-toggle-mask-icon {
+  color: $color3 !important;
+}
+
+// date picker style
+.p-datepicker {
+  .p-datepicker-panel {
+    z-index: 9999 !important;
+  }
+
+  .p-datepicker-input {
+    padding-inline-end: 25px !important;
+  }
+
+  .p-datepicker-input-icon-container {
+    inset-inline-end: 7px;
+
+    calendaricon {
+      color: $color3;
+    }
+  }
+}
+
+.p-datepicker-header {
+  padding: 0;
+
+  .p-button-text {
+    color: $color3;
+  }
+
+  .p-button-text:not(:disabled):hover {
+    background: none;
+    border-color: transparent;
+    color: $color1;
+  }
+}
+
+.p-datepicker-today-button {
+  background-color: $color3 !important;
+  color: white !important;
+  padding: 6px 12px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  letter-spacing: 2px !important;
+  font-size: 15px !important;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out !important;
+}
+
+.p-datepicker-today-button:not(:disabled):hover {
+  background-color: transparent !important;
+  color: $color3 !important;
+  outline: 1px solid $color3 !important;
+  border: none !important;
+}
+
+.p-datepicker-clear-button {
+  background-color: $color1 !important;
+  color: white !important;
+  padding: 6px 12px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  letter-spacing: 2px !important;
+  font-size: 15px !important;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out !important;
+}
+
+.p-datepicker-clear-button:not(:disabled):hover {
+  background-color: transparent !important;
+  color: $color1 !important;
+  outline: 1px solid $color1 !important;
+  border: none !important;
+}
+
+.p-datepicker-day-view {
+  font-size: 14px !important;
+
+  .p-datepicker-day-selected {
+    color: white !important;
+    background-color: $color1 !important;
+  }
+
+  .p-datepicker-weekday-cell,
+  .p-datepicker-day-cell {
+    padding: 0 !important;
+    text-align: center !important;
+  }
+}
+
+//select style
+.p-select {
+  height: 31px;
+  span {
+    padding: 5px 10px !important;
+    font-size: 14px;
+  }
+  .p-select-dropdown {
+    width: 30px;
+    color: $color3;
+  }
+
+  input {
+    padding: 4px 8px !important;
+    cursor: text !important;
+  }
+}
+
+.p-select-option {
+  padding: 0 !important;
+
+  span {
+    padding: 5px 10px !important;
+    font-size: 14px;
+  }
+}
+
+.p-select-option-selected {
+  background-color: $color1 !important;
+  color: white !important;
+}
+
+.p-select-dropdown {
+  width: 30px;
+  color: $color3;
+}
+
+//checkbox styles
+.p-checkbox {
+  top: -2px;
+  height: 16px !important;
+  width: 16px !important;
+
+  .p-checkbox-box {
+    height: 16px !important;
+    width: 16px !important;
+  }
+
+  .p-checkbox-icon {
+    height: 12px !important;
+    width: 12px !important;
+  }
+}
+.p-checkbox-checked {
+  .p-checkbox-box {
+    background: $color1 !important;
+    border-color: $color1 !important;
+  }
+}
+
+.p-tooltip {
+  .p-tooltip-text {
+    white-space: pre-line;
+    word-break: break-word;
+    background: #737373 !important;
+    color: var(--p-tooltip-color);
+    padding: 4px 8px !important;
+    font-size: 15px !important;
+  }
+
+  .p-tooltip-arrow {
+    border-top-color: #737373 !important;
+  }
+}
+
+//toast styles
+.p-toast-message-text {
+  gap: 0 !important;
+}
+
+.p-toast-close-button {
+  margin: -13% 0 0 0 !important;
+}
+
+//warning toast
+.p-toast-message-warn {
+  background: #ffe797 !important;
+  border-color: #737373 !important;
+  color: #303030 !important;
+
+  .p-button-text {
+    color: #a38f00 !important;
+  }
+
+  .p-button-text:not(:disabled):hover {
+    background: transparent !important;
+    border-color: transparent;
+  }
+}
+
+//info toast
+.p-toast-message-info {
+  background: #cceeff !important;
+  border-color: #737373 !important;
+  color: #303030 !important;
+
+  .p-button-text {
+    color: #a38f00 !important;
+  }
+
+  .p-button-text:not(:disabled):hover {
+    background: transparent !important;
+    border-color: transparent;
+  }
+}
+
+//error toast
+.p-toast-message-error {
+  background: #fff2f2 !important;
+  border-color: #dc2626 !important;
+  color: #dc2626 !important;
+  .p-toast-summary{
+    font-size: 15px;
+  }
+  .p-button-text {
+    color: #dc2626 !important;
+  }
+
+  .p-button-text:not(:disabled):hover {
+    background: transparent !important;
+    border-color: transparent;
+  }
+}
+
+//success toast
+.p-toast-message-success {
+  background: #f2fff8 !important;
+  border-color: #16a34a !important;
+  color: #16a34a !important;
+
+  .p-button-text {
+    color: #16a34a !important;
+  }
+
+  .p-button-text:not(:disabled):hover {
+    background: transparent !important;
+    border-color: transparent;
+  }
+}
+
+//pagination
+.p-paginator {
+  background: none !important;
+  justify-content: flex-end !important;
+  font-size: 14px !important;
+
+  .p-paginator-page.p-paginator-page-selected,
+  .p-select-option.p-select-option-selected {
+    background-color: $color1 !important;
+    color: white !important;
+  }
+
+  .p-paginator-jtp-input:after {
+    content: " ページ目へ";
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+
+  .p-paginator-page,
+  .p-paginator-next,
+  .p-paginator-last,
+  .p-paginator-first,
+  .p-paginator-prev {
+    padding: 0 5px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+    border-radius: 5px !important;
+  }
+
+  .p-paginator-jtp-input {
+    .p-inputtext {
+      max-width: 65px !important;
+    }
+  }
+}
+
+//loader
+.p-progressspinner-circle {
+  stroke: $color1 !important;
+}
+
+//confirm dialog
+.p-confirmdialog {
+  .p-dialog-header {
+    padding: 10px 20px;
+
+    .p-dialog-title {
+      color: $color3;
+    }
+  }
+
+  .p-dialog-content {
+    padding: 0 20px 30px;
+  }
+
+  .p-dialog-footer {
+    padding: 0 10px 10px;
+
+    .p-button.p-confirmdialog-accept-button {
+      background-color: $color3;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      font-size: 15px;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+        outline 0.3s ease-in-out;
+    }
+
+    .p-button:not(:disabled).p-confirmdialog-accept-button:hover {
+      background: transparent;
+      color: $color3;
+      outline: 1px solid $color3;
+      border: none;
+    }
+
+    .p-button.p-confirmdialog-reject-button {
+      background-color: $color1;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      font-size: 15px;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+        outline 0.3s ease-in-out;
+    }
+
+    .p-button:not(:disabled).p-confirmdialog-reject-button:hover {
+      background: transparent;
+      color: $color1;
+      outline: 1px solid $color1;
+      border: none;
+    }
+  }
+}
+
+//dialog related css
+.p-dialog {
+  background-color: #eee !important;
+
+  .p-dialog-header {
+    padding: 10px 20px 0 20px;
+  }
+
+  .p-dialog-content {
+    padding-bottom: 0;
+  }
+}
+
+.secondTable {
+  .p-datatable-table-container {
+    .p-datatable-table {
+      //table realted css
+      .p-datatable-tbody > tr > td {
+        border-width: 0px 0px 1px 0px !important;
+        border-bottom-color: #e2e8f0 !important;
+      }
+    }
+  }
+}
+
+.p-datatable-table-container {
+  background-color: white !important;
+
+  tr > td {
+    transition: background var(--p-datatable-transition-duration),
+      color var(--p-datatable-transition-duration),
+      border-color var(--p-datatable-transition-duration),
+      outline-color var(--p-datatable-transition-duration),
+      box-shadow var(--p-datatable-transition-duration);
+  }
+
+  .p-datatable-table {
+    //table realted css
+    .p-datatable-tbody > tr > td,
+    th {
+      border-width: 0px 1px 1px 0px !important;
+      border-right-color: #0181816e !important;
+      border-bottom-color: #0181816e !important;
+    }
+  }
+
+  .p-datatable-thead > tr > th.p-datatable-column-sorted {
+    // reassing marking important because when applying sorting manually below props are not applying to element
+    background: var(--p-datatable-header-cell-selected-background) !important;
+    color: var(--p-datatable-header-cell-selected-color) !important;
+  }
+}
+
+.p-tabs {
+  .p-tabpanels {
+    background: none !important;
+  }
+
+  .p-tablist-tab-list {
+    background: none !important;
+  }
+}
+//filters in table
+.filterRow {
+  th {
+    padding: 0 0 0 5px !important;
+
+    //multiselect
+    .p-multiselect {
+      width: 100%;
+      border-color: $color3 !important;
+
+      .p-multiselect-label-container {
+        height: 30px;
+
+        .p-multiselect-label {
+          padding: 4px 8px;
+        }
+      }
+    }
+
+    .p-multiselect:active {
+      outline: none !important;
+      border-color: $color1 !important;
+    }
+  }
+
+  .p-datatable-filter {
+    gap: 0 !important;
+
+    p-columnfilterformelement {
+      width: 100%;
+
+      .p-inputtext {
+        width: 100%;
+        height: 30px;
+        font-size: 14px;
+        padding: 4px 8px;
+      }
+    }
+
+    .p-datatable-column-filter-button {
+      width: 30px;
+    }
+    .p-button-text.p-button-secondary:not(:disabled):hover {
+      background: none;
+    }
+  }
+}
+
+.p-datatable-filter-overlay {
+  min-width: 0px !important;
+
+  .p-datatable-filter-constraint {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+  }
+
+  .p-datatable-filter-constraint-separator {
+    display: none;
+  }
+
+  .p-datatable-filter-constraint-selected {
+    background-color: $color1 !important;
+    color: white !important;
+  }
+
+  .p-datatable-filter-constraint:last-child {
+    display: none;
+  }
+}
+
+.p-multiselect-overlay {
+  .p-multiselect-header {
+    padding: 5px 10px;
+  }
+
+  .p-multiselect-list {
+    padding: 0;
+
+    .p-multiselect-option {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+// pMenu
+.p-menu {
+  min-width: auto !important;
+  .p-menu-list {
+    min-width: 125px;
+    padding: 0;
+    font-size: 14px !important;
+    .p-menu-item-link {
+      padding: 5px 10px;
+    }
+  }
+}
+
+// acty dialog
+.acty-dialog {
+  .p-dialog {
+    min-width: 300px !important;
+
+    .p-dialog-content {
+      padding: 5px 10px;
+      .acty-dialog-message {
+        .acty-dialog-icon {
+          color: $color3;
+          font-size: 50px;
+        }
+        display: flex;
+        align-items: center;
+        white-space: pre-line;
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+
+    .p-dialog-header {
+      color: $color3;
+      user-select: none;
+      padding: 0px 10px;
+    }
+    .p-dialog-footer {
+      display: flex;
+      justify-content: center;
+      padding: 0px 10px 10px 10px;
+    }
+  }
+}
+
+//split button
+
+.p-splitbutton {
+  height: 35px !important;
+  .p-splitbutton-button,
+  .p-splitbutton-dropdown {
+    font-size: 15px;
+    background-color: $color3 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px;
+  }
+  .p-splitbutton-dropdown {
+    border-left: 1px solid white !important;
+  }
+}
+
+.disabledSplitBtn {
+  .p-splitbutton-button,
+  .p-splitbutton-dropdown {
+    background-color: #a3a3a3 !important;
+    opacity: 0.65;
+  }
+  .p-splitbutton-dropdown {
+    border-left: 1px solid #999999 !important;
+  }
+}
+
+//triggered menu
+
+.p-tieredmenu {
+  letter-spacing: 2px !important;
+  font-size: 14px !important;
+  min-width: max-content !important;
+
+  .p-tieredmenu-root-list {
+    min-width: max-content;
+
+    .p-tieredmenu-item-link {
+      padding: 5px 10px;
+    }
+  }
+  .p-tieredmenu-submenu {
+    min-width: max-content;
+    // keep bottom 0 because by default it has top 0 and for submenu we can't appentToBody so it will over flow from body from grid footer
+    top: auto !important;
+    bottom: 0 !important;
+  }
+}

@@ -1,0 +1,35 @@
+<div class="wrapper d-flex justify-content-center align-items-center h-100">
+  <div class="login-box">
+    <h1>{{ textContent().BTN_TEXT.LOGINBTN }}</h1>
+    <div pFocusTrap>
+      <form (submit)="submitForm()">
+        <div class="mb-3 d-flex flex-column">
+          <label class="mb-0">{{ textContent().USERID }}</label>
+          <input
+            type="text"
+            pInputText
+            [pAutoFocus]="true"
+            name="userid"
+            [(ngModel)]="userid"
+            [class.invalid]="validationErr().userid"
+            (input)="onInput($event)"
+          />
+        </div>
+        <div class="mb-5 d-flex flex-column">
+          <label class="mb-0">{{ textContent().PASSWORD }}</label>
+          <p-password
+            name="password"
+            [(ngModel)]="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            [class.invalid]="validationErr().password"
+            (input)="onInput($event)"
+          />
+        </div>
+        <button type="submit" class="login-button">
+          {{ textContent().BTN_TEXT.LOGINBTN }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

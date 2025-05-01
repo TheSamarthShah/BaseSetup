@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand">
+  <div class="container-fluid d-flex justify-content-between px-3">
+    <div>
+      @if(showBackToMenu()){
+      <app-side-menu-bar #sidebar></app-side-menu-bar>
+      <button
+        class="menu-button secondaryBtn"
+        (click)="sidebar.toggleSidebar($event)"
+      >
+        <i class="bi bi-list"></i>
+      </button>
+      }
+      <a class="navbar-brand" routerLink="/menu">{{
+        textContent().PROJECT_NAME
+      }}</a>
+    </div>
+
+    <div>
+      <ul class="navbar-nav">
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link"> Ver : {{
+            version
+          }}</a>
+        </li>
+        @if(username() !== ''){
+        <li class="nav-item">
+          <a class="nav-link me-3 d-flex align-items-center">
+            <i class="bi bi-person-circle me-1"></i>
+            <span>{{ username() }}</span></a
+          >
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="hoverColor nav-link" (click)="logout()">{{
+            textContent().BTN_TEXT.LOGOUT
+          }}</a>
+        </li>
+
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

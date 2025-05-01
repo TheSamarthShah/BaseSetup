@@ -1,0 +1,155 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\context\\oradbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\context\\oradbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\repository\\core\\searchdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\repository\\core\\searchdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\repository\\core\\exportdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\repository\\core\\exportdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\model\\core\\columnmetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\model\\core\\columnmetadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\repository\\base\\login\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\repository\\base\\login\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|c:\\zz\\mymy\\basesetup\\basesetupapi\\basesetup\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA21B9A0-2898-442B-8E2B-D787ED8FEFB1}|BaseSetup\\BaseSetup.csproj|solutionrelative:basesetup\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:12:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{65ddf8c3-8f89-4077-a6c6-dbb8853aab13}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{65ddf8c3-8f89-4077-a6c6-dbb8853aab13}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{131369f2-062d-44a2-8671-91ff31efb4f4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OraDBContext.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Context\\OraDBContext.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Context\\OraDBContext.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Context\\OraDBContext.cs",
+              "RelativeToolTip": "BaseSetup\\Context\\OraDBContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T08:04:47.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SearchDataRepository.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Core\\SearchDataRepository.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Repository\\Core\\SearchDataRepository.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Core\\SearchDataRepository.cs",
+              "RelativeToolTip": "BaseSetup\\Repository\\Core\\SearchDataRepository.cs",
+              "ViewState": "AgIAAJgBAAAAAAAAAAAAAN4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T08:01:04.306Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ColumnMetaData.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Model\\Core\\ColumnMetaData.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Model\\Core\\ColumnMetaData.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Model\\Core\\ColumnMetaData.cs",
+              "RelativeToolTip": "BaseSetup\\Model\\Core\\ColumnMetaData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T08:00:05.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ExportDataRepository.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Core\\ExportDataRepository.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Repository\\Core\\ExportDataRepository.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Core\\ExportDataRepository.cs",
+              "RelativeToolTip": "BaseSetup\\Repository\\Core\\ExportDataRepository.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAAAcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T07:58:52.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Program.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Program.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Program.cs",
+              "RelativeToolTip": "BaseSetup\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T07:21:03.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginService.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Base\\Login\\LoginService.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Repository\\Base\\Login\\LoginService.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Repository\\Base\\Login\\LoginService.cs",
+              "RelativeToolTip": "BaseSetup\\Repository\\Base\\Login\\LoginService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T07:14:36.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "BaseSetup\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "BaseSetup\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T07:13:31.272Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

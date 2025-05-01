@@ -1,0 +1,47 @@
+import { Injectable, signal } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+/**
+ * Service to store the form state
+ * Note: on reload any service will lose its data and reinitialized(Mentioned here because this serivce will mainly used when navigting).
+ */
+export class FormStateService {
+
+  constructor() { }
+  /**
+   * torokuModoruFormId - for toroku form to know which form has openend it.
+   * mainly used for managing modoru button
+  */
+  torokuModoruFormId = signal<string>('');
+  /**
+   * torokuModoru - to let the form know that it is initialied by an modoru button of toroku form
+   * mainly used to let form know to set its state form this service
+   */
+  torokuModoru = signal<boolean>(false);
+
+  /**
+   * saves the form state in a dictionary with formId as key
+   */
+  formStates = signal<{ [formId: string]: Record<string, any> }>({});
+
+  /**
+   * saves the form state and updates if already present
+   * @param formId 
+   * @param newState 
+   */
+  setFormState(formId: string, newState: Record<string, any>) {
+    const currentStates = this.formStates();
+    this.formStates.set({
+      ...currentStates,
+      [formId]: {
+        ...newState
+      }
+    });
+  }
+
+  getFormState(formId: string): Record<string, any> | undefined {
+    return this.formStates()[formId];
+  }
+}

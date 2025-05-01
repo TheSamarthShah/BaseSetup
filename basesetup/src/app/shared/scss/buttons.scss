@@ -1,0 +1,88 @@
+$color1: #e19981;
+$color2: #000000;
+$color3: #01abaa;
+
+.mainBtn {
+  background-color: $color3;
+  color: white;
+  padding: 6px 12px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-size: 15px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out;
+}
+
+.mainBtn:hover {
+  background-color: $color1;
+}
+
+.primaryBtn {
+  background-color: $color3;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-size: 15px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out;
+}
+
+.primaryBtn:hover {
+  background-color: transparent;
+  color: $color3;
+  outline: 1px solid $color3;
+}
+
+.secondaryBtn {
+  background-color: $color1;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-size: 15px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out;
+}
+
+.secondaryBtn:hover {
+  background-color: transparent;
+  color: $color1;
+  outline: 1px solid $color1;
+}
+
+.refBtn {
+  background-color: $color1;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    outline 0.3s ease-in-out;
+  border-radius: 5px;
+  width: 27px;
+}
+
+// .refBtn:hover {
+//   background-color: transparent;
+//   color: $color1;
+//   outline: 1px solid $color1;
+// }
+
+.disabledBtn {
+  background-color: #a3a3a3 !important;
+  cursor: default;
+  opacity: 0.65;
+}

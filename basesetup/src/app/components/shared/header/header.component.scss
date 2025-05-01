@@ -1,0 +1,57 @@
+@use "../../../shared/scss/buttons.scss";
+$color1: #e19981;
+$color2: #01abaa;
+$color-border: #e2e8f0;
+
+/* Navbar Styling */
+nav {
+  background-color: white;
+  border-bottom: 1px solid #737373;
+  height: 50px;
+
+  .navbar-brand {
+    font-size: 24px;
+    cursor: pointer;
+    color: #737373;
+    font-weight: bold;
+  }
+
+  li a {
+    color: #737373;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    cursor: default;
+
+    i {
+      font-size: 21px;
+    }
+  }
+
+  li a.hoverColor {
+    cursor: pointer;
+  }
+
+  li a.hoverColor:hover {
+    color: $color1;
+  }
+}
+
+::ng-deep .menu-button {
+  background-color: transparent !important;
+  border-radius: 8px; /* Rounded corners */
+  border: 2px solid $color2 !important;
+  margin-right: 5px !important;
+  width: 30px !important;
+  height: 28px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  i {
+    margin-left: 2px !important;
+    margin-top: -2px !important;
+    font-size: 24px;
+    font-weight: Bold;
+    color: #01abaa;
+  }
+}

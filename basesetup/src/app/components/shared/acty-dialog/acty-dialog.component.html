@@ -1,0 +1,26 @@
+<div class="acty-dialog">
+    <p-dialog
+          [(visible)]="visible"
+          [modal]="true"
+          [header]="data()?.header || ''"
+        >
+        <div class="acty-dialog-message">
+          @if(data()?.type == 'confirm'){
+            <i class="bi bi-question-circle acty-dialog-icon"></i>
+          }@else if(data()?.type == 'error'){
+            <i class="bi bi-exclamation-circle acty-dialog-icon"></i>
+          }
+          <p class="acty-dialog-message-content m-0 ms-3">{{ data()?.message }}</p>
+        </div>
+          
+          <ng-template pTemplate="footer">
+            @for (btn of data()?.buttons; track $index) {
+                <button
+                  type="button"
+                  [class]="btn.styleClass"
+                  (click)="handleButtonClick(btn)"
+                >{{btn.label}}</button>
+            }
+          </ng-template>
+    </p-dialog>
+    </div>

@@ -1,0 +1,57 @@
+$color1: #e19981;
+$color2: #000000;
+$color3: #01abaa;
+$color-bg2: #ffffff;
+
+.wrapper {
+  background-color: #eee;
+
+  .login-box {
+    background-color: $color-bg2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 50px;
+
+    h1 {
+      color: $color1;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    label {
+      color: $color3;
+    }
+
+    input,
+    ::ng-deep p-password input {
+      min-width: 20rem;
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 16px;
+      border: 2px solid;
+    }
+
+    .login-button {
+      background-color: $color3;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      letter-spacing: 2px;
+      font-weight: bold;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .login-button:hover {
+      background-color: $color1;
+    }
+
+    input.ng-dirty,
+    ::ng-deep p-password.ng-dirty input {
+      border: 2px solid;
+    }
+  }
+}

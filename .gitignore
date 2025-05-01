@@ -1,0 +1,24 @@
+# Node modules and dependencies
+node_modules/
+
+### Angular ###
+# Build and cache
+dist/
+.aot/
+.angular/
+.tmp/
+.ng/
+
+### IDEs and Editors ###
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs and temp files
+*.log
+logs/
+npm-debug.log*
