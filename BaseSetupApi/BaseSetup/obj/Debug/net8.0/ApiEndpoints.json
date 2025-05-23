@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "BaseSetup.Controllers.CommonController",
+    "Method": "LogError",
+    "RelativePath": "Common/logerror",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "err",
+        "Type": "BaseSetup.Model.LogErrorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "BaseSetup.Controllers.LoginController",
     "Method": "Login",
     "RelativePath": "Login/login",

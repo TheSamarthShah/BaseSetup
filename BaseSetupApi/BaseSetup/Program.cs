@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using BaseSetup.Repository.Base.Login;
 using BaseSetup.Repository.Core;
 using BaseSetup.Context;
+using BaseSetup.Repository.Shared.Common;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,9 +18,11 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddNLog();
 });
 builder.Services.AddScoped<TokenGenerator>();
-builder.Services.AddScoped<IDBContext, OraDBContext>();
+builder.Services.AddScoped<IDBContext, SqlDBContext>();
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<CommonService>();
+builder.Services.AddScoped<CommonRepository>();
 
 #region Core Repos
 builder.Services.AddScoped(typeof(ISearchDataRepository<>), typeof(SearchDataRepository<>));

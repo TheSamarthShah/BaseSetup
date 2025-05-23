@@ -1,15 +1,6 @@
 <nav class="navbar navbar-expand">
   <div class="container-fluid d-flex justify-content-between px-3">
     <div>
-      @if(showBackToMenu()){
-      <app-side-menu-bar #sidebar></app-side-menu-bar>
-      <button
-        class="menu-button secondaryBtn"
-        (click)="sidebar.toggleSidebar($event)"
-      >
-        <i class="bi bi-list"></i>
-      </button>
-      }
       <a class="navbar-brand" routerLink="/menu">{{
         textContent().PROJECT_NAME
       }}</a>

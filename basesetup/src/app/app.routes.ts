@@ -16,4 +16,11 @@ export const routes: Routes = [
           return c.LoginComponent;
         },
       },
+      {
+        path: 'menu',
+        loadComponent: async () => {
+          const c = await import('./components/base/menu/menu.component');
+          return c.MenuComponent;
+        },
+      },
 ];

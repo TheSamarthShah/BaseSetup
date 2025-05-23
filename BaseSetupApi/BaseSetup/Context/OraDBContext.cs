@@ -1,34 +1,36 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Microsoft.Data.SqlClient;
 using System.Data.Common;
 
-namespace ThomasWebAPI.Context
+namespace BaseSetup.Context
 {
-    public class OraDBContext : IDBContext
+    public class SqlDBContext : IDBContext
     {
         private readonly IConfiguration configuration;
-        // Oracle database connection object
-        public OracleConnection oracleconnection;
-        // Oracle command object to execute SQL queries or stored procedures
-        public OracleCommand oraclecommand;
+
+        // SQL Server connection object
+        public SqlConnection sqlConnection;
+
+        // SQL Server command object to execute SQL queries or stored procedures
+        public SqlCommand sqlCommand;
 
         /// <summary>
-        /// Constructor for OraDBContext.
+        /// Constructor for SqlDBContext.
         /// </summary>
         /// <param name="configuration"></param>
-        public OraDBContext(IConfiguration configuration)
+        public SqlDBContext(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
         /// <summary>
-        ///  Common method to get Oracle database connection.
+        /// Common method to get SQL Server database connection.
         /// </summary>
         /// <returns></returns>
         public DbConnection GetConnection()
         {
-            // Create a new OracleConnection using the connection string from appsettings.json
-            oracleconnection = new OracleConnection(configuration.GetConnectionString("DefaultConnection"));
-            return oracleconnection;
+            // Create a new SqlConnection using the connection string from appsettings.json
+            sqlConnection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            return sqlConnection;
         }
     }
 }

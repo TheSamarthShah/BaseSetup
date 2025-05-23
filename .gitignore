@@ -1,24 +1,69 @@
 # Node modules and dependencies
 node_modules/
 
-### Angular ###
-# Build and cache
+# Angular build and cache
 dist/
 .aot/
 .angular/
 .tmp/
 .ng/
 
-### IDEs and Editors ###
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# .NET Core build output
+bin/
+obj/
 
-# Logs and temp files
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# IIS Express
+.vs/
+.vscode/
+.idea/
+*.njsproj
+*.ntvs*
+
+# Logs
 *.log
 logs/
 npm-debug.log*
+dotnet-dev.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Configuration transforms
+*.vspscc
+*.vssscc
+
+# Rider IDE files
+.idea/
+
+# Publish directory
+publish/
+
+# Resharper files
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+
+# Test result files
+TestResults/
+*.trx
+
+# Entity Framework
+Migrations/
+
+# Environment files
+.env
+.env.*
+
+# Docker files (optional if using Docker)
+**/docker-compose*
+**/*.Dockerfile

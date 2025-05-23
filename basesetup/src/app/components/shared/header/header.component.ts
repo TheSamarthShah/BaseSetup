@@ -1,14 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { JPTEXT } from '../../../shared/constants/jp-text';
-import { SideMenuBarComponent } from '../../core/side-menu-bar/side-menu-bar.component';
 import { CookieService } from 'ngx-cookie-service';
 import { DataChangeDetectedService } from '../../../services/core/data-change-detected.service';
 import { CONFIG } from '../../../shared/constants/config';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, SideMenuBarComponent],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

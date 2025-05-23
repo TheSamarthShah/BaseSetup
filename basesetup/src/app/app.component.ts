@@ -9,7 +9,7 @@ import { ToastErrorService } from './services/shared/toast-error.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ActyDialogComponent, ToastModule],
+  imports: [RouterOutlet, ActyDialogComponent, ToastModule, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
