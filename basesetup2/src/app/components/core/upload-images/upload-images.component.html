@@ -1,0 +1,60 @@
+<p-button
+  [label]="textContent.SELECT_FILES_BTN"
+  [severity]="'secondary'"
+  (onClick)="onDialogOpen($event)"
+  [badge]="commitedImagesCount().toString()"
+  badgeSeverity="primary"
+/>
+<p-dialog
+  [(visible)]="isDialogOpen"
+  (onHide)="closeDialog()"
+  [style]="{ width: '40vw', height: '50vh' }"
+  [header]="textContent.HEADER_TEXT"
+  [modal]="true"
+>
+  <div class="flex flex-col gap-y-2 h-full overflow-hidden">
+    <div class="flex-grow overflow-auto">
+      <p-fileupload
+        #fileuploader
+        [customUpload]="isCustomUpload()"
+        (uploadHandler)="onUpload($event)"
+        [multiple]="true"
+        [showUploadButton]="!isCustomUpload()"
+        mode="advanced"
+        [disabled]="isDisabled()"
+        [showCancelButton]="!isDisabled()"
+        [contentEditable]="!isDisabled()"
+      >
+        <ng-template #empty>
+          <div>Drag and drop files to here to upload.</div>
+        </ng-template>
+        <ng-template let-file pTemplate="file">
+          <div class="flex mb-2">
+            <div class="flex-grow">
+              <button
+                type="button"
+                class="p-0 border-none bg-transparent cursor-pointer text-primary underline"
+                (click)="openFile($event, file)"
+              >
+                {{ file.name }}
+              </button>
+            </div>
+            <div>
+              <button type="button" (click)="removeFile($event, file)">
+                <i class="pi pi-times" style="color: red"></i>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </p-fileupload>
+    </div>
+    <div class="ms-auto">
+      <p-button
+        label="{{ textContent.APPLY_BTN }}"
+        icon="pi pi-check"
+        (onClick)="onFilesSelected()"
+        [disabled]="isDisabled()"
+      />
+    </div>
+  </div>
+</p-dialog>

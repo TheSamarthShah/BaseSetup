@@ -1,0 +1,15 @@
+::ng-deep {
+  .p-popover {
+    margin-top: 0 !important;
+    background: var(--p-menu-background) !important;
+    color: var(--p-menu-color) !important;
+    border: 1px solid var(--p-menu-border-color) !important;
+    border-radius: var(--p-menu-border-radius) !important;
+    box-shadow: none !important;
+  }
+
+  .p-popover:before,
+  .p-popover:after {
+    display: none !important;
+  }
+}

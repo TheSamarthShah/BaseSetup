@@ -1,0 +1,44 @@
+<p-button
+  (click)="menu.toggle($event)"
+  outlined
+  [disabled]="isBackgroundLoading()"
+>
+  <i class="pi pi-table"></i>
+  {{ tableOptionsLbl }}
+  <i class="pi pi-chevron-down"></i>
+</p-button>
+<p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
+
+<!-- Keep your conditional app-save-as component -->
+@if (childComponent() === '1') {
+<app-export
+  [displayInp]="childComponent() === '1'"
+  [exportURL]="exportURL()"
+  [exportData]="exportData()"
+  [gridColumnList]="gridColumnList()"
+  [formId]="formId()"
+  [userId]="userId()"
+  (closeTriggered)="saveAsClosed()"
+  (isLoading)="isLoadingChange($event)"
+/>
+}@else if (childComponent() === '2') {
+<app-sort-data
+  [displayDialogInp]="childComponent() === '2'"
+  [sortOptionsInp]="gridColumnList()"
+  [formId]="formId()"
+  [userId]="userId()"
+  (closeSortDataTrigger)="closeSortData()"
+  (isLoading)="isLoadingChange($event)"
+  (sortDataChanged)="onSortDataChange()"
+/>
+}@else if(childComponent() === '3'){
+<app-swap-columns
+  [userId]="userId()"
+  [formId]="formId()"
+  [displayInp]="childComponent() === '3'"
+  [gridColumnList]="gridColumnListAll()"
+  (closeTriggered)="closeSwapColumn()"
+  (swapDataUpdated)="onSwapDataUpdate($event)"
+  (isLoading)="isLoadingChange($event)"
+/>
+}

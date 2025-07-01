@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@use "./tailwind.css";
+@use "./assets/layout/layout.scss";
+@use "primeicons/primeicons.css";
+
+* {
+  font-family: unset !important;
+}
+
+.pi {
+  font-family: "PrimeIcons" !important;
+}
+
+.editedInput {
+  background-color: var(--p-highlight-background) !important;
+  color: var(--p-highlight-color) !important;
+}
+
+.editedInputDate {
+  // Empty general styles, only apply datepicker styles
+  .p-datepicker-input {
+    background-color: var(--p-highlight-background) !important;
+    color: var(--p-highlight-color) !important;
+  }
+}
+
+.p-button-label{
+  font-weight: unset !important;
+}

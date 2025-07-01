@@ -1,0 +1,1390 @@
+<div style="height: calc(100vh - 112px)" class="flex flex-col gap-y-2 d201">
+  <div class="flex-grow">
+    <p-splitter
+      [panelSizes]="splitterSizes()"
+      [minSizes]="splitterMinSizes()"
+      layout="vertical"
+      [style]="{ height: '100%' }"
+      (onResizeEnd)="onSplitterMoved($event)"
+    >
+      <ng-template #panel
+        ><div class="card w-full h-full flex flex-col header-panel" style="padding: 20px">
+          <div class="flex justify-between items-center">
+            <div class="font-semibold text-xl">
+              {{ textContent.FORM_TITLE }}
+            </div>
+            <p-button
+              [rounded]="true"
+              [icon]="
+                isShowHeader() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'
+              "
+              class="p-button-sm"
+              (onClick)="splitterToggle(!isShowHeader())"
+            ></p-button>
+          </div>
+
+          <div class="flex flex-col gap-y-4">
+            <div class="flex gap-4 items-start w-100 overflow-y-auto">
+              <div
+                pRipple
+                class="flex items-center justify-center px-4 py-2 status-text"
+                style="white-space: nowrap; flex-shrink: 0"
+              >
+                <label class="text-lg text-center w-full">{{
+                  getStateLabel(Header_Data.State)
+                }}</label>
+              </div>
+              <div class="flex flex-wrap gap-y-4 gap-x-10">
+                <div class="">
+                  <label for="Planno" class="block mb-2 text-lable">{{
+                    textContent.PLANNO
+                  }}</label>
+                  <div id="Planno" tabindex="0" class="value-label">
+                    {{ Header_Data.Planno }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Proceseq" class="block mb-2 text-lable">{{
+                    textContent.PROCESEQ
+                  }}</label>
+                  <div
+                    id="Proceseq"
+                    tabindex="0"
+                    class="value-label number-label"
+                  >
+                    {{ Header_Data.Proceseq }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Hmno" class="block mb-2 text-lable">{{
+                    textContent.HMNO
+                  }}</label>
+                  <div id="Hmno" tabindex="0" class="value-label">
+                    {{ Header_Data.Hmno }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Hmnm" class="block mb-2 text-lable">{{
+                    textContent.HMNM
+                  }}</label>
+                  <div id="Hmnm" tabindex="0" class="value-label">
+                    {{ Header_Data.Hmnm }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Planqty" class="block mb-2 text-lable">{{
+                    textContent.PLANQTY
+                  }}</label>
+                  <div
+                    id="Planqty"
+                    tabindex="0"
+                    class="value-label number-label"
+                  >
+                    {{ Header_Data.Planqty }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Needqty" class="block mb-2 text-lable">{{
+                    textContent.NEEDQTY
+                  }}</label>
+                  <div
+                    id="Needqty"
+                    tabindex="0"
+                    class="value-label number-label"
+                  >
+                    {{ Header_Data.Needqty }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Yieldqty" class="block mb-2 text-lable">{{
+                    textContent.YIELDQTY
+                  }}</label>
+                  <div
+                    id="Yieldqty"
+                    tabindex="0"
+                    class="value-label number-label"
+                  >
+                    {{ Header_Data.Yieldqty }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Procecd" class="block mb-2 text-lable">{{
+                    textContent.PROCECD
+                  }}</label>
+                  <div id="Procecd" tabindex="0" class="value-label">
+                    {{ Header_Data.Procecd }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Procenm" class="block mb-2 text-lable">{{
+                    textContent.PROCENM
+                  }}</label>
+                  <div id="Procenm" tabindex="0" class="value-label">
+                    {{ Header_Data.Procenm }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Rescd" class="block mb-2 text-lable">{{
+                    textContent.RESCD
+                  }}</label>
+                  <div id="Rescd" tabindex="0" class="value-label">
+                    {{ Instruction_Tab_Data.Rescd }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="Resnm" class="block mb-2 text-lable">{{
+                    textContent.RESNM
+                  }}</label>
+                  <div id="Resnm" tabindex="0" class="value-label">
+                    {{ Instruction_Tab_Data.Resnm }}
+                  </div>
+                </div>
+                <div class="">
+                  <label for="INCHARGE" class="block mb-2 text-lable">{{
+                    textContent.INCHARGE
+                  }}</label>
+                  <div class="flex gap-4">
+                    <div id="INCHARGE" tabindex="0" class="value-label">
+                      {{ Header_Data.Chargecd }}
+                    </div>
+                    <div id="INCHARGE_NAME" tabindex="0" class="value-label">
+                      {{ Header_Data.Chargenm }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></ng-template
+      >
+      <ng-template #panel>
+        <div class="flex !justify-start h-full w-full">
+          <p-tabs
+            [(value)]="activeTab"
+            (valueChange)="onTabChange($event)"
+            class="w-full"
+          >
+            <p-tablist>
+              <p-tab [value]="0" [disabled]="!isTabEnabled(0)">{{
+                textContent.INSTRUCTIONS_TAB
+              }}</p-tab>
+              @if(showSopData){
+              <p-tab [value]="1" [disabled]="!isTabEnabled(1)">{{
+                textContent.SOP_TAB
+              }}</p-tab>
+              } @if(showChecklistData){
+              <p-tab [value]="2" [disabled]="!isTabEnabled(2)">{{
+                textContent.CHECKLIST_TAB
+              }}</p-tab>
+              } @if(showMeasurementData){
+              <p-tab [value]="3" [disabled]="!isTabEnabled(3)">{{
+                textContent.MNFG_DATA_INPUT_TAB
+              }}</p-tab>
+              }
+              <p-tab [value]="4" [disabled]="!isTabEnabled(4)">{{
+                textContent.ITEMS_INPUT_TAB
+              }}</p-tab>
+              <p-tab [value]="5" [disabled]="!isTabEnabled(5)">{{
+                textContent.MNFG_PERFORMANCE_INQUERY_TAB
+              }}</p-tab>
+              <p-tab [value]="6" [disabled]="!isTabEnabled(6)">{{
+                JissekiTabLabel
+              }}</p-tab>
+            </p-tablist>
+            <p-tabpanels class="h-full max-h-full overflow-y-auto !p-4">
+              <p-tabpanel [value]="0">
+                <div class="flex gap-y-10">
+                  <div class="flex gap-4 items-start w-full">
+                    <div class="flex flex-wrap gap-y-4 gap-x-10">
+                      <div class="flex-grow">
+                        <label
+                          for="Presetupstartdt"
+                          class="block mb-2 text-lable"
+                          >{{ textContent.PRESETUPSTARTDT }}</label
+                        >
+                        <div
+                          id="Presetupstartdt"
+                          tabindex="0"
+                          class="value-label"
+                        >
+                          {{
+                            ActyCommonService.formatDateToCustomString(
+                              Instruction_Tab_Data.Presetupstartdt,
+                              true
+                            )
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 items-start w-full">
+                    <div class="flex flex-wrap gap-y-4 gap-x-10">
+                      <div class="flex-grow">
+                        <label
+                          for="Prodstartdt"
+                          class="block mb-2 text-lable"
+                          >{{ textContent.PRODSTARTDT }}</label
+                        >
+                        <div id="Prodstartdt" tabindex="0" class="value-label">
+                          {{
+                            ActyCommonService.formatDateToCustomString(
+                              Instruction_Tab_Data.Prodstartdt,
+                              true
+                            )
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 items-start w-full">
+                    <div class="flex flex-wrap gap-y-4 gap-x-10">
+                      <div class="flex-grow">
+                        <label for="Prodenddt" class="block mb-2 text-lable">{{
+                          textContent.PRODENDDT
+                        }}</label>
+                        <div id="Prodenddt" tabindex="0" class="value-label">
+                          {{
+                            ActyCommonService.formatDateToCustomString(
+                              Instruction_Tab_Data.Prodenddt,
+                              true
+                            )
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex gap-4 items-start w-full">
+                    <div class="flex flex-wrap gap-y-4 gap-x-10">
+                      <div class="flex-grow">
+                        <label
+                          for="Aftsetupenddt"
+                          class="block mb-2 text-lable"
+                          >{{ textContent.AFTSETUPENDDT }}</label
+                        >
+                        <div
+                          id="Aftsetupenddt"
+                          tabindex="0"
+                          class="value-label"
+                        >
+                          {{
+                            ActyCommonService.formatDateToCustomString(
+                              Instruction_Tab_Data.Aftsetupenddt,
+                              true
+                            )
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="1">
+                <div class="sopContainer h-full">
+                  <p-galleria
+                    #galleria
+                    [(activeIndex)]="selectedGalleriaIndex"
+                    [value]="images"
+                    [numVisible]="5"
+                    [responsiveOptions]="galleriaResponsiveOptions"
+                    [circular]="true"
+                    [showItemNavigators]="true"
+                    [showItemNavigatorsOnHover]="true"
+                  >
+                    <ng-template #item let-item>
+                      <img [src]="item.itemImageSrc" />
+                    </ng-template>
+                    <ng-template #thumbnail let-item>
+                      <img [src]="item.thumbnailImageSrc" />
+                    </ng-template>
+                    <ng-template #footer let-item>
+                      <div class="custom-galleria-footer">
+                        <p-button
+                          icon="pi pi-external-link"
+                          severity="secondary"
+                          (onClick)="
+                            openBlobImageInNewTab(
+                              images[selectedGalleriaIndex].originalImageSrc
+                            )
+                          "
+                          class="fullscreen-button"
+                        />
+                      </div>
+                    </ng-template>
+                  </p-galleria>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="2">
+                <div class="h-full flex flex-col">
+                  <div class="flex-grow overflow-auto">
+                    <p-table
+                      [value]="Checklist_Data"
+                      [tableStyle]="{
+                        'min-width': '10rem',
+                        width: 'max-content'
+                      }"
+                      [showGridlines]="true"
+                      [scrollable]="true"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th colspan="3">
+                            {{ textContent.CHECKLIST_HEADER }}
+                          </th>
+                          <th>{{ textContent.CHECKLIST_NOTE }}</th>
+                        </tr>
+                      </ng-template>
+
+                      <ng-template pTemplate="body" let-row>
+                        @if (row.Measurerequiredkbn === '1') {
+                        <tr>
+                          <td colspan="3">
+                            <div class="flex">
+                              <p-checkbox
+                                [ngModel]="getCheckListCheckboxValue(row)"
+                                (onChange)="
+                                  setCheckListCheckboxValue(
+                                    row,
+                                    $event.checked
+                                  );
+                                  row._error = ''
+                                "
+                                [class.ng-invalid]="row._error !== ''"
+                                [class.ng-dirty]="row._error !== ''"
+                                binary="true"
+                                [disabled]="Header_Data.Chkflg === '1'"
+                              ></p-checkbox>
+                              <span class="ml-2">{{ row.Checkdetail }}</span>
+                              <span class="text-red-500">*</span>
+                            </div>
+                            @if(row._error !== ''){
+                            <p-message
+                              severity="secondary"
+                              variant="simple"
+                              size="small"
+                            >
+                              {{ row._error }}
+                            </p-message>
+                            }
+                          </td>
+                          <td>{{ row.Remark }}</td>
+                        </tr>
+                        } @if (row.Measurerequiredkbn === '2') { @if
+                        (row.Datakbn === '1' || row.Datakbn === '2') {
+                        <tr>
+                          <td>
+                            {{ row.Checkdetail }}
+                            <span class="text-red-500">*</span>
+                          </td>
+                          <td>
+                            @if(row.Datakbn === '1'){
+                            <input
+                              pInputText
+                              [(ngModel)]="row.Measured"
+                              [appMaxLength]="{
+                                tableName: 'D_MFG005',
+                                columnName: 'Cmeasured'
+                              }"
+                              (input)="row._error = ''"
+                              [class.ng-invalid]="row._error !== ''"
+                              [class.ng-dirty]="row._error !== ''"
+                              [disabled]="Header_Data.Chkflg === '1'"
+                            />
+                            @if(row._error !== ''){
+                            <p-message
+                              severity="secondary"
+                              variant="simple"
+                              size="small"
+                            >
+                              {{ row._error }}
+                            </p-message>
+                            } }@else {
+                            <input
+                              pInputText
+                              [(ngModel)]="row.Measured"
+                              [appMaxLength]="{
+                                tableName: 'D_MFG005',
+                                columnName: 'Nmeasured'
+                              }"
+                              class="text-right"
+                              (input)="row._error = ''"
+                              [class.ng-invalid]="row._error !== ''"
+                              [class.ng-dirty]="row._error !== ''"
+                              [disabled]="Header_Data.Chkflg === '1'"
+                            />
+                            @if(row._error !== ''){
+                            <p-message
+                              severity="secondary"
+                              variant="simple"
+                              size="small"
+                            >
+                              {{ row._error }}
+                            </p-message>
+                            } }
+                          </td>
+                          <td>{{ row.Unitnm }}</td>
+                          <td>{{ row.Remark }}</td>
+                        </tr>
+                        } @if (row.Datakbn === '3') {
+                        <tr>
+                          <td colspan="2">
+                            {{ row.Checkdetail }}
+                            <span class="text-red-500">*</span>
+                          </td>
+                          <td>
+                            <p-datepicker
+                              class="torokuGridInput"
+                              [showIcon]="true"
+                              [showButtonBar]="true"
+                              [(ngModel)]="row.Measured"
+                              inputStyleClass="text-right"
+                              [appendTo]="'body'"
+                              [showTime]="true"
+                              (onBlur)="row._error = ''"
+                              (keydown.enter)="row._error = ''"
+                              (onClose)="row._error = ''"
+                              [class.ng-invalid]="row._error !== ''"
+                              [class.ng-dirty]="row._error !== ''"
+                              [disabled]="Header_Data.Chkflg === '1'"
+                            ></p-datepicker>
+                            @if(row._error !== ''){
+                            <p-message
+                              severity="secondary"
+                              variant="simple"
+                              size="small"
+                            >
+                              {{ row._error }}
+                            </p-message>
+                            }
+                          </td>
+                          <td>{{ row.Remark }}</td>
+                        </tr>
+                        } @if (row.Datakbn === '4') {
+                        <tr>
+                          <td colspan="2">
+                            {{ row.Checkdetail }}
+                            <span class="text-red-500">*</span>
+                          </td>
+                          <td>
+                            <div (click)="row._error = ''">
+                              <app-upload-images
+                                [isCustomUpload]="true"
+                                [Images]="row.Images"
+                                (uploadEmmiter)="
+                                  onUploadCheckListImages($event, row)
+                                "
+                                [isDisabled]="Header_Data.Chkflg === '1'"
+                              />
+                              @if(row._error !== ''){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{ row._error }}
+                              </p-message>
+                              }
+                            </div>
+                          </td>
+                          <td>{{ row.Remark }}</td>
+                        </tr>
+                        } }
+                      </ng-template>
+                    </p-table>
+                  </div>
+                  <div class="flex gap-y-4 gap-x-10">
+                    <p-button
+                      [label]="textContent.REGISTER_BTN"
+                      (onClick)="RegisterCheckList()"
+                      [disabled]="Header_Data.Chkflg === '1'"
+                    />
+                    @if(Checklist_Data.length > 0){
+                    <div class="flex gap-x-4 h-max">
+                      <label for="TOROKUSHA" class="block mb-2 font-semibold">
+                        {{ textContent.TOROKUSHA }}
+                        <span class="text-red-500">*</span>
+                      </label>
+                      <div class="flex gap-4">
+                        <div class="flex flex-col">
+                          <p-inputgroup>
+                            <input
+                              id="Chargecd"
+                              name="Chargecd"
+                              type="text"
+                              [(ngModel)]="Checklist_Data[0].Chargecd"
+                              (change)="
+                                onInputFinished('Chargecd', Checklist_Data[0])
+                              "
+                              (keydown.enter)="
+                                onInputFinished('Chargecd', Checklist_Data[0])
+                              "
+                              (input)="onFieldInput('Chargecd_CheckList')"
+                              pInputText
+                              [appMaxLength]="{
+                                tableName: 'D_MFG005',
+                                columnName: 'Chargecd'
+                              }"
+                              [class.ng-invalid]="
+                                InvalidMSG.Chargecd_CheckList != ''
+                              "
+                              [class.ng-dirty]="
+                                InvalidMSG.Chargecd_CheckList != ''
+                              "
+                              [disabled]="Header_Data.Chkflg === '1'"
+                            />
+                            <p-inputgroup-addon>
+                              <app-reference-screen-button
+                                [tableName]="Torokusha_refTableName"
+                                [tableJPName]="Torokusha_refTableJPName"
+                                [formId]="textContent.FORM_ID"
+                                [columns]="Torokusha_refColumns"
+                                [selectedValue]="
+                                  showChecklistData
+                                    ? Checklist_Data[0].Chargecd
+                                    : ''
+                                "
+                                [disabled]="Header_Data.Chkflg === '1'"
+                                [gridRefData]="refScreenOnRowData()"
+                                refForColumn="Chargecd"
+                                (referenceSelected)="
+                                  onReferenceDataSelected($event)
+                                "
+                              />
+                            </p-inputgroup-addon>
+                          </p-inputgroup>
+                          @if(InvalidMSG.Chargecd_CheckList != ''){
+                          <p-message
+                            severity="secondary"
+                            variant="simple"
+                            size="small"
+                          >
+                            {{ InvalidMSG.Chargecd_CheckList }}
+                          </p-message>
+                          }
+                        </div>
+
+                        <div id="TOROKUSHA_NAME" class="value-label h-max">
+                          @if(Checklist_Data.length > 0){
+                          {{ Checklist_Data[0].Chargenm }}
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="3">
+                <div class="flex flex-col h-full overflow-hidden">
+                  <p-stepper [(value)]="activeMeasurementTime">
+                    <div class="flex items-center gap-4">
+                      <p-step-list>
+                        @for (step of getMeasurementStepArray(); track step) {
+                        <p-step
+                          [value]="step"
+                          [disabled]="!isMeasurementTimesEnabled(step)"
+                          >{{ textContent.TIMES_LABEL }}</p-step
+                        >
+                        }
+                      </p-step-list>
+
+                      <div class="font-semibold">
+                        {{ getCompletedRegisteredTabs() }}/{{ maxMeasuretimes
+                        }}{{ textContent.COMPLETE_LABEL }}
+                      </div>
+                    </div>
+                  </p-stepper>
+                  <div
+                    class="flex-grow flex flex-col overflow-hidden h-80 gap-2"
+                  >
+                    <div class="flex-grow overflow-auto">
+                      <p-table
+                        [value]="MeasurementDataMap[activeMeasurementTime]"
+                        [tableStyle]="{
+                          width: 'max-content'
+                        }"
+                        [showGridlines]="true"
+                        [scrollable]="true"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th colspan="3">
+                              {{ textContent.MEASUREMENT_HEADER }}
+                            </th>
+                            <th>{{ textContent.CHECKLIST_NOTE }}</th>
+                          </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-row>
+                          @if ((row.Datakbn === '1' || row.Datakbn === '2') &&
+                          row.Measuretimes >= activeMeasurementTime) {
+                          <tr>
+                            <td>
+                              {{ row.Measurementnm }}
+                              <span class="text-red-500">*</span>
+                            </td>
+                            <td>
+                              @if(row.Datakbn === '1'){
+                              <input
+                                pInputText
+                                [(ngModel)]="row.Measured"
+                                [appMaxLength]="{
+                                  tableName: 'D_MFG005',
+                                  columnName: 'Cmeasured'
+                                }"
+                                (input)="row._error = ''"
+                                [class.ng-invalid]="row._error !== ''"
+                                [class.ng-dirty]="row._error !== ''"
+                              />
+                              @if(row._error !== ''){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{ row._error }}
+                              </p-message>
+                              } } @else {
+                              <input
+                                pInputText
+                                [(ngModel)]="row.Measured"
+                                class="text-right"
+                                [appMaxLength]="{
+                                  tableName: 'D_MFG005',
+                                  columnName: 'Nmeasured'
+                                }"
+                                (input)="row._error = ''"
+                                [class.ng-invalid]="row._error !== ''"
+                                [class.ng-dirty]="row._error !== ''"
+                              />
+                              @if(row._error !== ''){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{ row._error }}
+                              </p-message>
+                              } }
+                            </td>
+                            <td>{{ row.Unitnm }}</td>
+                            <td>{{ row.Remark }}</td>
+                          </tr>
+                          } @if (row.Datakbn === '3' && row.Measuretimes >=
+                          activeMeasurementTime) {
+                          <tr>
+                            <td>
+                              {{ row.Measurementnm }}
+                              <span class="text-red-500">*</span>
+                            </td>
+                            <td colspan="2">
+                              <p-datepicker
+                                class="torokuGridInput"
+                                [showIcon]="true"
+                                [showButtonBar]="true"
+                                [(ngModel)]="row.Measured"
+                                inputStyleClass="text-right"
+                                [appendTo]="'body'"
+                                (onBlur)="row._error = ''"
+                                (keydown.enter)="row._error = ''"
+                                (onClose)="row._error = ''"
+                                [class.ng-invalid]="row._error !== ''"
+                                [class.ng-dirty]="row._error !== ''"
+                                [showTime]="true"
+                              ></p-datepicker>
+                              @if(row._error !== ''){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{ row._error }}
+                              </p-message>
+                              }
+                            </td>
+                            <td>{{ row.Remark }}</td>
+                          </tr>
+                          } @if (row.Datakbn === '4' && row.Measuretimes >=
+                          activeMeasurementTime) {
+                          <tr>
+                            <td>
+                              {{ row.Measurementnm }}
+                            </td>
+                            <td colspan="2">
+                              <div (click)="row._error = ''">
+                                <app-upload-images
+                                  [isCustomUpload]="true"
+                                  [Images]="row.Images"
+                                  (uploadEmmiter)="
+                                    onUploadMeasurementImages($event, row)
+                                  "
+                                />
+                                @if(row._error !== ''){
+                                <p-message
+                                  severity="secondary"
+                                  variant="simple"
+                                  size="small"
+                                >
+                                  {{ row._error }}
+                                </p-message>
+                                }
+                              </div>
+                            </td>
+                            <td>{{ row.Remark }}</td>
+                          </tr>
+                          }
+                        </ng-template>
+                      </p-table>
+                    </div>
+                    <div class="flex justify-between">
+                      <div class="flex gap-y-4 gap-x-10">
+                        <p-button
+                          [label]="textContent.REGISTER_BTN"
+                          (onClick)="RegisterMeasurementData()"
+                        />
+                        @if(MeasurementDataMap[activeMeasurementTime]){
+                        <div class="flex gap-x-4 h-max">
+                          <label
+                            for="TOROKUSHA"
+                            class="block mb-2 font-semibold"
+                            >{{ textContent.TOROKUSHA }}
+                            <span class="text-red-500">*</span>
+                          </label>
+                          <div class="flex gap-4">
+                            <div class="flex flex-col">
+                              <p-inputgroup>
+                                <input
+                                  id="Chargecd"
+                                  name="Chargecd"
+                                  type="text"
+                                  [(ngModel)]="
+                                    MeasurementDataMap[activeMeasurementTime][0]
+                                      .Chargecd
+                                  "
+                                  [appMaxLength]="{
+                                    tableName: 'D_MFG005',
+                                    columnName: 'Chargecd'
+                                  }"
+                                  (change)="
+                                    onInputFinished(
+                                      'Chargecd',
+                                      MeasurementDataMap[
+                                        activeMeasurementTime
+                                      ][0]
+                                    )
+                                  "
+                                  (keydown.enter)="
+                                    onInputFinished(
+                                      'Chargecd',
+                                      MeasurementDataMap[
+                                        activeMeasurementTime
+                                      ][0]
+                                    )
+                                  "
+                                  (input)="onFieldInput('Chargecd_Measurement')"
+                                  [class.ng-invalid]="
+                                    InvalidMSG.Chargecd_Measurement != ''
+                                  "
+                                  [class.ng-dirty]="
+                                    InvalidMSG.Chargecd_Measurement != ''
+                                  "
+                                  pInputText
+                                />
+                                <p-inputgroup-addon>
+                                  <app-reference-screen-button
+                                    [tableName]="Torokusha_refTableName"
+                                    [tableJPName]="Torokusha_refTableJPName"
+                                    [formId]="textContent.FORM_ID"
+                                    [columns]="Torokusha_refColumns"
+                                    [selectedValue]="
+                                      MeasurementDataMap[
+                                        activeMeasurementTime
+                                      ][0].Chargecd
+                                    "
+                                    [gridRefData]="refScreenOnRowData()"
+                                    refForColumn="Chargecd"
+                                    (referenceSelected)="
+                                      onReferenceDataSelected($event)
+                                    "
+                                  />
+                                </p-inputgroup-addon>
+                              </p-inputgroup>
+                              @if(InvalidMSG.Chargecd_Measurement != ''){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{ InvalidMSG.Chargecd_Measurement }}
+                              </p-message>
+                              }
+                            </div>
+
+                            <div id="TOROKUSHA_NAME" class="value-label h-max">
+                              {{
+                                MeasurementDataMap[activeMeasurementTime][0]
+                                  .Chargenm
+                              }}
+                            </div>
+                          </div>
+                        </div>
+                        }
+                      </div>
+                      <p-button
+                        label="{{ activeMeasurementTime + 1 }} {{
+                          textContent.TIMES_LABEL
+                        }}"
+                        [hidden]="activeMeasurementTime >= maxMeasuretimes"
+                        [severity]="'secondary'"
+                        [disabled]="
+                          !isMeasurementTimesRegistered(activeMeasurementTime)
+                        "
+                        icon="pi pi-chevron-right"
+                        iconPos="right"
+                        (onClick)="goToNextMeasurement()"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="4">
+                <div class="h-full flex flex-col">
+                  <div class="flex-grow overflow-auto">
+                    <app-toroku-grid
+                      #inputItemDataList_grid
+                      [formId]="textContent.FORM_ID"
+                      [formTitle]="textContent.FORM_TITLE"
+                      [dataGrid]="inputItemDataListDataGrid"
+                      [dataList]="dataInputItemDataList()"
+                      [dbDataEdit]="false"
+                      [refScreenDefaultValue]="defaultValue()"
+                      [gridId]="'inputItemDataList_grid'"
+                    />
+                  </div>
+                  <div class="flex gap-y-4 gap-x-10">
+                    <p-button
+                      [label]="textContent.REGISTER_BTN"
+                      (onClick)="RegisterInputItemDataList()"
+                      styleClass="p-button-primary"
+                    ></p-button>
+                  </div>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="5">
+                <div class="flex flex-col gap-y-2 overflow-hidden h-full">
+                  <div>
+                    <div class="font-semibold mb-1">
+                      {{ textContent.TOTAL_LBL }}
+                    </div>
+
+                    <div class="border pt-2 rounded-md">
+                      <div class="flex flex-wrap me-5">
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end w-max"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_PRE
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimepre"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_RUN
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimerun"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_POST
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimepost"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_BREAK
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimebreak"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_PAUSE
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimepause"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.TOTALTIME_ALL
+                          }}</label>
+                          <div>
+                            <span class="total-label">{{
+                              resultTabTotalDataList["Totaltimeall"]
+                            }}</span>
+                            {{ textContent.MINUTES_LBL }}
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr class="my-2" />
+
+                      <div class="flex flex-wrap text-left">
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 mb-2 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.SUMGOODQTY
+                          }}</label>
+                          <div class="total-label">
+                            {{ resultTabTotalDataList["Sumgoodqty"] }}
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col basis-1/6 min-w-max px-4 mb-2 items-end"
+                        >
+                          <label class="text-lable">{{
+                            textContent.SUMBADQTY
+                          }}</label>
+                          <div class="total-label">
+                            {{ resultTabTotalDataList["Sumbadqty"] }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex-grow h-96 flex flex-col overflow-hidden">
+                    <div class="font-semibold mb-1">
+                      {{ textContent.DETAILS_LBL }}
+                    </div>
+                    <div class="overflow-auto">
+                      <app-toroku-grid
+                        #resultTabDetailsGridComponent
+                        [formId]="textContent.FORM_ID"
+                        [formTitle]="textContent.FORM_TITLE"
+                        [dataGrid]="ResultTabDetailsGrid"
+                        [dataList]="resultTabDetailsDataList()"
+                        [gridId]="'resultTabDetailsGridComponent'"
+                        [addRow]="false"
+                        [editRow]="false"
+                        [deleteRow]="false"
+                        [isMultiselect]="false"
+                        [extraBtnsList]="ResultTabDetailsGridExtraBtns()"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </p-tabpanel>
+              <p-tabpanel [value]="6">
+                <div class="h-full tab-6">
+                  <p-splitter layout="vertical" [style]="{ height: '100%' }">
+                    <ng-template #panel>
+                      <div class="flex flex-col gap-y-2">
+                        <div class="flex flex-wrap gap-y-4 gap-x-10">
+                          <div class="flex gap-2">
+                            <label for="Goodqty" class="font-semibold"
+                              >{{ textContent.GOODQTY
+                              }}<span class="text-red-500">*</span></label
+                            >
+                            <div>
+                              <input
+                                pInputText
+                                [(ngModel)]="
+                                  ResultReference_ManufacturingRecord.Goodqty
+                                "
+                                [appMaxLength]="{
+                                  tableName: 'D_MFG002',
+                                  columnName: 'Goodqty'
+                                }"
+                                [class.ng-invalid]="
+                                  hasManufacturingFieldError('Goodqty')
+                                "
+                                [class.ng-dirty]="
+                                  hasManufacturingFieldError('Goodqty')
+                                "
+                                class="text-right"
+                                (change)="
+                                  onReferenceResultGoodqtyChange();
+                                  ValidateManufacturingField('Goodqty', true);
+                                  jissekiTabChangeDetectValidate(
+                                    'Goodqty',
+                                    ResultReference_ManufacturingRecord.Goodqty,
+                                    '2'
+                                  )
+                                "
+                              />
+                              @if(hasManufacturingFieldError('Goodqty')){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{
+                                  ResultReference_ManufacturingRecord.errors[
+                                    "Goodqty"
+                                  ]
+                                }}
+                              </p-message>
+                              }
+                            </div>
+                          </div>
+                          <div class="flex gap-2">
+                            <label for="Lotno" class="font-semibold"
+                              >{{ textContent.LOTNO
+                              }}<span class="text-red-500">*</span></label
+                            >
+                            <div>
+                              <input
+                                pInputText
+                                [(ngModel)]="
+                                  ResultReference_ManufacturingRecord.Lotno
+                                "
+                                [appMaxLength]="{
+                                  tableName: 'D_STOCK003',
+                                  columnName: 'Lotno'
+                                }"
+                                [class.ng-invalid]="
+                                  hasManufacturingFieldError('Lotno')
+                                "
+                                [class.ng-dirty]="
+                                  hasManufacturingFieldError('Lotno')
+                                "
+                                (change)="
+                                  ValidateManufacturingField('Lotno', true);
+                                  jissekiTabChangeDetectValidate(
+                                    'Lotno',
+                                    ResultReference_ManufacturingRecord.Lotno,
+                                    '2'
+                                  )
+                                "
+                              />
+                              @if(hasManufacturingFieldError('Lotno')){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{
+                                  ResultReference_ManufacturingRecord.errors[
+                                    "Lotno"
+                                  ]
+                                }}
+                              </p-message>
+                              }
+                            </div>
+                          </div>
+                          <div class="flex gap-2">
+                            <label
+                              for="TOROKUSHA"
+                              class="block mb-2 font-semibold"
+                              >{{ textContent.TOROKUSHA
+                              }}<span class="text-red-500">*</span></label
+                            >
+                            <div class="">
+                              <p-inputgroup>
+                                <input
+                                  id="Chargecd"
+                                  name="Chargecd"
+                                  type="text"
+                                  [(ngModel)]="
+                                    ResultReference_ManufacturingRecord.Chargecd
+                                  "
+                                  [appMaxLength]="{
+                                    tableName: 'M_PROC005',
+                                    columnName: 'Chargecd'
+                                  }"
+                                  [class.ng-invalid]="
+                                    hasManufacturingFieldError('Chargecd')
+                                  "
+                                  [class.ng-dirty]="
+                                    hasManufacturingFieldError('Chargecd')
+                                  "
+                                  (change)="
+                                    ValidateManufacturingField('Chargecd', true)
+                                  "
+                                  (change)="
+                                    onInputFinished(
+                                      'Chargecd',
+                                      ResultReference_ManufacturingRecord
+                                    );
+                                    jissekiTabChangeDetectValidate(
+                                      'Chargecd',
+                                      ResultReference_ManufacturingRecord.Chargecd,
+                                      '2'
+                                    )
+                                  "
+                                  (keydown.enter)="
+                                    onInputFinished(
+                                      'Chargecd',
+                                      ResultReference_ManufacturingRecord
+                                    )
+                                  "
+                                  pInputText
+                                />
+                                <p-inputgroup-addon>
+                                  <app-reference-screen-button
+                                    [tableName]="Torokusha_refTableName"
+                                    [tableJPName]="Torokusha_refTableJPName"
+                                    [formId]="textContent.FORM_ID"
+                                    [columns]="Torokusha_refColumns"
+                                    [selectedValue]="
+                                      ResultReference_ManufacturingRecord.Chargecd
+                                    "
+                                    [gridRefData]="refScreenOnRowData()"
+                                    refForColumn="Chargecd"
+                                    (referenceSelected)="
+                                      onReferenceDataSelected($event)
+                                    "
+                                  />
+                                </p-inputgroup-addon>
+                              </p-inputgroup>
+                              @if(hasManufacturingFieldError('Chargecd')){
+                              <p-message
+                                severity="secondary"
+                                variant="simple"
+                                size="small"
+                              >
+                                {{
+                                  ResultReference_ManufacturingRecord.errors[
+                                    "Chargecd"
+                                  ]
+                                }}
+                              </p-message>
+                              }
+                            </div>
+
+                            <div id="TOROKUSHA_NAME" class="value-label h-max">
+                              {{ ResultReference_ManufacturingRecord.Chargenm }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex-grow-0 h-full overflow-auto">
+                          <app-toroku-grid
+                            #ResultReferenceDefectiveItems
+                            [formId]="textContent.FORM_ID"
+                            [formTitle]="textContent.FORM_TITLE"
+                            [dataGrid]="ResultReferenceDefectiveItemsGrid"
+                            [dataList]="ResultReferenceDefectiveItemsGridList()"
+                            [gridId]="'ResultReferenceDefectiveItems'"
+                            [addRow]="areJissekiGridsEnabled()"
+                            [editRow]="areJissekiGridsEnabled()"
+                            [deleteRow]="areJissekiGridsEnabled()"
+                          />
+                        </div>
+                        <div>
+                          <p-floatlabel variant="on">
+                            <textarea
+                              pTextarea
+                              [(ngModel)]="
+                                ResultReference_ManufacturingRecord.Remark
+                              "
+                              id="Manufacturingnotes"
+                              rows="2"
+                              cols="60"
+                              class="h-full"
+                              style="resize: none"
+                              [class.p-filled]="
+                                ResultReference_ManufacturingRecord.Remark
+                              "
+                              [appMaxLength]="{
+                                tableName: 'D_MFG002',
+                                columnName: 'Remark'
+                              }"
+                            ></textarea>
+                            <label for="Manufacturingnotes">{{
+                              textContent.MANUFACTURING_NOTES
+                            }}</label>
+                          </p-floatlabel>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template #panel>
+                      <div style="height: 100%; overflow: auto">
+                        <app-toroku-grid
+                          #ResultReferenceUsedItems
+                          [formId]="textContent.FORM_ID"
+                          [formTitle]="textContent.FORM_TITLE"
+                          [dataGrid]="ResultReferenceUsedItemsGrid"
+                          [dataList]="ResultReferenceUsedItemsGridList()"
+                          [gridId]="'ResultReferenceUsedItems'"
+                          [refScreenDefaultValue]="defaultValue()"
+                          [addRow]="areJissekiGridsEnabled()"
+                          [editRow]="areJissekiGridsEnabled()"
+                          [deleteRow]="areJissekiGridsEnabled()"
+                        /></div
+                    ></ng-template>
+                  </p-splitter>
+                </div>
+              </p-tabpanel>
+            </p-tabpanels>
+          </p-tabs>
+        </div>
+      </ng-template>
+    </p-splitter>
+  </div>
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <div class="flex gap-2 flex-wrap">
+        @if(activeTab !== 6){ @if (showButton('start_setup_btn')) {
+        <button
+          id="start_setup_btn"
+          (click)="opsButtonClick('start_setup_btn')"
+          class="blue-button"
+        >
+          <i class="pi pi-save"></i>
+          {{ textContent.START_SETUP_BTN }}
+        </button>
+        } @if (showButton('start_production_btn')) {
+        <button
+          id="start_production_btn"
+          (click)="opsButtonClick('start_production_btn')"
+          class="blue-button"
+        >
+          <i class="pi pi-save"></i>
+          {{ textContent.START_PRODUCTION_BTN }}
+        </button>
+        } @if (showButton('end_production_btn')) {
+        <button
+          id="end_production_btn"
+          (click)="opsButtonClick('end_production_btn')"
+          class="blue-button"
+        >
+          <i class="pi pi-save"></i>
+          {{ textContent.END_PRODUCTION_BTN }}
+        </button>
+        } @if (showButton('end_post_setup_btn')) {
+        <button
+          id="end_post_setup_btn"
+          (click)="opsButtonClick('end_post_setup_btn')"
+          class="blue-button"
+        >
+          <i class="pi pi-save"></i>
+          {{ textContent.END_POST_SETUP_BTN }}
+        </button>
+        } @if (showButton('production_handover_btn')) {
+        <button
+          id="production_handover_btn"
+          (click)="opsButtonClick('production_handover_btn')"
+          class="orange-button"
+        >
+          <i class="pi pi-pause"></i>
+          {{ textContent.PRODUCTION_HANDOVER_BTN }}
+        </button>
+        } @if (showButton('handover_complete_btn')) {
+        <button
+          id="handover_complete_btn"
+          (click)="opsButtonClick('handover_complete_btn')"
+          class="orange-button"
+        >
+          <i class="pi pi-play"></i>
+          {{ textContent.HANDOVER_COMPLETE_BTN }}
+        </button>
+        } @if (showButton('interrupt_btn')) {
+        <button
+          id="interrupt_btn"
+          (click)="opsButtonClick('interrupt_btn')"
+          class="yellow-button"
+        >
+          <i class="pi pi-pause"></i>
+          {{ textContent.INTERRUPT_BTN }}
+        </button>
+        } @if (showButton('resume_btn')) {
+        <button
+          id="resume_btn"
+          (click)="opsButtonClick('resume_btn')"
+          class="yellow-button"
+        >
+          <i class="pi pi-play"></i>
+          {{ textContent.RESUME_BTN }}
+        </button>
+        } @if (showButton('start_break_btn')) {
+        <button
+          id="start_break_btn"
+          (click)="opsButtonClick('start_break_btn')"
+          class="lightgreen-button"
+        >
+          <i class="pi pi-pause"></i>
+          {{ textContent.START_BREAK_BTN }}
+        </button>
+        } @if (showButton('end_break_btn')) {
+        <button
+          id="end_break_btn"
+          (click)="opsButtonClick('end_break_btn')"
+          class="lightgreen-button"
+        >
+          <i class="pi pi-play"></i>
+          {{ textContent.END_BREAK_BTN }}
+        </button>
+        } @if (showButton('back_to_list_btn')) {
+        <button
+          id="back_to_list_btn"
+          (click)="opsButtonClick('back_to_list_btn')"
+          class="secondary-button"
+          pButton
+          severity="secondary"
+        >
+          <i class="pi pi-arrow-left"></i>
+          {{ textContent.BACK_TO_LIST_BTN }}
+        </button>
+        } }@else {
+        <p-button
+          [label]="textContent.JISSEKI_REGISTER_BTN"
+          (onClick)="SaveResultReference()"
+        />
+        <p-button
+          [label]="textContent.BACK_BTN"
+          severity="secondary"
+          (onClick)="BackFromJissekiTab()"
+        />
+        }
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      @if(activeTab !== 6){ @if (showButton('cancel_btn')) {
+      <button
+        id="cancel_btn"
+        (click)="opsButtonClick('cancel_btn')"
+        class="red-button"
+      >
+        <i class="pi pi-times"></i>
+        {{ textContent.CANCEL_BTN }}
+      </button>
+      } }
+    </ng-template>
+  </p-toolbar>
+</div>
+
+<app-reference-screen-dialog #refDialog />

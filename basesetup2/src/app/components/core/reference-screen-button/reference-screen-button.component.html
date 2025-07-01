@@ -1,0 +1,7 @@
+<p-button
+  severity="secondary"
+  variant="text"
+  icon="pi pi-search"
+  (click)="showDialog()"
+  [disabled]="isBackgroundLoading() || disabled()"
+/>

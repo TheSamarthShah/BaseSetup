@@ -1,0 +1,22 @@
+<div class="acty-dialog">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [header]="data()?.header || CommonText.CONFIRM"
+  >
+    <div class="acty-dialog-content">
+      <i class="pi pi-exclamation-triangle acty-dialog-icon"></i>
+      <span class="acty-dialog-message-content">{{ data()?.message }}</span>
+    </div>
+
+    <ng-template pTemplate="footer">
+      @for (btn of data()?.buttons; track $index) {
+      <p-button
+        [severity]="btn.severity"
+        label="{{ btn.label }}"
+        (click)="handleButtonClick(btn)"
+      ></p-button>
+      }
+    </ng-template>
+  </p-dialog>
+</div>

@@ -1,0 +1,113 @@
+.d201 {
+  --status-color-1: #f5f5dc; /* 未着手 */
+  --status-color-2: #2196f3; /* 前段取中 */
+  --status-color-3: #ffeb3b; /* 前段取中断中 */
+  --status-color-4: #aed581; /* 前段取休憩中 */
+  --status-color-5: #2196f3; /* 製造中 */
+  --status-color-6: #ffeb3b; /* 製造中断中 */
+  --status-color-7: #aed581; /* 製造休憩中 */
+  --status-color-8: #ffa726; /* 作業引継中 */
+  --status-color-9: #2196f3; /* 後段取中 */
+  --status-color-A: #aed581; /* 後段取休憩中 */
+  --status-color-B: #e6e6e6; /* 完了 */
+  --status-color-shusei: #f8bbd0; /* 修正 */
+
+  --active-status-color: var(--status-color-1);
+
+  .highlight {
+    background-color: var(--p-highlight-background);
+    color: var(--p-highlight-color);
+  }
+
+  .text-lable {
+    font-weight: 300;
+  }
+
+  .value-label {
+    padding-bottom: 0.25rem;
+    padding-right: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .total-label {
+    font-size: 1.25rem;
+  }
+
+  .number-label {
+    text-align: right;
+  }
+
+  .status-text {
+    color: var(--active-status-color);
+  }
+
+  .header-panel {
+    border: 2px solid var(--active-status-color);
+    //border-bottom: none;
+  }
+
+  .yellow-button {
+    @extend .custom-pbutton;
+    background-color: #ffeb3b; /* Yellow 500 */
+    color: black;
+    border: 1px solid background-color;
+  }
+
+  .blue-button {
+    @extend .custom-pbutton;
+    background-color: #42a5f5; /* Blue 400 */
+    color: black;
+    border: 1px solid background-color;
+  }
+
+  .lightgreen-button {
+    @extend .custom-pbutton;
+    background-color: #aed581; /* Light Green 300 */
+    color: black;
+    border: 1px solid background-color;
+  }
+
+  .orange-button {
+    @extend .custom-pbutton;
+    background-color: #ffa726; /* Orange 400 */
+    color: black;
+    border: 1px solid background-color;
+  }
+
+  .red-button {
+    @extend .custom-pbutton;
+    background-color: #ef5350; /* Red 400 */
+    color: black;
+    border: 1px solid background-color;
+  }
+
+  .custom-pbutton {
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    padding-block: var(--p-button-padding-y);
+    padding-inline: var(--p-button-padding-x);
+    font-size: 1rem;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    transition: background var(--p-button-transition-duration),
+      color var(--p-button-transition-duration),
+      border-color var(--p-button-transition-duration),
+      outline-color var(--p-button-transition-duration),
+      box-shadow var(--p-button-transition-duration);
+    border-radius: var(--p-button-border-radius);
+    outline-color: transparent;
+    gap: var(--p-button-gap);
+  }
+
+  ::ng-deep .tab-6 .p-splitterpanel-nested {
+    display: flex;
+    flex-grow: 1;
+    justify-content: start;
+  }
+}

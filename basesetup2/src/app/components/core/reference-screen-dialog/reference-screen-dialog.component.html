@@ -1,0 +1,335 @@
+<div class="refScreen-wrapper">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '50vw', height: '75vh' }"
+    [breakpoints]="{
+    '1280px': '60vw',
+    '960px': '75vw',
+    '640px': '95vw',
+  }"
+    [draggable]="true"
+    [closable]="false"
+    (onResizeEnd)="onDialogResize($event)"
+  >
+    <!-- Header Template with Filter Icon -->
+    <ng-template pTemplate="header">
+      <div
+        class="p-dialog-title flex justify-content-between align-items-center grow"
+      >
+        <div class="grow flex items-center">
+          {{ tableJPName + " " + textContent.TITLE }}
+        </div>
+        <div class="flex gap-2">
+          <p-button
+            class="pt-1"
+            [icon]="isShowFilter() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+            size="small"
+            (onClick)="toggleFilter()"
+            outlined
+            rounded
+          />
+          <p-button
+            icon="pi pi-times"
+            (onClick)="closeDialog()"
+            text
+            severity="secondary"
+            rounded
+          />
+        </div>
+      </div>
+    </ng-template>
+    <div class="h-full max-h-full flex flex-col">
+      <!-- Filter Section -->
+      <div
+        class="refFilterDiv flex flex-col overflow-y-hidden"
+        [ngStyle]="{
+          'max-height': isShowFilter() ? '50%' : '0'
+        }"
+      >
+        @if(isShowFilter()){
+        <div
+          class="refFilterInputs pt-3 pb-1 overflow-y-hidden h-full flex flex-col"
+        >
+          <div
+            class="flex flex-col gap-4 overflow-y-auto flex-grow w-full mb-4"
+          >
+            @for(column of searchList(); track $index){ @if(column.visible){
+            <div class="grid grid-cols-12 gap-2">
+              <label
+                for="{{ column.name }}_from"
+                class="flex items-center col-span-12 md:col-span-2 2xl:col-span-1"
+              >
+                {{ column.displayName }}
+              </label>
+              <div
+                class="col-span-12 md:col-span-10 lg:col-span-8 2xl:col-span-7 grid grid-cols-12 gap-2"
+              >
+                @if(column.data_type === "4"){
+                <div class="col-span-12 flex flex-wrap gap-4">
+                  @for(member of column.memberList; track $index){
+                  <div class="flex items-center">
+                    <p-checkbox
+                      inputId="{{ column.name }}_{{ member.code }}"
+                      name="{{ column.name }}"
+                      value="{{ member.code }}"
+                      [(ngModel)]="column.value_from"
+                    />
+                    <label
+                      for="{{ column.name }}_{{ member.code }}"
+                      class="ml-2"
+                      >{{ member.name }}</label
+                    >
+                  </div>
+                  }
+                </div>
+                } @else {
+                <div class="col-span-12 md:col-span-8 grid grid-cols-12 gap-2">
+                  @if(column.data_type === "3"){
+                  <p-datepicker
+                    id="{{ column.name }}_from"
+                    [showIcon]="true"
+                    [showButtonBar]="true"
+                    [(ngModel)]="column.value_from"
+                    appendTo="body"
+                    class="col-span-10 mb-0"
+                    inputStyleClass="text-right"
+                    dataType="string"
+                    [readonlyInput]="isTouchDevice"
+                  />
+                  } @else if(column.data_type === "2") {
+                  <input
+                    id="{{ column.name }}_from"
+                    pInputText
+                    [(ngModel)]="column.value_from"
+                    type="text"
+                    class="text-right col-span-10 mb-0"
+                    [appMaxLength]="column.colMetadataKey"
+                    inputmode="numeric"
+                  />
+                  } @else {
+                  <input
+                    id="{{ column.name }}_from"
+                    pInputText
+                    [(ngModel)]="column.value_from"
+                    type="text"
+                    class="col-span-10 mb-0"
+                    [appMaxLength]="column.colMetadataKey"
+                  />
+                  }
+                </div>
+                <p-select
+                  [(ngModel)]="column.match_type"
+                  [options]="
+                    column.data_type === '1'
+                      ? match_options_string
+                      : match_options_num_date
+                  "
+                  optionLabel="name"
+                  optionValue="code"
+                  appendTo="body"
+                  class="w-full col-span-10 md:col-span-4"
+                />
+                @if(column.match_type === "1"){
+                <div class="col-span-12 md:col-span-8 grid grid-cols-12 gap-2">
+                  @if(column.data_type === "3"){
+                  <p-datepicker
+                    [showIcon]="true"
+                    [showButtonBar]="true"
+                    [(ngModel)]="column.value_to"
+                    appendTo="body"
+                    class="col-span-10 mb-0"
+                    inputStyleClass="text-right"
+                    dataType="string"
+                    [readonlyInput]="isTouchDevice"
+                  />
+                  } @else if(column.data_type === "2") {
+                  <input
+                    pInputText
+                    [(ngModel)]="column.value_to"
+                    type="text"
+                    class="text-right col-span-10 mb-0"
+                    [appMaxLength]="column.colMetadataKey"
+                    inputmode="numeric"
+                  />
+                  } @else {
+                  <input
+                    pInputText
+                    [(ngModel)]="column.value_to"
+                    type="text"
+                    class="col-span-10 sm:mb-0"
+                    [appMaxLength]="column.colMetadataKey"
+                  />
+                  }
+                </div>
+                } }
+              </div>
+            </div>
+            } }
+          </div>
+          <div class="flex my-1 gap-2">
+            <p-button
+              (click)="getData()"
+              label="{{ FilertText.SEARCH_BTN }}"
+              icon="pi pi-search"
+            />
+            <p-button
+              (click)="resetFilter()"
+              label="{{ FilertText.RESET_BTN }}"
+              icon="pi pi-refresh"
+              outlined
+            />
+            <p-button
+              (click)="showInitialSearchKbnDialog()"
+              label="{{ ReferenceSettingText.INITIAL_SEARCH_TITLE }}"
+              icon="pi pi-spin pi-cog"
+              outlined
+            />
+          </div>
+        </div>
+        }
+      </div>
+      <p-divider />
+      <div class="refDataDiv flex-grow" style="overflow: hidden">
+        <!-- Grid Section -->
+        <p-table
+          #dt
+          [value]="gridData()"
+          [rows]="rows()"
+          [rowsPerPageOptions]="pageSize"
+          pageLinks="3"
+          [currentPageReportTemplate]="
+            '総計{totalPages}ページ、{totalRecords}件'
+          "
+          [rowHover]="true"
+          [showGridlines]="true"
+          [paginator]="true"
+          [scrollable]="true"
+          [resizableColumns]="true"
+          columnResizeMode="expand"
+          responsiveLayout="scroll"
+          [tableStyle]="{ 'min-width': '10rem', width: 'max-content' }"
+          dataKey="rowid"
+          [showCurrentPageReport]="true"
+          paginatorDropdownAppendTo="body"
+        >
+          <ng-template #header>
+            <tr>
+              <th
+                pResizableColumn
+                pFrozenColumn
+                alignFrozen="left"
+                [frozen]="true"
+              >
+                <div class="flex justify-between items-center">
+                  <div>NO.</div>
+                </div>
+              </th>
+
+              @for(column of columns; track $index) {@if(column.visible){
+              <th pResizableColumn pSortableColumn="{{ column.name }}">
+                <div class="flex justify-between items-center">
+                  <div>
+                    {{ column.displayName }}
+                    <p-sortIcon [field]="column.name" />
+                  </div>
+                  @if(column.dataType === "4"){
+                  <p-columnFilter
+                    field="{{ column.name }}"
+                    matchMode="in"
+                    display="menu"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
+                  >
+                    <ng-template #filter let-value let-filter="filterCallback">
+                      <p-multiselect
+                        [ngModel]="value"
+                        [options]="column.memberList"
+                        (onChange)="filter($event.value)"
+                        optionLabel="name"
+                        optionValue="code"
+                        styleClass="w-full"
+                        appendTo="body"
+                      >
+                      </p-multiselect>
+                    </ng-template>
+                  </p-columnFilter>
+                  }@else{
+                  <p-columnFilter
+                    [type]="
+                      column.dataType === '3'
+                        ? 'date'
+                        : column.dataType === '2'
+                        ? 'numeric'
+                        : 'text'
+                    "
+                    field="{{ column.name }}"
+                    display="menu"
+                    showButtons="false"
+                  ></p-columnFilter>
+                  }
+                </div>
+              </th>
+              }}
+            </tr>
+          </ng-template>
+
+          <ng-template #body let-data let-rowIndex="rowIndex">
+            <tr (dblclick)="handleRowDoubleClick(data)">
+              <td
+                pFrozenColumn
+                alignFrozen="left"
+                [frozen]="true"
+                style="text-align: right"
+              >
+                {{ rowIndex + 1 }}
+              </td>
+              @for(column of columns; track $index){@if(column.visible){
+              @if(column.dataType === "4"){
+              <td>
+                {{ getKBNNm(data[column.name], column.memberList ?? []) }}
+              </td>
+              } @else if(column.dataType === "3"){
+              <td style="text-align: right">
+                {{ data[column.name] | date : "yyyy/MM/dd" }}
+              </td>
+              } @else if(column.dataType === "2"){
+              <td style="text-align: right">
+                {{ data[column.name] }}
+              </td>
+              } @else {
+              <td>{{ data[column.name] }}</td>
+              } }}
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+            <div class="flex items-center">
+              @if(isBackgroundLoading()){
+              <div class="flex items-center">
+                <p-progress-spinner
+                  strokeWidth="8"
+                  fill="transparent"
+                  animationDuration=".5s"
+                  [style]="{ width: '25px', height: '25px' }"
+                />
+                <div class="ml-2">抽出中です. . .</div>
+              </div>
+              }
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <app-reference-initial-searchkbn
+      #refInitialSearchKBN
+      [tableName]="tableName"
+      [formId]="formId"
+      [displayFlgInp]="displayInitialSearchKbnDialog()"
+      (closeTriggered)="closeInitialSearchKbnDialog()"
+    />
+    @if(isLoading() > 0){
+    <app-loader />
+    }
+  </p-dialog>
+</div>

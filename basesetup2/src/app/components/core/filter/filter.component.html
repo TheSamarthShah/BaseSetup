@@ -1,0 +1,318 @@
+<div class="card w-full h-full flex flex-col" style="padding: 20px">
+  <div class="flex justify-between items-center mb-4">
+    <div class="font-semibold text-xl">{{ filterTitle() }}</div>
+    <button
+      pButton
+      [rounded]="true"
+      [icon]="isShowFilter() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+      class="p-button-sm"
+      (click)="toggleFilter()"
+    ></button>
+  </div>
+  <div class="flex flex-col gap-4 flex-1 overflow-y-auto w-full mb-4">
+    @for(column of searchList(); track $index){ @if(column.visible){
+    <div class="grid grid-cols-12 gap-2">
+      <label
+        for="{{ column.name }}_from"
+        class="flex items-center col-span-12 md:col-span-2 2xl:col-span-1"
+      >
+        {{ column.displayName }}
+        @if(column.required){
+        <span style="color: red">*</span>
+        }
+      </label>
+      <div
+        class="col-span-12 md:col-span-10 lg:col-span-8 2xl:col-span-7 grid grid-cols-12 gap-2"
+      >
+        @if(column.data_type === "4"){
+        <div class="col-span-12 flex flex-wrap gap-4">
+          <div class="flex items-center">
+            <p-checkbox
+              inputId="{{ column.name }}_ALL"
+              name="{{ column.name }}"
+              value="ALL"
+              [(ngModel)]="allCheckedStates[column.name]"
+              [binary]="true"
+              (onChange)="
+                column.memberList && onAllCheckboxChange(column, 'ALL')
+              "
+            />
+            <label for="{{ column.name }}_ALL" class="ml-2 mr-2">{{
+              textContent.CHECKBOX_ALL_OPTION
+            }}</label>
+            <label>{{ textContentCommon.TITLE_JOIN_PIPE }}</label>
+          </div>
+          @for(member of column.memberList; track $index){
+          <div class="flex items-center">
+            <p-checkbox
+              inputId="{{ column.name }}_{{ member.code }}"
+              name="{{ column.name }}"
+              value="{{ member.code }}"
+              [(ngModel)]="column.value_from"
+              (ngModelChange)="
+                column.memberList && onAllCheckboxChange(column, member.code)
+              "
+            />
+            <label for="{{ column.name }}_{{ member.code }}" class="ml-2">{{
+              member.name
+            }}</label>
+          </div>
+          }
+        </div>
+        } @else if(column.data_type === "6"){
+        <div class="col-span-12 flex flex-wrap gap-4">
+          <!-- Member options as radio buttons -->
+          @for(member of column.memberList; track $index){
+          <div class="flex items-center">
+            <p-radiobutton
+              inputId="{{ column.name }}_{{ member.code }}"
+              name="{{ column.name }}"
+              value="{{ member.code }}"
+              [(ngModel)]="column.value_from"
+            ></p-radiobutton>
+            <label for="{{ column.name }}_{{ member.code }}" class="ml-2">{{
+              member.name
+            }}</label>
+          </div>
+          }
+        </div>
+        } @else {
+        <div class="col-span-12 md:col-span-5 grid grid-cols-12 gap-2">
+          @if(column.data_type === "3"){
+          <div class="col-span-12 mb-0">
+            <p-datepicker
+                id="{{ column.name }}_from"
+                [showIcon]="true"
+                [showButtonBar]="true"
+                [showTime]="
+                  !!(
+                    column.dateFormat?.includes('HH:mm') ||
+                    column.dateFormat?.includes('hh:mm')
+                  )
+                "
+                [(ngModel)]="column.value_from"
+                appendTo="body"
+                [class.ng-invalid]="column.invalidInput"
+                [class.ng-dirty]="column.invalidInput"
+                (input)="column.required ? OnInputEvent(column.name) : null"
+                (onSelect)="column.required ? OnInputEvent(column.name) : null"
+                inputStyleClass="text-right"
+                dataType="string"
+                [readonlyInput]="isTouchDevice"
+              />
+            <!-- Show p-message only if there's a validation error -->
+            @if(column.invalidInput) {
+            <p-message severity="secondary" variant="simple" size="small">
+              {{ requiredMsg }}
+            </p-message>
+            }
+          </div>
+
+          } @else if(column.data_type === "2") {
+          <div class="col-span-12 mb-0">
+            <p-inputgroup>
+              <input
+                id="{{ column.name }}_from"
+                pInputText
+                [(ngModel)]="column.value_from"
+                type="text"
+                style="width: 100%"
+                [class.ng-invalid]="column.invalidInput"
+                [class.ng-dirty]="column.invalidInput"
+                (input)="column.required ? OnInputEvent(column.name) : null"
+                class="text-right"
+                [appMaxLength]="column.colMetadataKey"
+                inputmode="numeric"
+              />
+              @if(column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formID()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="column.value_from"
+                  refForColumn="{{ column.name }}_from"
+                  (referenceSelected)="onReferenceSelected($event)"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+            <!-- Show p-message only if there's a validation error -->
+            @if(column.invalidInput) {
+            <p-message severity="secondary" variant="simple" size="small">
+              {{ requiredMsg }}
+            </p-message>
+            }
+          </div>
+
+          } @else {
+          <div class="col-span-12 mb-0">
+            <p-inputgroup>
+              <input
+                id="{{ column.name }}_from"
+                pInputText
+                (input)="column.required ? OnInputEvent(column.name) : null"
+                [(ngModel)]="column.value_from"
+                type="text"
+                style="width: 100%"
+                [class.ng-invalid]="column.invalidInput"
+                [class.ng-dirty]="column.invalidInput"
+                [appMaxLength]="column.colMetadataKey"
+              />
+
+              @if(column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formID()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="column.value_from"
+                  refForColumn="{{ column.name }}_from"
+                  (referenceSelected)="onReferenceSelected($event)"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+            <!-- Show p-message only if there's a validation error -->
+            @if(column.invalidInput) {
+            <p-message severity="secondary" variant="simple" size="small">
+              {{ requiredMsg }}
+            </p-message>
+            }
+          </div>
+          }
+        </div>
+        @if(column.showMatchType){
+        <p-select
+          [(ngModel)]="column.match_type"
+          [options]="
+            column.data_type === '1'
+              ? match_options_string
+              : match_options_num_date
+          "
+          optionLabel="name"
+          optionValue="code"
+          appendTo="body"
+          class="w-full col-span-10 md:col-span-2"
+        />
+        @if(column.match_type === "1"){
+        <div class="col-span-12 md:col-span-5 grid grid-cols-12 gap-2">
+          @if(column.data_type === "3"){
+          <div class="col-span-12 mb-0">
+            <p-datepicker
+                [showIcon]="true"
+                [showButtonBar]="true"
+                [showTime]="
+                  !!(
+                    column.dateFormat?.includes('HH:mm') ||
+                    column.dateFormat?.includes('hh:mm')
+                  )
+                "
+                [(ngModel)]="column.value_to"
+                appendTo="body"
+                inputStyleClass="text-right"
+                dataType="string"
+                [readonlyInput]="isTouchDevice"
+              />
+          </div>
+
+          } @else if(column.data_type === "2") {
+          <div class="col-span-12 mb-0">
+            <p-inputgroup>
+              <input
+                pInputText
+                [(ngModel)]="column.value_to"
+                type="text"
+                class="text-right"
+                [appMaxLength]="column.colMetadataKey"
+                inputmode="numeric"
+              />
+              @if(column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formID()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="column.value_from"
+                  refForColumn="{{ column.name }}_from"
+                  (referenceSelected)="onReferenceSelected($event)"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+          </div>
+
+          } @else {
+          <div class="col-span-12 mb-0">
+            <p-inputgroup>
+              <input
+                pInputText
+                [(ngModel)]="column.value_to"
+                type="text"
+                [appMaxLength]="column.colMetadataKey"
+              />
+              @if(column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formID()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="column.value_from"
+                  refForColumn="{{ column.name }}_from"
+                  (referenceSelected)="onReferenceSelected($event)"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+          </div>
+
+          }
+        </div>
+        } } }
+      </div>
+    </div>
+    } }
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <div>
+      <p-button
+        label="{{ textContent.SEARCH_BTN }}"
+        icon="pi pi-search"
+        (onClick)="getData()"
+        [disabled]="isBackGroundOn()"
+      />
+    </div>
+    <div>
+      <p-button
+        label="{{ textContent.RESET_BTN }}"
+        icon="pi pi-refresh"
+        (click)="resetFilter()"
+        severity="primary"
+        outlined
+        [disabled]="isBackGroundOn()"
+      />
+    </div>
+    <div>
+      @if(showDisplayConditionSetting() || showAutomaticAdjustment()){
+      <app-condition-settings
+        [showDisplayConditionSetting]="showDisplayConditionSetting()"
+        [showAutomaticAdjustment]="showAutomaticAdjustment()"
+        [searchCols]="searchList()"
+        [isBackGroundOn]="isBackGroundOn()"
+        [formID]="formID()"
+        (loadTriggered)="conditionSettingsLoad($event)"
+        (conditionAdjustmentKBNOut)="conditionAdjustmentKBNChanged($event)"
+        (getDataTrigger)="onGetDataTriggered($event)"
+      ></app-condition-settings>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.selected-cell {
+  background-color: var(--p-highlight-background);
+  color: var(--p-highlight-color);
+}
+
+.resizable-disabled .p-datatable-column-resizer {
+  display: none !important; /* Hide resize handle */
+  pointer-events: none !important; /* Prevent interaction */
+}
+
+.selectedTd {
+  background: var(--p-datatable-row-selected-background) !important;
+  color: var(--p-datatable-row-selected-color) !important;
+}
+
+.icon-fit {
+  height: 32px; /* Or 1rem, depending on your font size */
+  width: auto;
+  max-width: 100%;
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: middle;
+  transform: scaleX(-1);
+  margin-right: 5px;
+}

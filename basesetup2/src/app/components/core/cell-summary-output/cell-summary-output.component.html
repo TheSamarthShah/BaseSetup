@@ -1,0 +1,27 @@
+@if (isCellModeEnabled()) {
+<div class="cellSummaryOutput">
+  <p-dialog
+    [(visible)]="showSummaryDialog"
+    [modal]="false"
+    [draggable]="true"
+    [resizable]="false"
+    [dismissableMask]="false"
+    [closable]="false"
+    [style]="{ width: 'auto' }"
+    [contentStyle]="{ overflow: 'auto' }"
+    position="bottom"
+  >
+    <!-- Custom header content (moved from body) -->
+    <ng-template pTemplate="header">
+      <div class="summaryHeader w-full">
+        @for (option of options(); track option.value) { @if (option.checked &&
+        option.value !== 'col0' && option.isShow) {
+        <span class="cellSummaryItem">
+          {{ option.label }}: {{ computedValues()[option.value] }}
+        </span>
+        } }
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
+}

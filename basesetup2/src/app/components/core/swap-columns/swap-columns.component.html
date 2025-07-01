@@ -1,0 +1,76 @@
+<p-dialog
+  header="{{ textContent.DIALOG_TITLE }}"
+  [(visible)]="displayFlg"
+  [modal]="true"
+  [breakpoints]="{
+    '1200px': '60vw',
+    '992px': '70vw',
+    '800px': '80vw'
+  }"
+  [style]="{ width: '50vw', height:'75vh' }"
+  (onHide)="closeModel()"
+  (onResizeEnd)="onDialogResize($event)"
+>
+  <div class="swapDataDiv h-full overflow-hidden">
+    <p-table
+      [value]="gridColumnList2()"
+      [scrollable]="true"
+      responsiveLayout="scroll"
+      class="swapTable"
+      [style]="{ 'user-select': 'none' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="text-align: center"></th>
+          <th style="text-align: center">{{ textContent.HEADER_COLUMN }}</th>
+          <th style="text-align: center; width: auto">
+            {{ textContent.HEADER_Display }}
+          </th>
+          <th style="text-align: center; width: auto">
+            {{ textContent.HEADER_FIXED_COLUMNS }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-index="rowIndex">
+        <tr [pReorderableRow]="index">
+          <td pReorderableRowHandle style="text-align: center">
+            <i class="pi pi-bars" pReorderableRowHandle></i>
+          </td>
+          <td>{{ rowData._DISPLAYNAME }}</td>
+          <td style="text-align: center; width: auto">
+            <p-checkbox
+              inputId="{{ rowData.COLNM }}_visible_{{ index }}"
+              [binary]="true"
+              [(ngModel)]="rowData._VISIBLE"
+              (onChange)="rowData.VISIBLE = $event.checked ? 1 : 0"
+            />
+          </td>
+          <td style="text-align: center; width: auto">
+            <p-checkbox
+              inputId="{{ rowData.COLNM }}_fixed_{{ index }}"
+              [binary]="true"
+              [(ngModel)]="rowData._FROZEN"
+              (onChange)="rowData.FROZEN = $event.checked ? 1 : 0"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <ng-template #footer class="pt-6">
+    <div class="flex justify-between items-center w-full">
+      <p-button
+        label="{{ textContent.BTN_TEXT_INITIAL_DATA }}"
+        class="w-auto"
+        severity="secondary"
+        (onClick)="resetData()"
+      ></p-button>
+      <p-button
+        label="{{ textContent.BTN_TEXT_OK }}"
+        class="w-auto"
+        (onClick)="saveData()"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

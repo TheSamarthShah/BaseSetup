@@ -1,0 +1,446 @@
+<p-table
+  #dt
+  [value]="visibleDataList()"
+  [rowHover]="true"
+  [showGridlines]="true"
+  [scrollable]="true"
+  [resizableColumns]="true"
+  columnResizeMode="expand"
+  responsiveLayout="scroll"
+  [tableStyle]="{ 'min-width': '10rem', width: 'max-content' }"
+  [selectionMode]="isMultiselect() ? 'multiple' : 'single'"
+  metaKeySelection="true"
+  [(selection)]="selectedData"
+  dataKey="rowid"
+  [customSort]="true"
+  (sortFunction)="customSort($event)"
+  (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)"
+>
+  @if(addRow() || (deleteRow() && isMultiselect()) || (extraBtnsList() ||
+  []).length > 0){
+  <ng-template #caption>
+    <div class="flex justify-between flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2">
+        @if(addRow()){
+        <div>
+          <p-button
+            label="{{ textContent.ADD_ROW }}"
+            icon="pi pi-plus"
+            (onClick)="openNew()"
+            outlined
+          />
+        </div>
+        } @if(deleteRow() && isMultiselect()){
+        <div>
+          <p-button
+            severity="secondary"
+            label="{{ textContent.DELETE_ROW }}"
+            icon="pi pi-trash"
+            outlined
+            (onClick)="deleteRowData()"
+            [disabled]="!selectedData || !selectedData.length"
+          />
+        </div>
+        } @for(btn of extraBtnsList(); track $index){ @if(btn.visible !==
+        false){ @if(btn.splitbutton === true){
+        <p-splitbutton
+          label="{{ btn.label }}"
+          icon="{{ btn.icon }}"
+          [model]="btn.menuModel"
+          [severity]="btn.severity"
+          [disabled]="btn.disabled"
+          appendTo="body"
+          (onClick)="btn.onBtnClick()"
+          [outlined]="!btn.filled"
+        />
+        }@else {
+        <p-button
+          label="{{ btn.label }}"
+          icon="{{ btn.icon }}"
+          [severity]="btn.severity"
+          [disabled]="btn.disabled"
+          (onClick)="btn.onBtnClick()"
+          [outlined]="!btn.filled"
+        />
+        } } }
+      </div>
+    </div>
+  </ng-template>
+  }
+  <ng-template #header>
+    <tr>
+      <th pResizableColumn pFrozenColumn alignFrozen="left" [frozen]="true">
+        <div class="flex justify-between items-center">
+          <div>NO.</div>
+        </div>
+      </th>
+      @if(isMultiselect()){
+      <th pFrozenColumn alignFrozen="left" [frozen]="true">
+        <p-tableHeaderCheckbox />
+      </th>
+      } @for(column of dataGrid(); track $index) { @if(column.visible){
+      <th pResizableColumn pSortableColumn="{{ column.name }}">
+        <div>
+          {{ column.displayName }}
+          <p-sortIcon [field]="column.name" />
+        </div>
+      </th>
+      } } @if(editRow() || deleteRow()){
+      <th pFrozenColumn alignFrozen="right" [frozen]="true"></th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-data let-rowIndex="rowIndex">
+    <tr
+      [pSelectableRow]="!isMultiselect() ? data : null"
+      [ngStyle]="{
+        cursor: isMultiselect() ? 'default' : 'pointer'
+      }"
+    >
+      <td
+        pFrozenColumn
+        alignFrozen="left"
+        [frozen]="true"
+        style="text-align: right"
+      >
+        {{ rowIndex + 1 }}
+      </td>
+
+      @if(isMultiselect()){
+      <td pFrozenColumn alignFrozen="left" [frozen]="true">
+        <p-tableCheckbox
+          [value]="data"
+          [disabled]="!dbDataEdit() && !data._isNew"
+        />
+      </td>
+      } @for(column of dataGrid(); track $index){ @if(column.visible){
+      @if(column.dataType ==="4"){
+      <td>
+        {{ getKBNNm(data[column.name], column.memberList) }}
+        @if(data._errors && data._errors[column.name]){
+        <div style="color: red">
+          {{ data._errors[column.name] }}
+        </div>
+        }
+      </td>
+      }@else if(column.dataType === "5"){
+      <td style="text-align: center">
+        <p-checkbox
+          [ngModel]="data[column.name]"
+          [binary]="true"
+          [disabled]="true"
+        />
+        @if(data._errors && data._errors[column.name]){
+        <div style="color: red">
+          {{ data._errors[column.name] }}
+        </div>
+        }
+      </td>
+      } @else if(column.dataType === "3"){
+      <td style="text-align: right">
+        {{ data[column.name] | date : "yyyy/MM/dd" }}
+        @if(data._errors && data._errors[column.name]){
+        <div style="color: red">
+          {{ data._errors[column.name] }}
+        </div>
+        }
+      </td>
+      } @else if(column.dataType === "2"){
+      <td style="text-align: right">
+        {{ data[column.name] }}
+        @if(data._errors && data._errors[column.name]){
+        <div style="color: red">
+          {{ data._errors[column.name] }}
+        </div>
+        }
+      </td>
+      } @else {
+      <td>
+        {{ data[column.name] }}
+        @if(data._errors && data._errors[column.name]){
+        <div style="color: red">
+          {{ data._errors[column.name] }}
+        </div>
+        }
+      </td>
+      } } } @if(editRow() || deleteRow()){
+      <td pFrozenColumn alignFrozen="right" [frozen]="true">
+        @if(dbDataEdit() || data._isNew === true){ @if(editRow()){
+        <p-button
+          icon="pi pi-pencil"
+          class="mr-2"
+          [rounded]="true"
+          [outlined]="true"
+          (click)="openEdit(data)"
+        />
+        } @if(deleteRow()){
+        <p-button
+          icon="pi pi-trash"
+          severity="danger"
+          [rounded]="true"
+          [outlined]="true"
+          (onClick)="deleteRowData(data.rowid)"
+        />
+        } }
+      </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="dialogVisible"
+  [style]="{ width: '450px' }"
+  [header]="formTitle() + textContentCommon.TITLE_JOIN_PIPE + dataSaveMode()"
+  [modal]="true"
+  (onHide)="hideDialog()"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      @for(column of dataGrid(); track $index){ @if(column.visible){
+      <div>
+        <label for="name" class="block mb-2">
+          {{ column.displayName }}
+          @if(column.isRequired){
+          <span style="color: red">*</span>
+          }
+        </label>
+        <div class="flex flex-row items-center gap-3 mb-1">
+          @if(column.dataType === "4"){
+          <p-select
+            class="torokuGridInput"
+            [(ngModel)]="currData[column.name]"
+            [options]="column.memberList"
+            optionLabel="name"
+            optionValue="code"
+            appendTo="body"
+            [disabled]="
+              !column.isEditable || (column.primaryKey && !currData._isNew)
+            "
+            fluid
+            styleClass="w-full"
+            [class.ng-invalid]="
+              validationErrors[column.name] &&
+              validationErrors[column.name].errorMessage != ''
+            "
+            [class.ng-dirty]="
+              validationErrors[column.name] &&
+              validationErrors[column.name].errorMessage != ''
+            "
+            [class.editedInput]="
+              (currentGridDataMode === 2 || currentGridDataMode === 3) &&
+              checkValueChange(column.name, currData[column.name])
+            "
+            (onChange)="
+              onInput(column.name); changeDetectValidate(column.name, currData)
+            "
+          />
+          }@else if(column.dataType === "5"){
+          <p-checkbox
+            [binary]="true"
+            [(ngModel)]="currData[column.name]"
+            [disabled]="
+              !column.isEditable || (column.primaryKey && !currData._isNew)
+            "
+            [class.ng-invalid]="
+              validationErrors[column.name] &&
+              validationErrors[column.name].errorMessage != ''
+            "
+            [class.ng-dirty]="
+              validationErrors[column.name] &&
+              validationErrors[column.name].errorMessage != ''
+            "
+            [class.editedInput]="
+              (currentGridDataMode === 2 || currentGridDataMode === 3) &&
+              checkValueChange(column.name, currData[column.name])
+            "
+            (onChange)="
+              onInput(column.name);
+              changeDetectValidate(column.name, currData);
+              onInputFinished(currData, column)
+            "
+          />
+          } @else if(column.dataType === "3"){
+          <div class="w-full">
+            <p-datepicker
+              class="torokuGridInput"
+              [showIcon]="true"
+              [showButtonBar]="true"
+              [(ngModel)]="currData[column.name]"
+              inputStyleClass="text-right"
+              [disabled]="
+                !column.isEditable || (column.primaryKey && !currData._isNew)
+              "
+              [class.ng-invalid]="
+                validationErrors[column.name] &&
+                validationErrors[column.name].errorMessage != ''
+              "
+              [class.ng-dirty]="
+                validationErrors[column.name] &&
+                validationErrors[column.name].errorMessage != ''
+              "
+              [class.editedInputDate]="
+                (currentGridDataMode === 2 || currentGridDataMode === 3) &&
+                checkValueChange(column.name, currData[column.name])
+              "
+              (onBlur)="
+                onInput(column.name);
+                changeDetectValidate(column.name, currData);
+                onInputFinished(currData, column)
+              "
+              (keydown.enter)="
+                changeDetectValidate(column.name, currData);
+                onInputFinished(currData, column)
+              "
+              (onClose)="
+                changeDetectValidate(column.name, currData);
+                onInputFinished(currData, column)
+              "
+              appendTo="body"
+              [readonlyInput]="isTouchDevice"
+            />
+          </div>
+
+          } @else if(column.dataType === "2") {
+          <div class="flex flex-wrap gap-2 w-full">
+            <p-inputgroup>
+              <input
+                class="torokuGridInput"
+                id="{{ column.name }}"
+                type="text"
+                pInputText
+                [(ngModel)]="currData[column.name]"
+                class="text-right"
+                [disabled]="
+                  !column.isEditable || (column.primaryKey && !currData._isNew)
+                "
+                fluid
+                [class.ng-invalid]="
+                  validationErrors[column.name] &&
+                  validationErrors[column.name].errorMessage != ''
+                "
+                [class.ng-dirty]="
+                  validationErrors[column.name] &&
+                  validationErrors[column.name].errorMessage != ''
+                "
+                [appMaxLength]="{
+                  tableName: column.tableName,
+                  columnName: column.name
+                }"
+                [class.editedInput]="
+                  (currentGridDataMode === 2 || currentGridDataMode === 3) &&
+                  checkValueChange(column.name, currData[column.name])
+                "
+                (input)="onInput(column.name)"
+                (change)="
+                  changeDetectValidate(column.name, currData);
+                  onInputFinished(currData, column)
+                "
+                inputmode="numeric"
+              />
+
+              @if(!column.primaryKey && column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formId()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="currData[column.name]"
+                  [refForColumn]="column.name"
+                  [defaultValue]="refScreenDefaultValue()"
+                  (referenceSelected)="onReferenceDataSelected($event)"
+                  [gridRefData]="refScreenOnRowData()"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+          </div>
+          } @else {
+          <div class="flex flex-wrap gap-2 w-full">
+            <p-inputgroup>
+              <input
+                class="torokuGridInput"
+                id="{{ column.name }}"
+                type="text"
+                pInputText
+                [(ngModel)]="currData[column.name]"
+                [disabled]="
+                  !column.isEditable || (column.primaryKey && !currData._isNew)
+                "
+                fluid
+                [class.ng-invalid]="
+                  validationErrors[column.name] &&
+                  validationErrors[column.name].errorMessage != ''
+                "
+                [class.ng-dirty]="
+                  validationErrors[column.name] &&
+                  validationErrors[column.name].errorMessage != ''
+                "
+                (change)="
+                  onInputFinished(currData, column);
+                  changeDetectValidate(column.name, currData)
+                "
+                (keydown.enter)="onInputFinished(currData, column)"
+                [appMaxLength]="{
+                  tableName: column.tableName,
+                  columnName: column.name
+                }"
+                [class.editedInput]="
+                  (currentGridDataMode === 2 || currentGridDataMode === 3) &&
+                  checkValueChange(column.name, currData[column.name])
+                "
+                (input)="onInput(column.name)"
+              />
+
+              @if(!column.primaryKey && column.isReferenceScreen){
+              <p-inputgroup-addon>
+                <app-reference-screen-button
+                  [tableName]="column.refTableName ?? ''"
+                  [queryID]="column.refQueryID ?? ''"
+                  [tableJPName]="column.refTableJPName ?? ''"
+                  [formId]="formId()"
+                  [columns]="column.refColumns ?? []"
+                  [selectedValue]="currData[column.name]"
+                  [refForColumn]="column.name"
+                  [defaultValue]="refScreenDefaultValue()"
+                  (referenceSelected)="onReferenceDataSelected($event)"
+                  [gridRefData]="refScreenOnRowData()"
+                />
+              </p-inputgroup-addon>
+              }
+            </p-inputgroup>
+          </div>
+
+          <!-- Reference button -->
+          }
+        </div>
+
+        <!-- Show p-message only if there's a validation error -->
+        @if(validationErrors[column.name] &&
+        validationErrors[column.name].errorMessage != '') {
+        <p-message severity="secondary" variant="simple" size="small">
+          {{ validationErrors[column.name].errorMessage }}
+        </p-message>
+        }
+      </div>
+      } }
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button
+      label="{{ textContent.CANCEL_BTN }}"
+      icon="pi pi-times"
+      text
+      (click)="hideDialog()"
+    />
+    <p-button
+      label="{{ textContent.APPLY_BTN }}"
+      icon="pi pi-check"
+      (click)="onDialogSaveData()"
+    />
+  </ng-template>
+</p-dialog>

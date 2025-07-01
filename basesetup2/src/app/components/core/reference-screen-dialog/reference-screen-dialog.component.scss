@@ -1,0 +1,14 @@
+.refScreen-wrapper {
+  ::ng-deep .p-dialog-header {
+    padding: unset !important;
+    border: 10px solid #c8e6c9 !important;
+    border-top-left-radius: var(--p-dialog-border-radius);
+    border-top-right-radius: var(--p-dialog-border-radius);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    .p-dialog-title {
+      background-color: #c8e6c9 !important;
+      color: black;
+    }
+  }
+}

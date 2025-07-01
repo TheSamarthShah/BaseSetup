@@ -1,0 +1,93 @@
+<div class="card !p-4 !mb-0">
+  <div class="flex justify-between">
+    <div class="flex gap-2">
+      @if(formStateService.torokuModoruFormId() !== ''){
+      <p-button
+        label="{{ textContent.BACK }}"
+        severity="primary"
+        outlined
+        icon="pi pi-arrow-left"
+        (onClick)="goBack()"
+      />
+      } @if(currMode() !== 0){
+      <p-button
+        label="{{ textContent.SAVE_BTN }}"
+        icon="pi pi-save"
+        (click)="currMode() === 2 ? updateData() : addData()"
+      />
+
+      @if (currMode() === 2) {
+      <p-button
+        label="{{ textContent.DELETE_BTN }}"
+        icon="pi pi-trash"
+        (click)="deleteConfirmation()"
+      />
+      }
+      <p-button
+        label="{{ textContent.RESET_BTN }}"
+        icon="pi pi-refresh"
+        severity="primary"
+        outlined
+        (click)="resetDataCheck()"
+      />
+      } @for(btn of extraBtnsList(); track $index){ @if(btn.visible !== false){
+      @if(btn.splitbutton === true){
+      <p-splitbutton
+        label="{{ btn.label }}"
+        icon="{{ btn.icon }}"
+        [model]="btn.menuModel"
+        [severity]="btn.severity"
+        [disabled]="btn.disabled"
+        appendTo="body"
+        (onClick)="btn.onBtnClick()"
+        outlined
+      />
+      }@else {
+      <p-button
+        label="{{ btn.label }}"
+        icon="{{ btn.icon }}"
+        [severity]="btn.severity"
+        [disabled]="btn.disabled"
+        (onClick)="btn.onBtnClick()"
+        outlined
+      />
+      } } }
+    </div>
+    <div class="flex gap-2">
+      @if(currMode() === 0 ||currMode() === 1 ||currMode() === 5){
+      <p-splitButton
+        appendTo="body"
+        [label]="textContent.UPDATE"
+        [model]="torokuOpenWith_1"
+        icon="pi pi-pencil"
+        [disabled]="currMode() === 2"
+        (onClick)="toggleMode(2)"
+        severity="primary"
+        outlined
+      />
+      } @if (currMode() === 0 || currMode() === 2 || currMode() === 5) {
+      <p-splitButton
+        appendTo="body"
+        [label]="textContent.ADD"
+        [model]="torokuOpenWith_0"
+        icon="pi pi-plus"
+        [disabled]="currMode() === 1"
+        (onClick)="toggleMode(1)"
+        severity="primary"
+        outlined
+      />
+      } @if (currMode() === 0 || currMode() === 2) {
+      <p-splitButton
+        appendTo="body"
+        [label]="textContent.COPY"
+        [model]="torokuOpenWith_2"
+        icon="pi pi-copy"
+        [disabled]="currMode() === 1"
+        (onClick)="toggleMode(5)"
+        severity="primary"
+        outlined
+      />
+      }
+    </div>
+  </div>
+</div>

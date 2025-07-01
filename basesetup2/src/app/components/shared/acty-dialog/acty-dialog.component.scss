@@ -1,0 +1,20 @@
+.acty-dialog {
+  color: var(--p-overlay-modal-color);
+}
+.acty-dialog-header {
+  padding: var(--p-overlay-modal-padding);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.acty-dialog-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+}
+.acty-dialog-icon {
+  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  color: var(--p-overlay-modal-color);
+}

@@ -1,0 +1,38 @@
+<p-dialog
+  header="{{ textContent.TITLE }}"
+  [(visible)]="displayFlg"
+  [modal]="true"
+  [style]="{ width: '300px' }"
+  (onHide)="closeModel()"
+>
+  <div class="dialog-content flex flex-wrap items-center gap-4">
+    <label class="form-label">{{ textContent.LABEL }}</label>
+    <div class="radio-group flex flex-wrap gap-3">
+      <div class="flex items-center gap-2">
+        <p-radioButton
+          name="adjustment"
+          value="1"
+          [(ngModel)]="autoAdjustmentKBN"
+          inputId="1"
+        ></p-radioButton>
+        <label for="1">{{ textContent.YES }}</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <p-radioButton
+          name="adjustment"
+          value="2"
+          [(ngModel)]="autoAdjustmentKBN"
+          inputId="2"
+        ></p-radioButton>
+        <label for="2">{{ textContent.NO }}</label>
+      </div>
+    </div>
+  </div>
+  <ng-template #footer>
+    <p-button
+      label="{{ textContent.OK }}"
+      [style]="{ width: 'auto' }"
+      (onClick)="saveChange()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

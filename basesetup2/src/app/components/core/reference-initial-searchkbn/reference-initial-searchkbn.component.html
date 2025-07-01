@@ -1,0 +1,48 @@
+<p-dialog
+  [header]="textContent.INITIAL_SEARCH_TITLE"
+  [(visible)]="displayFlg"
+  [modal]="true"
+  [style]="{ width: '300px' }"
+  (onHide)="closeDialog()"
+  appendTo="body"
+>
+<div class="dialog-content flex flex-wrap items-center gap-4">
+  <label class="form-label">
+    {{ textContent.INITIAL_SEARCH_LABEL }}
+  </label>
+<div class="radio-group flex flex-wrap gap-3">
+      <div class="flex items-center gap-2">
+    
+      <p-radioButton
+        name="adjustment"
+        value="1"
+        [(ngModel)]="initial_searchKBN"
+        inputId="1"
+      ></p-radioButton>
+      <label for="1" class="ml-2">
+        {{ textContent.RADIO_OPTION_YES }}
+      </label>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <p-radioButton
+        name="adjustment"
+        value="2"
+        [(ngModel)]="initial_searchKBN"
+        inputId="2"
+      ></p-radioButton>
+      <label for="2" class="ml-2">
+        {{ textContent.RADIO_OPTION_NO }}
+      </label>
+    </div>
+  </div>
+</div>
+
+  <ng-template #footer>
+      <p-button
+        class="secondaryBtn"
+        label="{{ CommonText.OK_BTN }}"
+        (click)="saveData()"
+      ></p-button>
+  </ng-template>
+</p-dialog>

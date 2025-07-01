@@ -1,0 +1,76 @@
+<p-splitter
+  [panelSizes]="splitterSizes()"
+  [minSizes]="splitterMinSizes()"
+  [style]="{ height: 'calc(100vh - 112px)' }"
+  layout="vertical"
+  (onResizeEnd)="onSplitterMoved($event)"
+>
+  <ng-template #panel>
+    <div class="flex h-full w-full !justify-start">
+      <app-filter
+        #filterComponent
+        style="width: 100%"
+        [userId]="userId"
+        [formID]="formId"
+        [filterTitle]="formName"
+        [isBackGroundOn]="isBackgroundOn()"
+        [searchListInp]="searchList()"
+        (getDataTriggered)="getData()"
+        (splitterToggle)="splitterToggle($event)"
+        (searchListChanged)="updateSearchData($event)"
+      />
+    </div>
+  </ng-template>
+  <ng-template #panel>
+    <div class="flex h-full w-full !justify-start dataDiv">
+      <app-grid
+        #gridComponent
+        [formId]="formId"
+        [userId]="userId"
+        [formTitle]="formName"
+        [dataGridInp]="dataGrid"
+        [editableGrid]="false"
+        [getDataUrl]="getDataUrl"
+        [pageSizes]="pageSize"
+        [searchList]="searchList()"
+        [isCellSummary]="true"
+        [showSanshoModeBtn]="false"
+        [showAddModeBtn]="false"
+        [showCopyModeBtn]="false"
+        [showHenshuModeBtn]="false"
+        [sortableCols]="false"
+        [filterableCols]="false"
+        [showSwapCol]="false"
+        [showSortData]="false"
+        [bottomBorderInterval]="{
+          Hmno: 3
+        }"
+        [rowColoring]="{
+          groupSize: 3,
+          rules: [
+            {
+              positionInGroup: 1,
+              color: '#c8e6c9',
+              darkModeColor: '#133021',
+              exemptColumns: ['Hmno']
+            },
+            {
+              positionInGroup: 2,
+              color: '#e3f2fd',
+              darkModeColor: '#1a2b3a',
+              exemptColumns: ['Hmno']
+            }
+          ]
+        }"
+        [columnColoring]="weekendColumnColor()"
+        (isLoading)="isLoadingChanged($event)"
+        (isBackgroundLoading)="isBackGroundLoading($event)"
+        style="max-width: 100%"
+      />
+    </div>
+  </ng-template>
+</p-splitter>
+
+@if(isLoading() > 0){
+<app-loader />
+}

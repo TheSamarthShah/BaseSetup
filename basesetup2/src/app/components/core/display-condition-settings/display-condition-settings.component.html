@@ -1,0 +1,438 @@
+<p-dialog
+  header="{{ textContent.TITLE }}"
+  [(visible)]="displayFlg"
+  [breakpoints]="{ '1200px': '80vw', '768px': '95vw' }"
+  [style]="{ width: '60vw', height: '75vh' }"
+  [modal]="true"
+  (onHide)="closeModel()"
+  (onShow)="openModel()"
+  (onResizeEnd)="updateScrollHeight()"
+>
+  <div class="h-full condMainDiv">
+    <p-tabs [value]="activeTab" (valueChange)="tabChange($event)">
+      <p-tablist>
+        <p-tab [value]="0">{{ textContent.LOAD_TAB }}</p-tab>
+        <p-tab [value]="1">{{ textContent.SAVE_TAB }}</p-tab>
+      </p-tablist>
+      <p-tabpanels class="!pb-0">
+        <p-tabpanel [value]="0">
+          <div class="flex flex-col">
+            <div class="flex flex-wrap gap-x-8 gap-y-4 conFilterDiv">
+              <div class="flex flex-wrap gap-x-8 gap-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <label for="conditionnm" class="w-32">
+                    {{ textContent.NAME }}
+                  </label>
+                  <input
+                    pInputText
+                    id="conditionnm"
+                    class="w-80"
+                    type="text"
+                    [(ngModel)]="searchObj().conditionnm"
+                  />
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label for="registedUsers" class="w-32">
+                    {{ textContent.REG_USERS }}
+                  </label>
+                  <input
+                    pInputText
+                    id="registedUsers"
+                    type="text"
+                    class="w-80"
+                    [(ngModel)]="searchObj().registedUsers"
+                  />
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label for="accesskbn" class="w-32">
+                    {{ textContent.ACCESS_TYPE }}
+                  </label>
+                  <div class="flex flex-wrap gap-4">
+                    @for(member of accesskbn_options; track $index){
+                    <div class="flex items-center">
+                      <p-checkbox
+                        inputId="{{ $index }}"
+                        value="{{ member.code }}"
+                        [(ngModel)]="searchObj().accesskbn"
+                      />
+                      <label for="{{ $index }}" class="ml-2">
+                        {{ member.name }}
+                      </label>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-4">
+                <p-button
+                  label="{{ textContent.SEARCH_BTN }}"
+                  icon="pi pi-search"
+                  (onClick)="getData()"
+                />
+                <p-button
+                  label="{{ textContent.RESET_BTN }}"
+                  icon="pi pi-refresh"
+                  outlined
+                  (click)="resetFilter()"
+                />
+              </div>
+            </div>
+            <p-divider />
+            <div class="firstDiv">
+              <p-table
+                [value]="dataList()"
+                showGridlines
+                [showGridlines]="true"
+                [paginator]="true"
+                [scrollable]="true"
+                [resizableColumns]="true"
+                columnResizeMode="expand"
+                responsiveLayout="scroll"
+                [tableStyle]="{ 'min-width': '10rem', width: 'max-content' }"
+                dataKey="CONDITIONNO"
+                [selectionMode]="'single'"
+                metaKeySelection="true"
+                [(selection)]="selectedData"
+                [currentPageReportTemplate]="
+                  '総計{totalPages}ページ、{totalRecords}件'
+                "
+                [showCurrentPageReport]="true"
+                [rows]="pageSizes[0]"
+                [rowsPerPageOptions]="pageSizes"
+                paginatorDropdownAppendTo="body"
+              >
+                <ng-template #header>
+                  <tr>
+                    <th>NO.</th>
+                    <th pResizableColumn>{{ textContent.NAME }}</th>
+                    <th pResizableColumn>{{ textContent.ACCESS_TYPE }}</th>
+                    <th pResizableColumn>{{ textContent.REG_USERS }}</th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template #body let-data let-rowIndex="rowIndex">
+                  <tr [id]="data.CONDITIONNO" [pSelectableRow]="data">
+                    <td class="text-right">
+                      {{ rowIndex + 1 }}
+                    </td>
+                    <td>{{ data.CONDITIONNM }}</td>
+                    <td>{{ getKBNNm(data.ACCESSKBN, accesskbn_options) }}</td>
+                    <td>{{ data.USERNM }}</td>
+                    <td>
+                      <p-button
+                        icon="pi pi-arrow-up-right"
+                        class="mr-2"
+                        severity="info"
+                        [rounded]="true"
+                        [outlined]="true"
+                        pTooltip="{{ textContent.PREVIEW_TLTIP }}"
+                        (click)="
+                          loadConditionSettingData(
+                            data.CONDITIONNO,
+                            data.CONDITIONNM,
+                            data.ACCESSKBN,
+                            1
+                          )
+                        "
+                      />
+
+                      @if(loginUserId === data.USERID){
+                      <p-button
+                        icon="pi pi-pencil"
+                        class="mr-2"
+                        [rounded]="true"
+                        [outlined]="true"
+                        pTooltip="{{ textContent.EDIT_TLTIP }}"
+                        (click)="
+                          loadConditionSettingData(
+                            data.CONDITIONNO,
+                            data.CONDITIONNM,
+                            data.ACCESSKBN,
+                            2
+                          )
+                        "
+                      />
+                      <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        [rounded]="true"
+                        [outlined]="true"
+                        pTooltip="{{ textContent.DELETE_TLTIP }}"
+                        (click)="deleteConditionSettingData(data.CONDITIONNO)"
+                      />
+                      }
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="paginatorright">
+                  <p-button
+                    label="{{ textContent.LOAD_TAB }}"
+                    (onClick)="onDirectLoadBtnClick()"
+                    [disabled]="!selectedData"
+                  />
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </p-tabpanel>
+        <p-tabpanel [value]="1">
+          <div class="flex flex-col">
+            <div class="flex flex-wrap gap-x-8 gap-y-2 inputDiv">
+              <div class="flex flex-wrap items-center gap-2">
+                <label for="conditionnm" class="w-24">
+                  {{ textContent.NAME }}
+                </label>
+                <div class="flex flex-col flex-wrap gap-1">
+                  <input
+                    pInputText
+                    id="conditionnm"
+                    class="w-80"
+                    type="text"
+                    [(ngModel)]="saveObj().conditionnm"
+                    [class.ng-invalid]="saveObj().invalidConditionnm"
+                    [class.ng-dirty]="saveObj().invalidConditionnm"
+                    (input)="OnInputEvent('changenm')"
+                    [disabled]="!canEdit()"
+                  />
+                  @if(saveObj().invalidConditionnm){
+                  <p-message severity="secondary" variant="simple" size="small">
+                    {{ errMsg }}
+                  </p-message>
+                  }
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <label for="registedUsers" class="w-24">
+                  {{ textContent.ACCESS_TYPE }}
+                </label>
+                <p-select
+                  [(ngModel)]="saveObj().accesskbn"
+                  [options]="accesskbn_options"
+                  optionValue="code"
+                  optionLabel="name"
+                  [disabled]="!canEdit()"
+                />
+              </div>
+            </div>
+            <p-divider />
+            <div class="secondDiv">
+              <p-table
+                [value]="searchCols()"
+                scrollable="true"
+                responsiveLayout="scroll"
+                size="small"
+              >
+                <ng-template #body let-column let-index>
+                  <tr>
+                    <td class="whitespace-nowrap">
+                      <p-checkbox
+                        [(ngModel)]="column.visible"
+                        [binary]="true"
+                        [disabled]="!canEdit() || column.required"
+                      />
+                      {{ column.displayName }}
+                    </td>
+                    @if(column.data_type === "4"){
+                    <td colspan="3">
+                      <div
+                        class="flex flex-wrap gap-4"
+                        style="min-height: 32px"
+                      >
+                        <div class="flex items-center">
+                          <p-checkbox
+                            inputId="{{ column.name }}_CndSet_ALL"
+                            name="{{ column.name }}"
+                            value="ALL"
+                            [(ngModel)]="allCheckedStates[column.name]"
+                            [binary]="true"
+                            (onChange)="
+                              column.memberList &&
+                                onAllCheckboxChange(column, 'ALL')
+                            "
+                          />
+                          <label
+                            for="{{ column.name }}_CndSet_ALL"
+                            class="ml-2 mr-2"
+                            >{{ textContentFilter.CHECKBOX_ALL_OPTION }}</label
+                          >
+                          <label class="mr-2">{{
+                            textContentCommon.TITLE_JOIN_PIPE
+                          }}</label>
+                        </div>
+                        @for(member of column.memberList; track $index){
+                        <div class="flex items-center">
+                          <p-checkbox
+                            inputId="{{ column.name }}_{{ member.code }}_CndSet"
+                            name="{{ column.name }}"
+                            value="{{ member.code }}"
+                            [(ngModel)]="column.value_from"
+                            [disabled]="!canEdit()"
+                            (ngModelChange)="
+                              column.memberList &&
+                                onAllCheckboxChange(column, member.code)
+                            "
+                          />
+                          <label
+                            for="{{ column.name }}_{{ member.code }}_CndSet"
+                            class="ml-2"
+                          >
+                            {{ member.name }}
+                          </label>
+                        </div>
+                        }
+                      </div>
+                    </td>
+                    }@else if(column.data_type === "6"){
+                    <td colspan="3">
+                      <div
+                        class="flex flex-wrap gap-4"
+                        style="min-height: 32px"
+                      >
+                        @for(member of column.memberList; track $index){
+                        <div class="flex items-center">
+                          <p-radiobutton
+                            inputId="{{ column.name }}_{{ member.code }}_CndSet"
+                            name="{{ column.name }}"
+                            value="{{ member.code }}"
+                            [(ngModel)]="column.value_from"
+                            [disabled]="!canEdit()"
+                          />
+                          <label
+                            for="{{ column.name }}_{{ member.code }}_CndSet"
+                            class="ml-2"
+                          >
+                            {{ member.name }}
+                          </label>
+                        </div>
+                        }
+                      </div>
+                    </td>
+                    } @else {
+                    <td>
+                      @if(column.data_type === '3'){
+                      <p-datepicker
+                        name="{{ column.name }}_from"
+                        [(ngModel)]="column.value_from"
+                        [showIcon]="true"
+                        [showTime]="
+                          !!(
+                            column.dateFormat?.includes('HH:mm') ||
+                            column.dateFormat?.includes('hh:mm')
+                          )
+                        "
+                        [showButtonBar]="true"
+                        appendTo="body"
+                        inputStyleClass="text-right"
+                        dataType="string"
+                        [disabled]="!canEdit()"
+                        [readonlyInput]="isTouchDevice"
+                      />
+                      } @else if (column.data_type === '2') {
+                      <input
+                        name="{{ column.name }}_from"
+                        type="text"
+                        [(ngModel)]="column.value_from"
+                        pInputText
+                        [disabled]="!canEdit()"
+                        class="text-right min-w-64 w-full"
+                        [appMaxLength]="column.colMetadataKey"
+                        inputmode="numeric"
+                      />
+                      } @else{
+                      <input
+                        name="{{ column.name }}_from"
+                        type="text"
+                        [(ngModel)]="column.value_from"
+                        pInputText
+                        [disabled]="!canEdit()"
+                        [appMaxLength]="column.colMetadataKey"
+                        class="min-w-64 w-full"
+                      />
+                      }
+                    </td>
+                    <td>
+                      @if(column.showMatchType){
+                      <p-select
+                        [options]="
+                          column.data_type === '1'
+                            ? match_options_string
+                            : match_options_num_date
+                        "
+                        optionLabel="name"
+                        optionValue="code"
+                        appendTo="body"
+                        [(ngModel)]="column.match_type"
+                        [disabled]="!canEdit()"
+                        class="w-40"
+                      ></p-select>
+                      }
+                    </td>
+                    <td>
+                      @if(column.showMatchType && column.match_type === '1'){
+                      @if(column.data_type === '3'){
+                      <p-datepicker
+                        name="{{ column.name }}_to"
+                        [(ngModel)]="column.value_to"
+                        [showIcon]="true"
+                        [showTime]="
+                          !!(
+                            column.dateFormat?.includes('HH:mm') ||
+                            column.dateFormat?.includes('hh:mm')
+                          )
+                        "
+                        [showButtonBar]="true"
+                        appendTo="body"
+                        inputStyleClass="text-right"
+                        dataType="string"
+                        [disabled]="!canEdit()"
+                        [readonlyInput]="isTouchDevice"
+                      />
+                      } @else if (column.data_type === '2') {
+                      <input
+                        name="{{ column.name }}_to"
+                        type="text"
+                        [(ngModel)]="column.value_to"
+                        pInputText
+                        [disabled]="!canEdit()"
+                        class="text-right min-w-64 w-full"
+                        [appMaxLength]="column.colMetadataKey"
+                        inputmode="numeric"
+                      />
+                      } @else{
+                      <input
+                        name="{{ column.name }}_to"
+                        type="text"
+                        [(ngModel)]="column.value_to"
+                        pInputText
+                        [disabled]="!canEdit()"
+                        [appMaxLength]="column.colMetadataKey"
+                        class="min-w-64 w-full"
+                      />
+                      } }
+                    </td>
+                    }
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+            <div class="flex justify-between buttonsDiv mt-4">
+              <p-button
+                outlined
+                (click)="resetConditionSetting()"
+                [disabled]="!canEdit()"
+                label="{{ textContent.INITIAL_DATA }}"
+              />
+              <p-button
+                label="{{
+                  canEdit() ? textContent.SAVE_BTN : textContent.LOAD_TAB
+                }}"
+                (click)="canEdit() ? saveData() : closePopupWithData()"
+              />
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</p-dialog>

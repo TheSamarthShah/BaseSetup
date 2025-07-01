@@ -1,0 +1,32 @@
+<p-menu [model]="childMenuItems" [popup]="true" #menu appendTo="body"></p-menu>
+<p-button
+  (click)="menu.toggle($event)"
+  [disabled]="isBackGroundOn()"
+  [class.disabledBtn]="isBackGroundOn()"
+  severity="primary"
+  outlined
+>
+  <i class="pi pi-cog"></i>
+  {{ this.filterTextContent }}
+  <i class="pi pi-chevron-down"></i>
+</p-button>
+
+<!-- Display the selected component -->
+<div>
+  @if(childComponent() === '1'){
+  <app-display-condition-settings
+    [displayInp]="cond_set_disp()"
+    [seachColsInp]="searchCols()"
+    [formId]="formID()"
+    (closeTriggered)="conditionSettingDisplayClosed()"
+    (loadTriggerd)="conditionSettingLoad($event)"
+  ></app-display-condition-settings>
+  } @if(childComponent() === '2'){
+  <app-automatic-adjustment
+    (autoAdjustmentOut)="conditionAdjustmentKBNChanged($event)"
+    [displayInp]="cond_set_disp_adjustment()"
+    [formID]="formID()"
+    (closeTriggered)="automaticAdjustmentClosed()"
+  ></app-automatic-adjustment>
+  }
+</div>

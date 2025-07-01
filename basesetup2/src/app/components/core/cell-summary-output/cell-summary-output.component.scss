@@ -1,0 +1,27 @@
+.cellSummaryOutput {
+  ::ng-deep {
+    .p-dialog {
+      cursor: move;
+      border: none;
+      border-radius: 5px;
+      padding: 0 !important;
+      user-select: none;
+      margin: 0;
+      box-shadow: 1px 1px 5px var(--p-button-secondary-hover-background),
+        /* Right & Bottom */ -1px -1px 5px
+          var(--p-button-secondary-hover-background),
+        /* Left & Top */ 1px -1px 5px var(--p-button-secondary-hover-background),
+        /* Right & Top */ -1px 1px 5px var(--p-button-secondary-hover-background); /* Left & Bottom */
+    }
+    .p-dialog-header {
+      border-radius: 5px;
+      padding: 0 !important;
+    }
+    .p-dialog-content {
+      padding: 0 !important;
+    }
+  }
+  .cellSummaryItem {
+    padding: 0 10px;
+  }
+}

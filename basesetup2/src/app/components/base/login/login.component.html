@@ -1,0 +1,102 @@
+<app-floating-configurator />
+<div
+  class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
+>
+  <div class="flex flex-col items-center justify-center">
+    <div
+      style="
+        border-radius: 56px;
+        padding: 0.3rem;
+        background: linear-gradient(
+          180deg,
+          var(--primary-color) 10%,
+          rgba(33, 150, 243, 0) 30%
+        );
+      "
+    >
+      <div
+        class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20"
+        style="border-radius: 53px"
+      >
+        <div class="text-center mb-8">
+          <div
+            class="flex items-center justify-around text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4"
+          >
+            <div class="flex">
+              <img src="thomas.png" class="h-10" />
+            </div>
+          </div>
+
+          <span class="text-muted-color font-medium">{{
+            textContent.LOGIN_BTN
+          }}</span>
+        </div>
+
+        <form (submit)="submitForm()">
+          <div>
+            <label
+              for="userid"
+              class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+              >{{ textContent.USERID }}</label
+            >
+
+            <div class="flex flex-col flex-wrap gap-1 mb-8">
+              <input
+                pInputText
+                id="userid"
+                name="userid"
+                type="text"
+                [pAutoFocus]="true"
+                placeholder="{{ textContent.USERID }}"
+                class="w-full md:w-[30rem]"
+                [(ngModel)]="userid"
+                (input)="onInput('userid')"
+                [class.ng-invalid]="validationErr.userid"
+                [class.ng-dirty]="validationErr.userid"
+              />
+              @if(validationErr.userid){
+              <p-message severity="secondary" variant="simple" size="small">
+                {{ errMsgs.E0009 }}
+              </p-message>
+              }
+            </div>
+
+            <label
+              for="password"
+              class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+            >
+              {{ textContent.PASSWORD }}
+            </label>
+
+            <div class="flex flex-col flex-wrap gap-1 mb-4">
+              <p-password
+                id="password"
+                name="password"
+                [(ngModel)]="password"
+                placeholder="{{ textContent.PASSWORD }}"
+                [toggleMask]="true"
+                [fluid]="true"
+                [feedback]="false"
+                (input)="onInput('password')"
+                [class.ng-invalid]="validationErr.password"
+                [class.ng-dirty]="validationErr.password"
+              />
+              @if (validationErr.password) {
+              <p-message severity="secondary" variant="simple" size="small">
+                {{ errMsgs.E0009 }} </p-message
+              >}
+            </div>
+            <p-button
+              label="{{ textContent.LOGIN_BTN }}"
+              type="submit"
+              styleClass="w-full mt-8"
+              icon="pi pi-sign-in"
+            ></p-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast [life]="toastLifeTime" preventOpenDuplicates="true" />
