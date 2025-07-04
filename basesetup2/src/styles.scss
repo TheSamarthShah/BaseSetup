@@ -27,3 +27,12 @@
 .p-button-label{
   font-weight: unset !important;
 }
+
+.p-datatable-header{
+  border-width: 1px 1px 1px 1px !important;
+}
+
+.p-datatable-scrollable th.p-datatable-frozen-column,
+td.p-datatable-frozen-column {
+  border-right-width: 1px !important;
+}
