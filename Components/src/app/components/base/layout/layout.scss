@@ -1,0 +1,27 @@
+@use "@angular/material" as mat;
+.layout {
+  background-color: var(--mat-sys-secondary);
+  @include mat.sidenav-overrides(
+    (
+      container-background-color: var(--mat-sys-surface),
+      content-background-color: var(--mat-sys-surface),
+    )
+  );
+
+  @include mat.tree-overrides(
+    (
+      container-background-color: var(--mat-sys-surface),
+    )
+  );
+  .tree-node{
+    //background-color: var(--mat-sys-surface);
+    //border-radius: 2rem;
+    //border: 1px solid var(--mat-sys-primary);
+  }
+}
+.pageWrapper {
+  background: var(--mat-sys-secondary);
+  .page {
+    background: var(--mat-sys-surface);
+  }
+}

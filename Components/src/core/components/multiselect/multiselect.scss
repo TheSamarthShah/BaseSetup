@@ -1,0 +1,20 @@
+@use "@angular/material" as mat;
+
+.multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: black,
+      outlined-container-shape: var(--theme-form-field-border-radius),
+      outlined-label-text-color: black,
+    )
+  );
+}
+
+.multiselect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  padding-left: 0;
+  border-bottom: 1px solid lightgray;
+}

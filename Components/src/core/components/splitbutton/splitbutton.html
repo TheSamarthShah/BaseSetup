@@ -1,0 +1,44 @@
+<div class="acty-split-button" [ngClass]="severity() + '-btn'">
+  <!-- Invisible trigger anchor -->
+  <span
+    class="menu-anchor"
+    [matMenuTriggerFor]="menu"
+    #menuTrigger="matMenuTrigger"
+  >
+  </span>
+
+  <!-- First (main) button -->
+  <button
+    [disabled]="disabled()"
+    [matButton]="type() === 'outlined' ? 'outlined' : 'filled'"
+    (click)="clicked.emit()"
+    class="acty-split-button-main-button"
+  >
+    @if(leftIcon()){
+    <mat-icon class="acty-split-button-left-icon">{{ leftIcon() }}</mat-icon>
+    }
+    {{ text() }}
+  </button>
+
+  <!-- Dropdown button -->
+  <button
+    [disabled]="disabled()"
+    class="dropdown-btn acty-split-button-dropdown-button"
+    [matButton]="type() === 'outlined' ? 'outlined' : 'filled'"
+    (click)="menuTrigger.openMenu()"
+  >
+    <mat-icon class="acty-split-button-dropdown-icon">keyboard_arrow_down</mat-icon>
+  </button>
+
+  <!-- Menu -->
+  <mat-menu #menu="matMenu" class="split-button-menu-panel acty-split-button-menu">
+    @for(item of menuItems(); track $index){
+    <button mat-menu-item (click)="menuClicked.emit(item)" class="split-button-menu-item acty-split-button-menu-item">
+      @if (item.icon) {
+      <mat-icon class="acty-split-button-menu-item-icon">{{ item.icon }}</mat-icon>
+      }
+      <span class="acty-split-button-menu-item-text">{{ item.label }}</span>
+    </button>
+    }
+  </mat-menu>
+</div>

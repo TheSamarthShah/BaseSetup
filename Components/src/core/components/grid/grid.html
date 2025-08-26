@@ -1,0 +1,455 @@
+<div class="-webkit-fill-available p-2 acty-grid">
+  <div class="grid-caption py-1">
+    <div class="flex justify-between flex-wrap gap-2 px-1">
+      <!-- Left Side Buttons -->
+      <div class="flex flex-wrap gap-2 flex-grow">
+        @if (editableGrid()) { @if(showSaveBtn()) {
+        <button mat-flat-button color="primary" class="square-button">
+          <mat-icon>save</mat-icon>
+          {{ textContent.SAVE_DATA }}
+        </button>
+        } @if(addRow()) {
+        <button mat-stroked-button (click)="addNewRow()">
+          <mat-icon>add</mat-icon>
+          {{ textContent.ADD_ROW }}
+        </button>
+        } @if(deleteRow()) {
+        <button
+          mat-stroked-button
+          (click)="deleteRowData()"
+          color="warn"
+          [disabled]="!(selection && selection.selected.length > 0)"
+        >
+          <mat-icon>delete</mat-icon>
+          {{ textContent.DELETE_ROW }}
+        </button>
+        } @if(copyRow()) {
+        <button
+          mat-stroked-button
+          [disabled]="!(selection && selection.selected.length > 0)"
+        >
+          <mat-icon>content_copy</mat-icon>
+          {{ textContent.COPY_ROW }}
+        </button>
+
+        <button mat-stroked-button>
+          <mat-icon>content_paste</mat-icon>
+          {{ textContent.PASTE_ROW }}
+        </button>
+        } }@for(btn of extraBtnsList(); track $index) { @if(btn.visible !==
+        false) { @if(btn.splitbutton === true) {
+        <button
+          mat-stroked-button
+          [color]="btn.severity || 'primary'"
+          [matMenuTriggerFor]="menu"
+          [disabled]="btn.disabled"
+          (click)="btn.onBtnClick()"
+        >
+          <mat-icon>{{ btn.icon }}</mat-icon>
+          {{ btn.label }}
+        </button>
+        <mat-menu #menu="matMenu">
+          @for(item of btn.menuModel; track $index) { }
+        </mat-menu>
+        } @else {
+        <button
+          mat-raised-button
+          [color]="btn.severity || 'primary'"
+          [disabled]="btn.disabled"
+          (click)="btn.onBtnClick()"
+        >
+          <mat-icon>{{ btn.icon }}</mat-icon>
+          {{ btn.label }}
+        </button>
+        } } }
+      </div>
+
+      <!-- Right Side Buttons -->
+      <div class="flex flex-wrap gap-2">
+        @if(showSanshoModeBtn() && !editableGrid()) {
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="refMenu"
+          [disabled]="!selection.hasValue"
+        >
+          <mat-icon>info</mat-icon>
+          {{ textContent.REF }}
+        </button>
+        <mat-menu #refMenu="matMenu">
+          <!-- Add menu items here -->
+        </mat-menu>
+        } @if(showHenshuModeBtn() && !editableGrid()) {
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="updateMenu"
+          [disabled]="!selection.hasValue"
+        >
+          <mat-icon>edit</mat-icon>
+          {{ textContent.UPDATE }}
+        </button>
+        <mat-menu #updateMenu="matMenu">
+          <!-- Add menu items here -->
+        </mat-menu>
+        } @if(showAddModeBtn() && !editableGrid()) {
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="addMenu"
+        >
+          <mat-icon>add</mat-icon>
+          {{ textContent.ADD }}
+        </button>
+        <mat-menu #addMenu="matMenu">
+          <!-- Add menu items here -->
+        </mat-menu>
+        } @if(showCopyModeBtn() && !editableGrid()) {
+        <button
+          mat-stroked-button
+          color="primary"
+          [matMenuTriggerFor]="copyMenu"
+          [disabled]="!selection.hasValue"
+        >
+          <mat-icon>content_copy</mat-icon>
+          {{ textContent.COPY }}
+        </button>
+        <mat-menu #copyMenu="matMenu">
+          <!-- Add menu items here -->
+        </mat-menu>
+        }
+
+        <button mat-stroked-button>
+          <mat-icon>filter_alt_off</mat-icon>
+          {{ textContent.FILTER_RESET }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-auto table-container">
+    <table
+      #table
+      mat-table
+      [dataSource]="visibleDataList"
+      class="mat-elevation-z2"
+    >
+      <ng-container matColumnDef="select" sticky>
+        <th mat-header-cell *matHeaderCellDef class="grid-cell grid-header">
+          @if(editableGrid()){
+          <mat-checkbox
+            (change)="toggleAllRows()"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+          }
+        </th>
+        <td mat-cell *matCellDef="let row" class="grid-cell">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            [checked]="selection.isSelected(row.rowid)"
+            (change)="onCheckboxChange(row.rowid, $event.checked)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="no" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header"
+          sticky
+        >
+          No.
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="grid-cell">
+          {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
+        </td>
+      </ng-container>
+      @for (column of displayedColumns; track column;) {
+      <ng-container [matColumnDef]="column">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header cursor-pointer"
+        >
+          <div class="flex justify-between">
+            <div class="text-nowrap my-auto">
+              {{ getColumnDisplayName(column) }}
+            </div>
+            <div class="flex">
+              @if(sortableCols()){
+              <button
+                mat-icon-button
+                color="primary"
+                (click)="sortData(column)"
+              >
+                <mat-icon>
+                  {{ getSortIcon(column) }}
+                </mat-icon>
+              </button>
+              } @if(filterableCols()){
+              <button
+                mat-icon-button
+                color="primary"
+                [matMenuTriggerFor]="filterMenu"
+                class="grid-filter-button"
+              >
+                <mat-icon>filter_alt</mat-icon>
+              </button>
+              <mat-menu #filterMenu="matMenu" class="grid-filter-menu-panel">
+                <div
+                  matMenuContent
+                  class="grid-filter-menu-div"
+                  (click)="$event.stopPropagation()"
+                >
+                  @let filterState = getColumnFilterState(column); 
+                  @let columnobj = getColumnConfig(column); 
+                  @if(columnobj &&
+                  columnobj?.dataType === '4'){
+                  <acty-multiselect
+                    [options]="getGridFilterMultiselectoptions(column)"
+                    [maxSelectedLabels]="1"
+                    [(value)]="filterState.rules[0].value"
+                    [styleClass]="'grid-filter-multiselect'"
+                  />
+                  } @else {
+                  <!-- Match mode -->
+                  <div style="margin-bottom: 8px">
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%"
+                      class="x-small"
+                    >
+                      <mat-select
+                        [(ngModel)]="filterState.matchMode"
+                        class="grid-filter-select-matchmode"
+                        panelClass="grid-filter-select-matchmode-menu-panel select-menu-panel"
+                      >
+                        <mat-option value="all" class="select-option">
+                          Match All
+                        </mat-option>
+                        <mat-option value="any" class="select-option">
+                          Match Any
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- Filter rules -->
+                  <div class="grid-filter-rules-block filter-rules-div">
+                    @for (rule of filterState.rules; let i = $index; track rule)
+                    {
+                    <div
+                      style="
+                        padding-bottom: 8px;
+                        display: flex;
+                        flex-direction: column;
+                      "
+                      [class.border-bottom]="
+                        filterState.rules.length > 1 && !$last
+                      "
+                    >
+                      <!-- Condition -->
+                      <mat-form-field
+                        appearance="outline"
+                        class="x-small grid-filter-rule-select"
+                        style="width: 100%; margin-bottom: 8px"
+                      >
+                        <mat-select
+                          [(ngModel)]="rule.condition"
+                          panelClass="select-menu-panel"
+                        >
+                          @for (cond of getColumnFilterRuleOptions(column);
+                          track cond.value) {
+                          <mat-option
+                            [value]="cond.value"
+                            class="select-option"
+                          >
+                            {{ cond.display }}
+                          </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+
+                      <!-- Value -->
+                      <mat-form-field
+                        appearance="outline"
+                        class="x-small grid-filter-rule-value"
+                        style="width: 100%; margin-bottom: 8px"
+                      >
+                        <input
+                          matInput
+                          placeholder="Value"
+                          [(ngModel)]="rule.value"
+                          (keyup.enter)="applyFilter()"
+                        />
+                      </mat-form-field>
+
+                      @if(filterState.rules.length > 1){
+                      <!-- Remove rule -->
+                      <acty-button
+                        type="text"
+                        severity="danger"
+                        leftIcon="delete"
+                        text="Remove Rule"
+                        btnClass="w-full grid-filter-rule-delete"
+                        (clicked)="removeRule(column, i)"
+                      />
+                      }
+                    </div>
+                    }
+                  </div>
+
+                  @if(filterState.rules.length < 2){
+                  <!-- Add rule -->
+                  <acty-button
+                    type="text"
+                    severity="primary"
+                    leftIcon="add"
+                    text="Add Rule"
+                    btnClass="w-full grid-filter-rule-add"
+                    (clicked)="addRule(column)"
+                  />
+                  } }
+                  <!-- Footer -->
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      padding-top: 8px;
+                    "
+                  >
+                    <acty-button
+                      text="Clear"
+                      type="outlined"
+                      severity="primary"
+                      class="grid-filter-rules-clear"
+                      (clicked)="clearFilter(column)"
+                    />
+                    <acty-button
+                      text="Apply"
+                      type="filled"
+                      severity="primary"
+                      class="grid-filter-rules-apply"
+                      (clicked)="applyFilter()"
+                    />
+                  </div>
+                </div>
+              </mat-menu>
+              }
+            </div>
+          </div>
+        </th>
+
+        <td mat-cell *matCellDef="let row" class="grid-cell">
+          @switch (getColumnConfig(column)?.dataType) { @case ('1') {
+          <!-- String -->
+          @if (editableMap[column] && selection.isSelected(row.rowid)) {
+          <mat-form-field
+            class="grid-field x-small"
+            (click)="$event.stopPropagation()"
+          >
+            <input matInput [(ngModel)]="row[column]" />
+          </mat-form-field>
+          } @else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } @case ('2') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <!-- Number -->
+          <mat-form-field
+            class="grid-field x-small"
+            (click)="$event.stopPropagation()"
+          >
+            <input
+              matInput
+              [(ngModel)]="row[column]"
+              (ngModelChange)="onEditChange(row, column, $event)"
+            />
+          </mat-form-field>
+          }@else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } @case ('3') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <!-- Date -->
+          <mat-form-field
+            class="grid-field x-small"
+            (click)="$event.stopPropagation()"
+          >
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="row[column]"
+              (ngModelChange)="onEditChange(row, column, $event)"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+              class="inside-button"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          }@else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } @case ('4') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <!-- KBN: dropdown -->
+          <mat-form-field
+            class="grid-field x-small"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-select
+              [(value)]="row[column]"
+              (selectionChange)="onEditChange(row, column, $event.value)"
+            >
+              @for (opt of getColumnConfig(column)?.memberList || []; track
+              opt.code) {
+              <mat-option [value]="opt.code">{{ opt.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          }@else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } @case ('5') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <!-- Checkbox -->
+          <mat-checkbox
+            [(ngModel)]="row[column]"
+            (change)="onEditChange(row, column, $event.checked)"
+            (click)="$event.stopPropagation()"
+          ></mat-checkbox>
+          } @else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } @default { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <input
+            matInput
+            [(ngModel)]="row[column]"
+            (ngModelChange)="onEditChange(row, column, $event)"
+            (click)="$event.stopPropagation()"
+          />
+          } @else {
+          <div class="text-nowrap">{{ row[column] }}</div>
+          } } }
+        </td>
+      </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="renderedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        class="grid-dataRow"
+        *matRowDef="let row; columns: renderedColumns"
+        (click)="handleRowClick($event, row)"
+      ></tr>
+    </table>
+  </div>
+  <mat-paginator
+    #paginator
+    class="grid-paginator"
+    [pageSizeOptions]="pageSizes()"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

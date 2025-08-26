@@ -1,0 +1,108 @@
+@use "@angular/material" as mat;
+
+.acty-grid {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: white,
+    )
+  );
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 0px,
+      outlined-container-shape: 0px,
+      text-container-shape: 0px,
+      outlined-outline-color: var(--mat-sys-primary),
+    )
+  );
+  @include mat.datepicker-overrides(
+    (
+      calendar-container-background-color: white,
+      calendar-container-elevation-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12),
+    )
+  );
+  @include mat.select-overrides(
+    (
+      panel-background-color: white,
+    )
+  );
+  //  --mat-option-selected-state-layer-color: var(--mat-sys-primary);;
+  //--mat-option-selected-state-label-text-color: white;
+  @include mat.paginator-overrides(
+    (
+      container-text-size:
+        var(
+          --mat-form-field-container-text-size,
+          var(--mat-sys-body-large-size)
+        ),
+      select-trigger-text-size:
+        var(
+          --mat-form-field-container-text-size,
+          var(--mat-sys-body-large-size)
+        ),
+      container-text-font: var(--default-font-family),
+      container-background-color: white,
+      form-field-container-height: 28px,
+      form-field-container-vertical-padding: 5px,
+    )
+  );
+
+  .acty-container {
+    background-color: var(--mat-toolbar-container-background-color);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .grid-cell {
+    //--mat-table-row-item-outline-width: 0px;
+    position: relative;
+
+    /* Add shadow on all four sides */
+    box-shadow: 0 -1px 2px 0 var(--mat-sys-surface),
+      // Top shadow
+      0 1px 2px 0 var(--mat-sys-surface),
+      // Bottom shadow
+      -1px 0 2px 0 var(--mat-sys-surface),
+      // Left shadow
+      1px 0 2px 0 var(--mat-sys-surface); // Right shadow
+
+    /* Existing border styles with pseudo-elements */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 1px;
+      background: var(--mat-sys-surface);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      background: var(--mat-sys-surface);
+    }
+  }
+  .grid-header {
+    box-shadow: 0 -1px 0 0 var(--mat-sys-surface) inset,
+      0 1px 0 0 var(--mat-sys-surface) inset;
+  }
+
+  .grid-dataRow {
+    cursor: pointer;
+  }
+  .table-container {
+    @include mat.table-overrides(
+      (
+        background-color: white,
+        row-item-outline-color: var(--mat-sys-surface),
+      )
+    );
+  }
+  .grid-caption {
+    border: 1px solid var(--mat-sys-surface);
+  }
+}

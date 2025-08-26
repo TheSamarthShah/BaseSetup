@@ -1,0 +1,101 @@
+@use "@angular/material" as mat;
+
+.mat-mdc-form-field.small {
+  @include mat.form-field-overrides(
+    (
+      container-height: 35px,
+      container-vertical-padding: 8px,
+    )
+  );
+}
+
+.mat-mdc-form-field.x-small {
+  @include mat.form-field-overrides(
+    (
+      container-height: 28px,
+      container-vertical-padding: 5px,
+    )
+  );
+}
+
+//cannot be accessed from splitbutton component, so placed it here as overlay element will be avaialble outside the app component
+.split-button-menu-panel {
+  max-width: none !important;
+
+  @include mat.menu-overrides(
+    (
+      container-color: white,
+      container-shape: 0px,
+    )
+  );
+
+  .split-button-menu-item {
+    min-height: 36px;
+  }
+}
+
+.multiselect-menu{
+  max-width: none !important;
+
+  @include mat.menu-overrides(
+    (
+      container-color: white,
+      container-shape: 0px,
+    )
+  );
+}
+
+.grid-filter-menu-panel {
+  max-width: none !important;
+
+  .mat-mdc-form-field{
+    max-width:200px;
+  }
+
+  @include mat.menu-overrides(
+    (
+      container-color: white,
+      container-shape: 0px,
+    )
+  );
+
+  .grid-filter-menu-div {
+    padding: 8px 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .filter-rules-div {
+      flex-grow: 1;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .border-bottom {
+        border-bottom: 1px solid black;
+      }
+    }
+
+    .grid-filter-multiselect{
+      min-width: 200px;
+      text-wrap-mode: nowrap;
+    }
+  }
+}
+
+.select-menu-panel {
+  @include mat.select-overrides(
+    (
+      panel-background-color: white,
+    )
+  );
+
+  .select-option {
+    min-height: 36px;
+  }
+}
+
+.w-full{
+  width: 100%;
+}

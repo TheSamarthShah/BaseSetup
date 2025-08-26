@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+.navbar {
+@include mat.toolbar-overrides((
+    standard-height: 56px,
+    container-background-color: var(--mat-sys-surface),
+  ));
+}

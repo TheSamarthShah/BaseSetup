@@ -1,0 +1,8 @@
+<acty-multiselect 
+    [options]="myOptions" 
+    [maxSelectedLabels]=3
+    [styleClass]="'multiselect-demo'"
+    [(value)]="selectedCategories">
+</acty-multiselect>
+
+<p>Selected keys: {{ selectedCategories | json }}</p>

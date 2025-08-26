@@ -1,0 +1,72 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use "@angular/material" as mat;
+@use './core/theming/styles.scss' as core;
+@use './app/theming/styles.scss' as app;
+//@import "tailwindcss/theme.css" layer(theme); //as we are using material theme we won't be needing this
+/* Note: intentionally omitting preflight.css(base) which changes browser default styling and conflict with angular material*/
+@use "tailwindcss/theme.css";
+@use "tailwindcss/utilities.css"; // we use utility classes so we'll only import that.
+
+:root {
+  --theme-primary: #2563eb;
+  --theme-secondary: #e2e8f0;
+  --theme-success: #16a34a;
+  --theme-info: #0284c7;
+  --theme-warn: #ea580c;
+  --theme-help: #9333ea;
+  --theme-danger: #dc2626;
+  --theme-form-field-border-radius: 0px;
+}
+
+* {
+  font-family: unset !important;
+}
+
+mat-icon{
+  font-family: 'Material Icons' !important;
+  display: flex !important;
+}
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+    ),
+    $overrides:("secondary" : var(--theme-secondary),"primary" : var(--theme-primary), "error": var(--theme-danger))
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+}
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}

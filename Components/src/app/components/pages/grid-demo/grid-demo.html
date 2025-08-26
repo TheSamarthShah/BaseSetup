@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-y-2 h-full">
+  <button mat-flat-button color="primary" class="square-button" (click)="getData()">search</button>
+  <div
+    class="flex h-full w-full overflow-hidden !justify-start dataDiv acty-container"
+  >
+    <acty-grid
+      #gridComponent
+      [formId]="formId"
+      [userId]="userId"
+      [formTitle]="formName"
+      [dataGrid]="dataGrid"
+      [editableGrid]="true"
+      [getDataUrl]="getDataUrl"
+      [style.width]="'-webkit-fill-available'"
+    />
+  </div>
+</div>

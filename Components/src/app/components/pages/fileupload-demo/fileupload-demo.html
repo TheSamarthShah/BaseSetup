@@ -1,0 +1,13 @@
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <acty-fileupload 
+      [filesArrInp]="files"
+      (filesChange)="onFilesChange($event)">
+    </acty-fileupload>
+    <div style="margin-top: 20px;">
+        <acty-button text="Save" type="filled" severity="primary" (click)="saveFiles()" />
+    </div>
+  </mat-card-content>
+</mat-card>
+</div>

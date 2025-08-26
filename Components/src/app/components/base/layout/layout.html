@@ -1,0 +1,69 @@
+<div class="h-screen flex flex-col layout gap-y-4">
+  <!-- Toolbar -->
+  <navbar (sidenavOpenedEmitter)="toggleSidenav($event)" class="z-10"></navbar>
+
+  <mat-sidenav-container class="flex-grow mb-4">
+    <!-- Sidebar with tree -->
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [(opened)]="sidenavOpened"
+      class="w-64 border-r"
+    >
+      <div class="overflow-y-auto p-2">
+        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+          <!-- Parent node template -->
+          <mat-tree-node
+            matTreeNodePadding
+            [matTreeNodePaddingIndent]="24"
+            *matTreeNodeDef="let node; when: hasNoChildren"
+             class="cursor-pointer tree-node"
+              [routerLink]="node.routerLink"
+          >
+            <span class="mr-2">{{ node.icon }}</span>
+            @if (node.routerLink) {
+              <div>
+                {{ node.name }}
+              </div>
+            } @else {
+              <span>{{ node.name }}</span>
+            }
+          </mat-tree-node>
+
+          <!-- Expandable node template -->
+          <mat-tree-node
+            matTreeNodeToggle
+            matTreeNodePadding
+            [matTreeNodePaddingIndent]="24"
+            *matTreeNodeDef="let node; when: hasChildren"
+          >
+            <div class="flex justify-between w-100">
+              <div>
+                <span class="mr-2">{{ node.icon }}</span>
+                {{ node.name }}
+              </div>
+              <button mat-icon-button [attr.aria-label]="'toggle ' + node.name">
+                <mat-icon>
+                  {{
+                    treeControl.isExpanded(node)
+                      ? "expand_more"
+                      : "chevron_right"
+                  }}
+                </mat-icon>
+              </button>
+            </div>
+          </mat-tree-node>
+        </mat-tree>
+      </div>
+    </mat-sidenav>
+
+    <!-- Main content area -->
+    <mat-sidenav-content>
+      <div class="pageWrapper overflow-auto h-full">
+        <main class="h-full mx-4 page">
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

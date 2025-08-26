@@ -1,0 +1,107 @@
+@use "@angular/material" as mat;
+
+.acty-split-button {
+  display: inline-flex;
+  align-items: center;
+
+  .menu-anchor {
+    display: inline-block;
+    height: -webkit-fill-available;
+    vertical-align: bottom;
+    position: relative;
+  }
+
+  // Common overrides for all buttons in this component
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 0px,
+      outlined-container-shape: 0px,
+      text-container-shape: 0px,
+    )
+  );
+
+  .dropdown-btn {
+    min-width: 40px;
+    border-left: 0px;
+    @include mat.button-overrides(
+      (
+        filled-container-shape: 0px,
+        outlined-container-shape: 0px,
+        filled-horizontal-padding: 0px,
+        outlined-horizontal-padding: 0px,
+        filled-icon-spacing: 0px,
+        outlined-icon-spacing: 0px,
+        filled-icon-offset: 0px,
+        outlined-icon-offset: 0px,
+      )
+    );
+  }
+}
+
+// Apply the theme overrides to the button inside the container
+.primary-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-primary),
+      filled-container-color: var(--theme-primary),
+    )
+  );
+}
+
+.secondary-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-secondary),
+      filled-container-color: var(--theme-secondary),
+    )
+  );
+}
+
+.success-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-success),
+      filled-container-color: var(--theme-success),
+    )
+  );
+}
+
+.info-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-info),
+      filled-container-color: var(--theme-info),
+    )
+  );
+}
+
+.warn-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-warn),
+      filled-container-color: var(--theme-warn),
+    )
+  );
+}
+
+.help-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-help),
+      filled-container-color: var(--theme-help),
+    )
+  );
+}
+
+.danger-btn button {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-danger),
+      filled-container-color: var(--theme-danger),
+    )
+  );
+}
+
+.mat-mdc-button-base {
+  line-height: normal;
+}

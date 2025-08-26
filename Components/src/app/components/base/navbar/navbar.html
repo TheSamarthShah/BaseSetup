@@ -1,0 +1,20 @@
+<div class="navbar">
+  <!-- Top Toolbar -->
+  <mat-toolbar class="z-10">
+    <button
+      mat-icon-button
+      (click)="
+        sidenavOpened = !sidenavOpened; sidenavOpenedEmitter.emit(sidenavOpened)
+      "
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="ml-2">
+      <div class="flex text-md">
+        <a [routerLink]="'/'">
+          Thomas Components
+        </a>
+      </div>
+    </span>
+  </mat-toolbar>
+</div>
