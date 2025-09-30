@@ -1,0 +1,48 @@
+﻿namespace BaseSetup.Repository.Base.Common
+{
+	public static class ReferenceQuery
+	{
+		public static string MITEM0010U_REF_1()
+		{
+			return @"SELECT	HMNO,
+							HMNM
+					FROM	M_ITEM001_TEST
+					ORDER BY HMNO DESC";
+		}
+
+		public static string D201_InputItems_REF_1()
+		{
+			return @"SELECT			D_PLAN103.PLANNO,
+									D_PLAN103.PROCESEQ,
+									D_STOCK003.LABELNO,
+									D_STOCK003.HMNO,
+									M_ITEM001.HMNM,
+									D_STOCK003.STOCKCD,
+									D_STOCK003.SHELFNO,
+									D_STOCK003.LOTNO,
+									D_STOCK003.STOCKQTY,
+									D_STOCK003.UNIT,
+									M_UNIT001.UNITNM,
+									D_STOCK003.LABELDTTM,
+                                    M_ITEM002.OYAQTY,
+                                    M_ITEM002.KOQTY,
+									D_STOCK003.UPDTDT
+					FROM			D_PLAN103 D_PLAN103
+					INNER JOIN		D_PLAN101 D_PLAN101
+					ON				D_PLAN101.PLANNO = D_PLAN103.PLANNO
+					INNER JOIN		D_STOCK003 D_STOCK003
+					ON				D_STOCK003.HMNO = D_PLAN103.HMNO
+					INNER JOIN		M_ITEM001 M_ITEM001
+					ON				M_ITEM001.HMNO = D_STOCK003.HMNO
+					INNER JOIN		M_ITEM002 M_ITEM002
+					ON				M_ITEM002.OYAHMNO		= D_PLAN101.HMNO
+					AND 			M_ITEM002.KOHMNO		= D_STOCK003.HMNO
+					AND				M_ITEM002.YMDFR			<= SYSDATE
+					AND				M_ITEM002.YMDTO			>= SYSDATE
+					LEFT JOIN		M_UNIT001 M_UNIT001
+					ON				M_UNIT001.UNIT = D_STOCK003.UNIT
+					ORDER BY		D_PLAN103.HMNO,
+									D_STOCK003.LABELDTTM";
+		}
+	}
+}

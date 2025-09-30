@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BaseSetup.Model.Core;
+using BaseSetup.Model.Page.Common;
 
 namespace BaseSetup.Repository.Core
 {
