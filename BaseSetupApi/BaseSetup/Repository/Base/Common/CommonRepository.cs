@@ -57,7 +57,7 @@ namespace BaseSetup.Repository.Base.Common
 			try
 			{
                 var result = conn.QueryFirst<string>(
-                "SELECT sc_main.fn_sys_getnextno(@av_appid, @av_notyp)",
+                "SELECT fn_sys_getnextno(@av_appid, @av_notyp)",
                 new { av_appid = "SEIRA", av_notyp = NOTYP },
                 tran
             );

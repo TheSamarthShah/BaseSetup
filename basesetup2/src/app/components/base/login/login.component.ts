@@ -100,6 +100,7 @@ export class LoginComponent {
     //make call to service for login request
     this.loginService.login(this.userid, this.password).subscribe({
       next: (res) => {
+        console.log(res)
         if (res.Code === 200) {
           this.cookieService.set('jwttoken', res.Data.userdata.Jwttoken, {
             path: '/',

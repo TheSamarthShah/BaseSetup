@@ -1,11 +1,9 @@
 using BaseSetup.Common.Filters;
 using BaseSetup.Common.Util;
 using BaseSetup.Context;
-using BaseSetup.Model;
 using BaseSetup.Repository.Base.Common;
 using BaseSetup.Repository.Base.Login;
 using BaseSetup.Repository.Core;
-using BaseSetup.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
@@ -95,9 +93,6 @@ builder.Services.AddCors(options =>
 
 //For Production Config Load
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
-	options.UseNpgsql(connectionString));
-builder.Services.AddScoped<ConfigService>();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 

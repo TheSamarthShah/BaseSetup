@@ -1,21 +1,37 @@
 [
   {
-    "ContainingType": "BaseSetup.Controllers.CommonController",
-    "Method": "LogError",
-    "RelativePath": "Common/logerror",
+    "ContainingType": "BaseSetup.Controllers.Page.Master.ActyTestDemoController",
+    "Method": "Exportdata",
+    "RelativePath": "ActyTestDemo/Exportdata",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "err",
-        "Type": "BaseSetup.Model.LogErrorModel",
+        "Name": "exportData",
+        "Type": "BaseSetup.Model.Page.Common.ExportData\u00601[[BaseSetup.Model.Page.Master.MITEM0010UModel\u002BSearch, BaseSetup, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Page.Master.ActyTestDemoController",
+    "Method": "GetData",
+    "RelativePath": "ActyTestDemo/getdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Master.MITEM0010UModel\u002BSearch",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "BaseSetup.Model.ResponseModel",
+        "Type": "BaseSetup.Model.Common.ResponseModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -26,7 +42,645 @@
     ]
   },
   {
-    "ContainingType": "BaseSetup.Controllers.LoginController",
+    "ContainingType": "BaseSetup.Controllers.Page.Master.ActyTestDemoController",
+    "Method": "SaveData",
+    "RelativePath": "ActyTestDemo/savedata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Common.BaseModel\u002BSaveObj\u00601[[BaseSetup.Model.Page.Master.MITEM0010UModel\u002BRecord, BaseSetup, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "DeleteConditionSetting",
+    "RelativePath": "Common/deleteconditiondisplaysetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BSearch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "FileDataGet",
+    "RelativePath": "Common/filedataget",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhysicalPath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "FileDelete",
+    "RelativePath": "Common/filedelete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhysicalPath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "FileDownload",
+    "RelativePath": "Common/filedownload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhysicalPath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "FileUpload",
+    "RelativePath": "Common/fileupload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhysicalPath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetColumnMetaData",
+    "RelativePath": "Common/getcolumnmetadata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetSavedConditionSetting",
+    "RelativePath": "Common/getconditiondisplaysetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BSearch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetSavedConditionSettingList",
+    "RelativePath": "Common/getconditiondisplaysettinglist",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BSearch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetHeightAdjustmentData",
+    "RelativePath": "Common/getheightadjustmentdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Page.Common.AutomaticAdjustmentModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "Gethidefilterdata",
+    "RelativePath": "Common/gethidefilterdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "hidefilters",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetLastConditionSetting",
+    "RelativePath": "Common/getlastconditionsetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BS_SET006",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetNextNo",
+    "RelativePath": "Common/getnextNo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "NOTYP",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetReferenceScreenData",
+    "RelativePath": "Common/getreferencescreendata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refData",
+        "Type": "System.Object",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetReferenceSetting",
+    "RelativePath": "Common/getreferencesetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "BaseSetup.Model.Page.Common.ReferenceModel\u002BS_SET008",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetRefreshedJWTToken",
+    "RelativePath": "Common/getrefreshedjwttoken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "System.String[]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetSortingData",
+    "RelativePath": "Common/getsortingdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "FormData",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "GetSwapColumnData",
+    "RelativePath": "Common/getswapcolumndata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "FormData",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "LogError",
+    "RelativePath": "Common/logerror",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "errorDetails",
+        "Type": "BaseSetup.Model.Common.LogErrorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "SaveConditionSetting",
+    "RelativePath": "Common/saveconditiondisplaysetting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BSave",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "SaveHeightAdjustmentData",
+    "RelativePath": "Common/saveheightadjustmentdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Page.Common.AutomaticAdjustmentModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "SaveSortingData",
+    "RelativePath": "Common/savesortingdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "SortData",
+        "Type": "BaseSetup.Model.Page.Common.SortingDataModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "SwapColumnData",
+    "RelativePath": "Common/swapColumnData",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "SwapColumnData",
+        "Type": "System.Collections.Generic.List\u00601[[BaseSetup.Model.Page.Common.SwapColumnsModel, BaseSetup, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.CommonController",
+    "Method": "UpdateLastConditionno",
+    "RelativePath": "Common/updatelastconditionno",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Page.Common.ConditionSettingModel\u002BS_SET006",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Base.LoginController",
     "Method": "Login",
     "RelativePath": "Login/login",
     "HttpMethod": "POST",
@@ -35,13 +689,81 @@
     "Parameters": [
       {
         "Name": "login",
-        "Type": "BaseSetup.Model.Page.LoginModel\u002BSearch",
+        "Type": "BaseSetup.Model.Page.Login.LoginModel\u002BSearch",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "BaseSetup.Model.ResponseModel",
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Page.Master.MITEM0010UController",
+    "Method": "Exportdata",
+    "RelativePath": "MITEM0010U/Exportdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "exportData",
+        "Type": "BaseSetup.Model.Page.Common.ExportData\u00601[[BaseSetup.Model.Page.Master.MITEM0010UModel\u002BSearch, BaseSetup, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Page.Master.MITEM0010UController",
+    "Method": "GetData",
+    "RelativePath": "MITEM0010U/getdata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchData",
+        "Type": "BaseSetup.Model.Page.Master.MITEM0010UModel\u002BSearch",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BaseSetup.Controllers.Page.Master.MITEM0010UController",
+    "Method": "SaveData",
+    "RelativePath": "MITEM0010U/savedata",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "saveData",
+        "Type": "BaseSetup.Model.Common.BaseModel\u002BSaveObj\u00601[[BaseSetup.Model.Page.Master.MITEM0010UModel\u002BRecord, BaseSetup, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BaseSetup.Model.Common.ResponseModel",
         "MediaTypes": [
           "text/plain",
           "application/json",

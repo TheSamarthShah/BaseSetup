@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BaseSetup.Model.Table
 {
-    [Table("sc_main.S_SET005")]
+    [Table("S_SET005")]
     public class S_SET005Model : BaseModel
     {
         [Key]

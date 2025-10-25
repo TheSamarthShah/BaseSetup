@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BaseSetup.Model.Table
 {
-    [Table("sc_main.S_AUTH001")]
+    [Table("S_AUTH001")]
     public class S_AUTH001Model : BaseModel
     {
         [Key]
@@ -22,7 +22,6 @@ namespace BaseSetup.Model.Table
         public PropertyWrapper<string?> Instprgnm { get; set; } = new();
         public PropertyWrapper<string?> Updtid { get; set; } = new();
         public PropertyWrapper<DateTimeOffset?> Updtdt { get; set; } = new();
-        public PropertyWrapper<string?> Updtterm { get; set; } = new();
         public PropertyWrapper<string?> Updtprgnm { get; set; } = new();
     }
 }

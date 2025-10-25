@@ -12,8 +12,8 @@
                            S_SET001.FORMID,
                            S_AUTH001.USERNM,
                            S_SET001.ACCESSKBN
-                    FROM sc_main.S_SET001 S_SET001
-                    INNER JOIN  sc_main.S_AUTH001 S_AUTH001
+                    FROM S_SET001 S_SET001
+                    INNER JOIN  S_AUTH001 S_AUTH001
                     ON      S_AUTH001.USERID = S_SET001.USERID
                     WHERE ((S_SET001.ACCESSKBN = '1' AND S_SET001.USERID = @LOGINUSERID)
                            OR (S_SET001.ACCESSKBN = '2' AND (S_SET001.USERID = @LOGINUSERID OR S_SET001.USERID LIKE @USERNM || '%')))
@@ -23,13 +23,13 @@
 
 		public static string S_SET001_INSERT_1()
 		{
-			return @" INSERT INTO sc_main.S_SET001 (CONDITIONNO, CONDITIONNM, FORMID, USERID, ACCESSKBN)
+			return @" INSERT INTO S_SET001 (CONDITIONNO, CONDITIONNM, FORMID, USERID, ACCESSKBN)
 					VALUES (:CONDITIONNO, :CONDITIONNM, :FORMID, :USERID, :ACCESSKBN);";
 		}
 
 		public static string S_SET001_UPDATE_1()
 		{
-			return @"UPDATE sc_main.S_SET001
+			return @"UPDATE S_SET001
 					SET CONDITIONNM = :CONDITIONNM,
 						ACCESSKBN = :ACCESSKBN
 					WHERE CONDITIONNO = :CONDITIONNO;";
@@ -37,7 +37,7 @@
 
         public static string S_SET001_DELETE_1()
         {
-            return @"DELETE FROM sc_main.S_SET001
+            return @"DELETE FROM S_SET001
                         WHERE CONDITIONNO = :CONDITIONNO;  ";
         }
         #endregion S_SET001
@@ -52,19 +52,19 @@
                             S_SET002.TOVALUE,
                             S_SET002.COMBOVALUE,
                             S_SET002.CHECKVALUE
-                    FROM    sc_main.S_SET002 S_SET002
+                    FROM    S_SET002 S_SET002
                     ORDER BY S_SET002.SEQ";
 		}
 
 		public static string S_SET002_INSERT_1()
 		{
-			return @"INSERT INTO sc_main.S_SET002 (CONDITIONNO, COLUMNNAME, SEQ, VISIBLE, FROMVALUE, TOVALUE, COMBOVALUE, CHECKVALUE)
+			return @"INSERT INTO S_SET002 (CONDITIONNO, COLUMNNAME, SEQ, VISIBLE, FROMVALUE, TOVALUE, COMBOVALUE, CHECKVALUE)
 			VALUES (:CONDITIONNO, :COLUMNNAME, :SEQ, :VISIBLE, :FROMVALUE, :TOVALUE, :COMBOVALUE, :CHECKVALUE);";
 		}
 
 		public static string S_SET002_UPDATE_1()
 		{
-			return @"UPDATE sc_main.S_SET002
+			return @"UPDATE S_SET002
 					SET VISIBLE = :VISIBLE,
 						FROMVALUE = :FROMVALUE,
 						TOVALUE = :TOVALUE,
@@ -77,7 +77,7 @@
 
         public static string S_SET002_DELETE_1()
         {
-            return @"DELETE FROM sc_main.S_SET002
+            return @"DELETE FROM S_SET002
                     WHERE CONDITIONNO = :CONDITIONNO; ";
         }
 
@@ -89,7 +89,7 @@
 			return @"SELECT	S_SET003.USERID,
 		                    S_SET003.FORMID,
 		                    S_SET003.PNLHEIGHTKBN
-                    FROM	sc_main.S_SET003 S_SET003";
+                    FROM	S_SET003 S_SET003";
 		}
         #endregion S_SET003
 
@@ -102,7 +102,7 @@
                              CHAR_COL_DECL_LENGTH as CharColDeclLength,
                              DATA_PRECISION as DataPrecision,
                              DATA_SCALE as DataScale
-                      FROM   sc_main.col_size_info";
+                      FROM   col_size_info";
         }
         #endregion TMES_COL_SIZE_INFO
 
@@ -121,7 +121,7 @@
                             S_SET004.ASC3,
                             S_SET004.ASC4,
                             S_SET004.ASC5
-              FROM    sc_main.S_SET004 AS S_SET004";
+              FROM    S_SET004 AS S_SET004";
         }
 		#endregion S_SET004
 
@@ -135,7 +135,7 @@
                             S_SET005.VISIBLE,
                             S_SET005.FROZEN,
                             S_SET005.COLNM
-                     FROM   SC_MAIN.S_SET005 S_SET005
+                     FROM   S_SET005 S_SET005
                      ORDER BY DISPCOLNO";
 		}
 		#endregion S_SET005
@@ -146,7 +146,7 @@
 			return @"SELECT S_SET006.LAST_CONDITIONNO,
                             S_SET006.USERID,
                             S_SET006.FORMID
-                    FROM    sc_main.S_SET006";
+                    FROM    S_SET006";
 		}
 		public static string S_SET006_SELECT_2()
 		{
@@ -158,8 +158,8 @@
                                 S_SET002.CHECKVALUE,
                                 S_SET006.FORMID,
                                 S_SET006.USERID
-                    FROM        sc_main.S_SET006 S_SET006
-                    INNER JOIN  sc_main.S_SET002 S_SET002
+                    FROM        S_SET006 S_SET006
+                    INNER JOIN  S_SET002 S_SET002
                     ON          S_SET006.LAST_CONDITIONNO = S_SET002.CONDITIONNO
                     ORDER BY    S_SET002.SEQ";
 		}
@@ -171,7 +171,7 @@
 			return @"SELECT S_SET007.HIDEFILTERKBN,
                             S_SET007.USERID,
                             S_SET007.FORMID
-                    FROM    sc_main.S_SET007 S_SET007";
+                    FROM    S_SET007 S_SET007";
 		}
 		#endregion
 
@@ -190,7 +190,7 @@
         public static string S_AUTH001_SELECT_1()
         {
             return @"SELECT 1
-                    FROM   sc_main.s_auth001 s_auth001
+                    FROM   s_auth001 s_auth001
                     WHERE  s_auth001.userid = @userid
                     AND    s_auth001.refreshtoken = @refreshtoken
                     AND    EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - s_auth001.lastactivitytm)) / 60 < @idletimemins";
@@ -199,7 +199,7 @@
         public static string S_004INsert()
         {
             return @"
-                        INSERT INTO sc_main.S_SET004
+                        INSERT INTO S_SET004
                         (
                             USERID,
                             FORMID,

@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj": {}
+    "D:\\projects\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj": {}
   },
   "projects": {
-    "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj": {
+    "D:\\projects\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj",
+        "projectUniqueName": "D:\\projects\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj",
         "projectName": "BaseSetup",
-        "projectPath": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj",
-        "packagesPath": "C:\\Users\\Bhavik\\.nuget\\packages\\",
-        "outputPath": "C:\\zz\\MyMy\\BaseSetup\\BaseSetupApi\\BaseSetup\\obj\\",
+        "projectPath": "D:\\projects\\BaseSetup\\BaseSetupApi\\BaseSetup\\BaseSetup.csproj",
+        "packagesPath": "C:\\Users\\iamsa\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\BaseSetup\\BaseSetupApi\\BaseSetup\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Bhavik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\iamsa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -46,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -67,6 +66,18 @@
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[5.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Oracle.ManagedDataAccess.Core": {
+              "target": "Package",
+              "version": "[23.26.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -96,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

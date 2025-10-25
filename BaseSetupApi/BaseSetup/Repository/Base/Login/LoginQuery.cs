@@ -8,8 +8,8 @@
 			return @"SELECT			S_AUTH001.USERNM USERNAME,
 				                    S_AUTH001.CHARGECD
 				                    --M_PROC005.CHARGENM
-                    FROM			SC_MAIN.S_AUTH001
-                    --LEFT JOIN		SC_MAIN.M_PROC005
+                    FROM	S_AUTH001
+                    --LEFT JOIN		M_PROC005
                     --ON				S_AUTH001.CHARGECD	= M_PROC005.CHARGECD
                     WHERE			S_AUTH001.USERID	= :userid
                     AND				S_AUTH001.PASS		= :password";
@@ -17,7 +17,7 @@
 
 		public static string S_AUTH001_UPDATE_1()
 		{
-			return @"UPDATE SC_MAIN.S_AUTH001
+			return @"UPDATE S_AUTH001
                     SET     REFRESHTOKEN	= :refreshtoken
                     WHERE   USERID			= :userid";
 		}

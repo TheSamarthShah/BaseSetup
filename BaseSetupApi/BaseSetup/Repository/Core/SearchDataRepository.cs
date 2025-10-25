@@ -837,7 +837,7 @@ namespace BaseSetup.Repository.Core
                                         ASC3,
                                         ASC4,
                                         ASC5
-                                 FROM   sc_main.S_SET004
+                                 FROM   S_SET004
                                  WHERE  USERID = :UserId
                                  AND    FORMID = :FormId";
 
