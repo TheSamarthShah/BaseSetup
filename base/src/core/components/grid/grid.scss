@@ -1,0 +1,439 @@
+@use "@angular/material" as mat;
+
+.acty-grid {
+  position: relative;
+  .text-nowrap {
+    text-wrap-mode: nowrap;
+  }
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--theme-base),
+    )
+  );
+  @include mat.datepicker-overrides(
+    (
+      calendar-container-background-color: var(--theme-base),
+      calendar-container-elevation-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12),
+    )
+  );
+  @include mat.select-overrides(
+    (
+      panel-background-color: var(--theme-base),
+    )
+  );
+  //  --mat-option-selected-state-layer-color: var(--mat-sys-primary);;
+  //--mat-option-selected-state-label-text-color: var(--theme-base);
+  @include mat.paginator-overrides(
+    (
+      container-text-size:
+        var(
+          --mat-form-field-container-text-size,
+          var(--mat-sys-body-large-size)
+        ),
+      select-trigger-text-size:
+        var(
+          --mat-form-field-container-text-size,
+          var(--mat-sys-body-large-size)
+        ),
+      container-text-font: var(--default-font-family),
+      container-background-color: var(--theme-surface-50),
+      form-field-container-height: 28px,
+      form-field-container-vertical-padding: 5px,
+    )
+  );
+
+  .table-container {
+    @include mat.table-overrides(
+      (
+        background-color: var(--theme-base),
+        row-item-container-height: var(--theme-elements-container-height),
+        header-container-height: var(--theme-elements-container-height),
+        header-headline-weight: 400,
+      )
+    );
+
+    background-color: var(--theme-base);
+    overflow: auto;
+    width: 100%;
+
+    .acty-grid-table {
+      min-width: unset;
+    }
+    .acty-grid-table.acty-tabular-grid-table {
+      min-width: 100%;
+    }
+
+    .acty-container {
+      background-color: var(--mat-toolbar-container-background-color);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .grid-cell,
+    .tabular-grid-cell {
+      //position: relative;
+      border: 0.1px solid var(--theme-border);
+      height: inherit;
+    }
+
+    .tabular-grid-cell {
+      border-right: none;
+      border-left: none;
+      align-content: start;
+    }
+
+    .filter-action {
+      padding: 4px;
+      border-radius: 50%;
+      background: transparent;
+      transition: background-color 0.2s ease;
+      &.redirect {
+        @include mat.icon-overrides(
+          (
+            color: var(--theme-info),
+          )
+        );
+        border: 1px solid var(--theme-info);
+        display: inline-block;
+        transform: rotate(45deg);
+        &:hover {
+          background-color: rgba(2, 132, 199, 0.1);
+        }
+      }
+      &.edit {
+        @include mat.icon-overrides(
+          (
+            color: var(--theme-primary),
+          )
+        );
+        border: 1px solid var(--theme-primary);
+        &:hover {
+          background-color: rgba(37, 99, 235, 0.1);
+        }
+      }
+      &.delete {
+        @include mat.icon-overrides(
+          (
+            color: var(--theme-danger),
+          )
+        );
+        border: 1px solid var(--theme-danger);
+        &:hover {
+          background-color: rgba(220, 38, 38, 0.1);
+        }
+      }
+    }
+
+    .grid-header {
+      /*box-shadow: 0 -1px 0 0 var(--mat-sys-surface) inset,
+        0 1px 0 0 var(--mat-sys-surface) inset;*/
+      border: 0.1px solid var(--theme-surface-100);
+      border: 0.1px solid var(--theme-border);
+      background-color: var(--theme-surface-50);
+      background-color: var(--theme-base);
+      font-size: var(--theme-medium-font-size);
+      * {
+        font-size: inherit;
+      }
+      .column-header-container {
+        display: flex;
+        justify-content: space-between;
+        .column-header-name {
+          text-wrap-mode: nowrap;
+          display: flex;
+          margin: auto 0;
+          .requiredIcon {
+            @include mat.icon-overrides(
+              (
+                color: var(--theme-danger),
+              )
+            );
+          }
+        }
+        .column-header-button-container {
+          display: flex;
+        }
+      }
+    }
+
+    .indexColumn {
+      text-align: center;
+      background-color: var(--theme-base);
+      border: 0.1px solid var(--theme-surface-100);
+      border: 0.1px solid var(--theme-border);
+      //border-right: none;
+      padding: 0 var(--theme-spacing-small);
+      width: 35px;
+    }
+
+    .grid-dataRow {
+      background-color: var(--theme-base);
+
+      &:nth-child(odd) {
+        background-color: var(--theme-surface-50);
+      }
+
+      &:hover {
+        background-color: rgba(var(--theme-interactive-hover-rgb), 0.5);
+        z-index: 1;
+      }
+    }
+
+    .tabular-grid-header {
+      background-color: #fcfedd;
+    }
+    .tabular-grid-tabColumn {
+      //background-color: #fafafa;
+    }
+
+    .tabular-grid-dataRow {
+      background-color: var(--theme-base);
+
+      &:nth-child(odd) {
+        //background-color: var(--theme-surface-50);
+      }
+
+      &:hover {
+        background-color: rgba(var(--theme-interactive-hover-rgb), 0.5);
+        z-index: 1;
+        .tabular-grid-header {
+          background-color: rgba(var(--theme-interactive-hover-rgb), 0.5);
+        }
+        .tabular-grid-tabColumn {
+          background-color: rgba(var(--theme-interactive-hover-rgb), 0.5);
+        }
+      }
+    }
+
+    .resizer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 5px;
+      height: 100%;
+      cursor: col-resize;
+      user-select: none;
+    }
+
+    .icon-fit {
+      height: 32px; /* Or 1rem, depending on your font size */
+      //width: 100%;
+      display: inline-block;
+      object-fit: contain;
+      vertical-align: middle;
+      transform: scaleX(-1);
+    }
+    .grid-dataRow.selected-row,
+    .tabular-grid-dataRow.selected-row {
+      background-color: var(--theme-interactive-active);
+
+      .editable-column {
+        padding: 0;
+      }
+      .tabular-grid-header {
+        background-color: var(--theme-interactive-active);
+      }
+      .tabular-grid-tabColumn {
+        background-color: var(--theme-interactive-active);
+      }
+    }
+  }
+
+  .table-container.readonlyGrid-table-container {
+    .tabular-grid-dataRow {
+      background-color: var(--theme-base);
+
+      &:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      &:hover {
+        background-color: rgba(var(--theme-interactive-hover-rgb), 0.5);
+        z-index: 1;
+      }
+    }
+  }
+
+  .editableGrid-table-container {
+    td.editable-column {
+      cursor: pointer;
+      background-color: var(--theme-base);
+    }
+    .required-column-header {
+      background-color: #fde8e8 !important;
+    }
+    .statusColumn {
+      padding: 0;
+      min-width: 35px;
+      span {
+        display: flex;
+        justify-content: center; /* Horizontal center */
+        align-items: center;
+      }
+    }
+    td.statusColumn {
+      color: white;
+    }
+    td.statusColumn.updateRowStatus {
+      background-color: var(--theme-success);
+    }
+    td.statusColumn.newRowStatus {
+      background-color: var(--theme-info);
+    }
+    td.statusColumn.deleteRowStatus {
+      background-color: var(--theme-danger);
+    }
+    td.statusColumn.errorRowStatus {
+      background-color: var(--theme-base);
+    }
+    .grid-dataRow {
+      background-color: var(--theme-surface-50);
+
+      &:nth-child(odd) {
+        background-color: var(--theme-surface-50);
+      }
+
+      &:hover {
+        background-color: rgba(var(--theme-interactive-hover-rgb));
+        .editable-column {
+          background-color: rgba(var(--theme-interactive-hover-rgb));
+        }
+      }
+    }
+    .updatedCell {
+      background-color: var(--theme-success-light) !important;
+    }
+    .errorCell {
+      background-color: var(--theme-danger-light) !important;
+    }
+  }
+  .grid-caption {
+    padding: var(--theme-spacing-small) var(--theme-spacing-large);
+    //border: 1px solid var(--theme-surface);
+    background-color: var(--theme-surface-50);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    .left-buttons-container,
+    .right-buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  }
+}
+
+td.grid-cell.selected-cell {
+  background-color: #6a98fa;
+  color: var(--theme-base);
+}
+.detailview-container {
+  display: flex;
+  align-items: center;
+}
+.detailview-label {
+  min-width: 130px;
+}
+
+.detailview-custom-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.detailview-column-span {
+  align-content: center;
+}
+
+.paginator-wrapper {
+  position: relative;
+  background-color: var(--theme-surface-50);
+  .background-loader {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+.grid-cell {
+  ::ng-deep {
+    .acty-text-input,
+    .acty-datetime-field,
+    .acty-dropdowm-field {
+      @include mat.form-field-overrides(
+        (
+          outlined-container-shape: 0px,
+        )
+      );
+      background-color: transparent;
+    }
+  }
+}
+
+.tabular-grid-cell {
+  .updatedField {
+    ::ng-deep {
+      .acty-text-input,
+      .acty-datetime-field,
+      .acty-dropdowm-field {
+        background-color: var(--theme-success-light);
+      }
+    }
+  }
+  .errorField {
+    ::ng-deep {
+      .acty-text-input,
+      .acty-datetime-field,
+      .acty-dropdowm-field {
+        background-color: var(--theme-danger-light);
+      }
+    }
+  }
+}
+
+.group-container {
+  .group-section {
+    .group-row {
+      display: flex;
+      padding: var(--theme-spacing-small) 0;
+      .group-field {
+        display: flex;
+        align-items: center;
+        .field-label {
+          line-height: var(--theme-elements-container-height);
+          min-height: var(--theme-elements-container-height);
+          background-color: #c6deec;
+          padding-left: var(--theme-spacing-large);
+          white-space: nowrap;
+          text-align: left;
+        }
+        .field-label.first-field-label {
+          min-width: 100px;
+        }
+
+        .field-value {
+          padding-left: var(--theme-spacing-small);
+          white-space: nowrap;
+          overflow-x: auto;
+          scrollbar-width: none;
+          .field-value-readonly {
+            border-bottom: 1px solid var(--theme-inverse);
+            line-height: var(--theme-elements-container-height);
+            min-height: var(--theme-elements-container-height);
+          }
+        }
+
+        .header-label {
+          padding-left: var(--theme-spacing-small);
+          white-space: nowrap;
+        }
+        .header-label.header-field-label {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+}

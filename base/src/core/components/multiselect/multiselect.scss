@@ -1,0 +1,150 @@
+@use "@angular/material" as mat;
+
+.multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-inverse),
+      outlined-container-shape: var(--theme-form-field-border-radius),
+      outlined-label-text-color: var(--theme-inverse),
+      outlined-label-text-size: var(--theme-medium-font-size),
+      text-with-icon-horizontal-padding: var(--theme-spacing-large),
+      filled-horizontal-padding: var(--theme-spacing-large),
+      outlined-horizontal-padding: var(--theme-spacing-large),
+      text-horizontal-padding: var(--theme-spacing-large),
+      filled-container-height: var(--theme-elements-container-height),
+      outlined-container-height: var(--theme-elements-container-height),
+      text-container-height: var(--theme-elements-container-height),
+    )
+  );
+  background-color: var(--theme-base);
+  background-color: var(--theme-base);
+
+  mat-icon {
+    font-size: calc(var(--theme-medium-font-size) + 5px);
+    height: calc(var(--theme-medium-font-size) + 5px);
+    width: calc(var(--theme-medium-font-size) + 5px);
+  }
+}
+
+.multiselect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  padding-left: 0;
+  border-bottom: 1px solid var(--theme-inverse);
+}
+
+// Apply the theme overrides to the button inside the container
+.primary-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-primary),
+      outlined-label-text-color: var(--theme-primary),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-primary),
+    )
+  );
+}
+
+.secondary-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-secondary),
+      outlined-label-text-color: var(--theme-secondary),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-secondary),
+    )
+  );
+}
+
+.success-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-success),
+      outlined-label-text-color: var(--theme-success),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-success),
+    )
+  );
+}
+
+.info-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-info),
+      outlined-label-text-color: var(--theme-info),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-info),
+    )
+  );
+}
+
+.warn-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-warn),
+      outlined-label-text-color: var(--theme-warn),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-warn),
+    )
+  );
+}
+
+.help-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-help),
+      outlined-label-text-color: var(--theme-help),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-help),
+    )
+  );
+}
+
+.danger-multiselect {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: var(--theme-danger),
+      outlined-label-text-color: var(--theme-danger),
+    )
+  );
+
+  @include mat.icon-overrides(
+    (
+      color: var(--theme-danger),
+    )
+  );
+}
+
+.disabled-multiselect {
+  @include mat.icon-overrides(
+    (
+      color: currentColor,
+    )
+  );
+}

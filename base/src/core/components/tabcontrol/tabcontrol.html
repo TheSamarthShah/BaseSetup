@@ -1,0 +1,18 @@
+<div class="tabcontrol acty-tabcontrol">
+  <!-- Header -->
+  <div class="tab-header acty-tab-header">
+    @for (label of tabLabels(); track label; let i = $index) {
+    <div
+      class="tab-header-item acty-tab-header-item"
+      [class.active]="activeIndex === i"
+      (click)="selectTab(i)">
+      {{ label | translate }}
+    </div>
+  }
+  </div>
+
+  <!-- Content -->
+  <div class="tab-content acty-tab-content">
+    <ng-content select=".acty-tab"></ng-content>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="a-button acty-button" [class]="disabled()? 'disabled-btn ' : '' + severity() + '-btn'">
+  @switch (type()) { @case ('icon') {
+  <button matIconButton [disabled]="disabled()" [class]="btnClass()" (click)="clicked.emit()">
+    <mat-icon class="acty-button-left-icon">{{ leftIcon() }}</mat-icon>
+  </button>
+  } @case ('mini fab') {
+  <button matMiniFab [disabled]="disabled()" [class]="btnClass()" (click)="clicked.emit()">
+    <mat-icon class="acty-button-left-icon">{{ leftIcon() }}</mat-icon>
+  </button>
+  }
+  @case ('text'){
+    <button
+    matButton
+    [disabled]="disabled()"
+    [class]="[btnClass(), 'text-btn']"
+    (click)="clicked.emit()"
+  >
+    @if(leftIcon()){
+    <mat-icon class="acty-button-left-icon">{{ leftIcon() }}</mat-icon>
+    }
+    {{ text() | translate }}
+    @if(rightIcon()){
+    <mat-icon class="acty-button-right-icon" iconPositionEnd>{{ rightIcon() }}</mat-icon>
+    }
+  </button>
+  } @default {
+  <button
+    [matButton]="type() === 'outlined' ? 'outlined' : 'filled'"
+    [disabled]="disabled()"
+    [class]="[btnClass(), type() === 'outlined' ? 'outlined-btn' : 'filled-btn']"
+    (click)="clicked.emit()"
+  >
+    @if(leftIcon()){
+    <mat-icon class="acty-button-left-icon">{{ leftIcon() }}</mat-icon>
+    }
+    {{ text() | translate }}
+    @if(rightIcon()){
+    <mat-icon class="acty-button-right-icon" iconPositionEnd>{{ rightIcon() }}</mat-icon>
+    }
+  </button>
+  } }
+</div>
+

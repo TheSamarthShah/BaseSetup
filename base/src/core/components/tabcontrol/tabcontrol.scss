@@ -1,0 +1,29 @@
+.tabcontrol {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--theme-surface);
+  height: 100%;
+
+  .tab-header {
+    flex-shrink: 0;  
+    display: flex;
+    background: var(--theme-base);
+    border-bottom: 1px solid var(--theme-surface);
+
+    .tab-header-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      user-select: none;
+
+      &.active {
+        color: var(--theme-info);
+        border-bottom: 1px solid var(--theme-primary);
+      }
+    }
+  }
+
+  .tab-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}

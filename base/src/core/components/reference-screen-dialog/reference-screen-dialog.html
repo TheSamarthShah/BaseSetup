@@ -1,0 +1,95 @@
+<acty-dialog-box
+  #RefScreen
+  [showFooterButton]="false"
+  [showClose]="false"
+  [showIcon]="false"
+  [buttonPosition]="'center'"
+  [width]="'800px'"
+  [height]="'800px'"
+>
+  <div class="title-bar" dialog-header>
+    <span class="screen-name"
+      >{{ "CORE.REFERENCESCREEN.ReferenceLbl" | translate }}
+      {{ refTitleCaption | translate }}</span
+    >
+    <div class="button-container">
+      <acty-button
+        [type]="'icon'"
+        [leftIcon]="showFilter ? 'expand_less' : 'expand_more'"
+        class="toggle-button"
+        (clicked)="toggleFilter()"
+        [severity]="'primary'"
+      ></acty-button>
+      <acty-button
+        [type]="'icon'"
+        [leftIcon]="'close'"
+        class="toggle-button"
+        (clicked)="onDialogClose()"
+      ></acty-button>
+    </div>
+  </div>
+
+  <div #mainDiv class="mainDiv">
+    <!-- Splitter -->
+    <acty-splitter
+      #splitter
+      direction="vertical"
+      [firstPanelSize]="firstPanelSize"
+      (sizeChange)="onSizeChange($event)"
+      class="custom-splitter"
+    >
+      <!-- Splitter -->
+
+      <div split-left class="filterDiv filter-panel" #filterContainer>
+        <div
+          #filterWrapper
+          class="filter-wrapper"
+          [class.collapsed]="!showFilter"
+        >
+          <app-material-filter
+            #materialFilter
+            [customFilters]="customFilters"
+            [userId]="userId"
+            [screenName]="''"
+            [filterExtraBtns]="filterExtraBtns"
+            (extraButtonClick)="extraFilterbtnClick($event)"
+            [formID]="formId"
+            (filterChanged)="getDataSearch($event)"
+            (toggleFilter)="toggleFilter()"
+            [permissionVisible_ConditionSetting]="false"
+            [permissionVisible_Autoheight]="false"
+          >
+          </app-material-filter>
+        </div>
+      </div>
+
+      @if(visible()){
+      <div split-right class="refdataDiv">
+        <acty-grid
+          #gridComponent
+          [formId]="formId"
+          [userId]="userId"
+          [formTitle]="''"
+          [editableGrid]="false"
+          [dataGrid]="dataGrid"
+          [GridMenuBtns]="[]"
+          [getDataUrl]="getDataUrl"
+          [searchList]="gridFilters"
+          [additionalSearchData]="AddtionalData"
+          (doubleClickedRow)="handleRowDoubleClick($event)"
+        ></acty-grid>
+      </div>
+      }
+    </acty-splitter>
+    <acty-reference-initial-searchkbn
+      #refInitialSearchKBN
+      [displayFlgInp]="openReferenceInitialDailog"
+      [formId]="formId"
+      [userId]="userId"
+      [refTableName]="refTableName"
+      (dialogClose)="onCloseReferenceInitialDialog()"
+    ></acty-reference-initial-searchkbn>
+  </div>
+</acty-dialog-box>
+
+<ng-template #container></ng-template>

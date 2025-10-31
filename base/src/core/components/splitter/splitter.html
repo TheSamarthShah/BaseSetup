@@ -1,0 +1,36 @@
+<!-- <div class="split-container-wrapper"> -->
+
+<div
+  #splitContainer
+  class="split-container acty-split-container"
+  [class.vertical]="direction() === 'vertical'"
+>
+  <div
+    class="split-panel first-panel acty-split-first-panel"
+    [style.flex]="'0 0 ' + firstPanelSize() + 'rem'"
+  >
+    <ng-content select="[split-left]"></ng-content>
+  </div>
+
+  <div
+    class="splitter"
+    [class.vertical]="direction() === 'vertical'"
+    (mousedown)="startDragging($event)"
+    [matTooltip]="toolTip()"
+  >
+    <div class="split-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div
+    class="split-panel second-panel acty-split-second-panel"
+    [style.flex]="'1 1 calc(100% - ' + firstPanelSize() + 'rem)'"
+  >
+    <ng-content select="[split-right]"></ng-content>
+  </div>
+</div>
+
+<!-- </div> -->

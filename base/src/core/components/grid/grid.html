@@ -1,0 +1,1117 @@
+<div #actyGrid class="acty-grid">
+  @if (hasGridCaption) {
+  <div #gridCaptionContainer class="grid-caption">
+    <!-- Left Side Buttons Container -->
+    <div class="left-buttons-container">
+      @if(isCellSummary() && !editableGrid()){
+      <acty-cell-summary
+        (summaryChanged)="onSummaryChanged($event)"
+        [selectedValues]="selectedValues()"
+      ></acty-cell-summary>
+      } @for(btn of GridMenuBtns(); track $index) {
+      <!-- Editbale true then show button-->
+      @if(btn.IsVisible !== false){ @if(btn.text === 'CORE.GRID.DetailView' &&
+      (btn.type !== 'menu-outlined' && btn.type !== 'menu-filled' && btn.type
+      !== 'toggle' && btn.type !== 'split-outlined' && btn.type !==
+      'split-filled')){
+      <!-- single selection show detailve-->
+      @if(selectionMode() === 'single'){
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.text | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [btnClass]="btn.btnClass"
+        [rightIcon]="btn.rightIcon"
+        [severity]="btn.severity"
+        (clicked)="buttonClicked(btn.text)"
+      />
+      } } @else if((btn.text === 'CORE.GRID.SaveBtn' || btn.text ===
+      'CORE.GRID.AddRow' || btn.text === 'CORE.GRID.PasteRow' || btn.text ===
+      'CORE.GRID.DeleteRow' || btn.text === 'CORE.GRID.CopyRow') && btn.type !==
+      'menu-outlined' && btn.type !== 'menu-filled' && btn.type !== 'toggle' &&
+      btn.type !== 'split-outlined' && btn.type !== 'split-filled') {
+      <!--grid is Editable True then show button -->
+      @if(editableGrid()){
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.text | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [btnClass]="btn.btnClass"
+        [rightIcon]="btn.rightIcon"
+        [severity]="btn.severity"
+        (clicked)="buttonClicked(btn.text)"
+      />
+      } } @else if(btn.text !== 'CORE.GRID.Ref' && btn.text !==
+      'CORE.GRID.EditData' && btn.text !== 'CORE.GRID.Add' && btn.text !==
+      'CORE.GRID.Copy' && btn.text !== 'CORE.GRID.FilterReset') {
+      <!-- Extra Spilt Button -->
+      @if(btn.type === 'split-outlined' || btn.type === 'split-filled'){
+      <acty-splitbutton
+        [type]="btn.type === 'split-outlined' ? 'outlined' : 'filled'"
+        [text]="btn.text"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [menuItems]="btn.menuModel ?? []"
+        [severity]="btn.severity ?? 'primary'"
+        (clicked)="extraButtonClicked(btn.text)"
+        (menuClicked)="extraButtonClicked(btn.text, $event.id)"
+      />
+      } @else if(btn.type === 'menu-outlined' || btn.type === 'menu-filled'){
+      <acty-menubutton
+        [type]="btn.type === 'menu-outlined' ? 'outlined' : 'filled'"
+        [text]="btn.text"
+        [disabled]="false"
+        [leftIcon]="btn.leftIcon"
+        [rightIcon]="btn.rightIcon"
+        (menuClicked)="onClickMenuButtons($event, btn.text)"
+        [menuItems]="btn.menuModel ?? []"
+        [severity]="btn.severity"
+      />
+      } @else if(btn.type === 'toggle'){ @if(btn.inactiveText !==
+      'CORE.GRID.GridFilterSort'){
+      <acty-toggle-button
+        [inactiveText]="btn?.inactiveText ?? ''"
+        [inactiveLeftIcon]="btn.inactiveLeftIcon"
+        [activeLeftIcon]="btn.activeLeftIcon"
+        [state]="btn?.state ?? 'inactive'"
+        (onBtnClick)="onClickToggleBtn($event, btn.inactiveText ?? '')"
+      />
+      } } @else{
+      <!-- Extra Button -->
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.text | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [btnClass]="btn.btnClass"
+        [rightIcon]="btn.rightIcon"
+        [severity]="btn.severity"
+        (clicked)="extraButtonClicked(btn.text)"
+      />
+      } } } }
+    </div>
+    <!-- Right Side Buttons Container -->
+    <div class="right-buttons-container">
+      @for(btn of GridMenuBtns(); track $index) { @if(btn.IsVisible !== false){
+      @if((btn.text === 'CORE.GRID.Ref' || btn.text === 'CORE.GRID.EditData' ||
+      btn.text === 'CORE.GRID.Add' || btn.text === 'CORE.GRID.Copy') &&
+      !editableGrid() && (btn.type !== 'menu-outlined' && btn.type !==
+      'menu-filled' && btn.type !== 'toggle' && btn.type !== 'split-outlined' &&
+      btn.type !== 'split-filled')) {
+      <!-- Editable False show  button -->
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.text | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [btnClass]="btn.btnClass"
+        [severity]="btn.severity"
+        [rightIcon]="btn.rightIcon"
+        (clicked)="buttonClicked(btn.text)"
+      />
+      } @if(btn.type === 'toggle'){ @if(btn.inactiveText ===
+      'CORE.GRID.GridFilterSort'){
+      <acty-toggle-button
+        [inactiveText]="btn?.inactiveText ?? ''"
+        [inactiveLeftIcon]="btn.inactiveLeftIcon"
+        [activeLeftIcon]="btn.activeLeftIcon"
+        [(state)]="gridOpsToggleState"
+        (onBtnClick)="onClickToggleBtn($event, btn.inactiveText)"
+      />
+      } }
+      <!-- Filter Button default show in last || btn.name === 'CORE.GRID.Gridops' -->
+      @else if(btn.text === 'CORE.GRID.FilterReset' && (btn.type !==
+      'menu-outlined' && btn.type !== 'menu-filled' && btn.type !==
+      'split-outlined' && btn.type !== 'split-filled')){
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.text | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="isButtonDisabled(btn)"
+        [btnClass]="btn.btnClass"
+        [severity]="btn.severity"
+        [rightIcon]="btn.rightIcon"
+        (clicked)="buttonClicked(btn.text)"
+      />
+      } } }
+    </div>
+  </div>
+  }
+
+  <div
+    #tableContainer
+    class="table-container"
+    [class]="editableGrid() ? ' editableGrid-table-container' : ' readonlyGrid-table-container'"
+  >
+    <table
+      #actyGridTable
+      mat-table
+      [dataSource]="visibleDataList"
+      class="mat-elevation-z2 form-field-small acty-grid-table"
+      [class.acty-tabular-grid-table]="!rowFormat()"
+      [ngStyle]="{
+        'user-select': isCellModeEnabled() ? 'none' : null
+      }"
+    >
+      @if(rowFormat()){ @if(selectionMode() === 'multiple'){
+      <ng-container matColumnDef="select" sticky>
+        <th mat-header-cell *matHeaderCellDef class="grid-cell grid-header">
+          @if(selectionMode() !== 'single'){
+          <mat-checkbox
+            (change)="toggleAllRows()"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+          }
+        </th>
+        <td mat-cell *matCellDef="let row" class="grid-cell">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            [checked]="selection.isSelected(row.rowid)"
+            (change)="onCheckboxChange(row.rowid, $event.checked)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      }
+      <ng-container matColumnDef="no" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header indexColumn"
+          sticky
+        >
+          No.
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row; let i = index"
+          class="grid-cell indexColumn"
+        >
+          @if(selectionMode() === 'single' && selection.isSelected(row.rowid)){
+          <mat-icon>label_important</mat-icon>
+          } @else { @if(showPaginator()){
+          {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
+          }@else {
+          {{ i + 1 }}
+          } }
+        </td>
+      </ng-container>
+      @if(editableGrid()){
+      <ng-container matColumnDef="status" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header statusColumn"
+          sticky
+        >
+          <span>{{ "\u2007" }}</span>
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row; let i = index"
+          [class]="'grid-cell statusColumn' + getRowStatusClass(row)"
+          [matTooltip]="getRowStatusTooltip(row)"
+          matTooltipPosition="right"
+          matTooltipClass="multiline-tooltip"
+        >
+          <span>
+            @if(hasRowError(row)){
+            <mat-icon style="color: var(--theme-danger)">error</mat-icon>
+            }@else{
+            {{ getRowStatusChar(row) }}
+            }
+          </span>
+        </td>
+      </ng-container>
+      }
+      <ng-container matColumnDef="actions" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header"
+          sticky
+        >
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index" class="grid-cell">
+          <div style="display: flex; gap: 0.5rem">
+            <button
+              (click)="onGridActions('redirect', row)"
+              class="filter-action redirect"
+            >
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            @if(userId() == row.userid){
+            <button
+              (click)="onGridActions('edit', row)"
+              class="filter-action edit"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              (click)="onGridActions('delete', row)"
+              class="filter-action delete"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            }
+          </div>
+        </td>
+      </ng-container>
+      @for (column of displayedColumns; track column) {
+      <ng-container
+        [matColumnDef]="column"
+        [sticky]="getColumnisSticky(column)"
+      >
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          [class]="
+            'grid-cell grid-header cursor-pointer mat-column-{{ column }}' +
+            (isEditableColumn(column) ? ' editable-column' : '') +
+            (isRequiredColumn(column) ? ' required-column-header' : '')
+          "
+          [matTooltip]="getColumnTooltip(column)"
+          matTooltipPosition="below"
+          matTooltipClass="multiline-tooltip"
+        >
+          <div class="column-header-container">
+            <span [class]="'column-header-name'">
+              @if(isRequiredColumn(column) && false){
+              <mat-icon class="requiredIcon">emergency</mat-icon>
+              }
+              {{ getColumnDisplayName(column) | translate }}
+            </span>
+            @if(showGridOperationBtns){
+            <div class="column-header-button-container">
+              @if(isSortable(column)){
+              <acty-button
+                type="icon"
+                leftIcon="{{ getSortIcon(column) }}"
+                (clicked)="sortData(column)"
+              />
+              } @if(isFilterable(column)){
+              <acty-button
+                #filterMenuTrigger="matMenuTrigger"
+                type="icon"
+                leftIcon="filter_alt"
+                [matMenuTriggerFor]="filterMenu"
+              />
+              <mat-menu #filterMenu="matMenu" class="grid-filter-menu-panel">
+                <div
+                  matMenuContent
+                  class="grid-filter-menu-div"
+                  (click)="$event.stopPropagation()"
+                >
+                  @let filterState = getColumnFilterState(column); @let
+                  columnobj = getColumnConfig(column); @if(columnobj &&
+                  columnobj?.editorType === '4'){
+                  <acty-multiselect
+                    [options]="getGridFilterMultiselectoptions(column)"
+                    [maxSelectedLabels]="1"
+                    [(value)]="filterState.rules[0].value"
+                    [styleClass]="'grid-filter-multiselect'"
+                  />
+                  } @else {
+                  <div style="margin-bottom: 8px">
+                    <mat-form-field
+                      appearance="outline"
+                      style="width: 100%"
+                      class="small"
+                    >
+                      <mat-select
+                        [(ngModel)]="filterState.matchMode"
+                        class="grid-filter-select-matchmode"
+                        panelClass="grid-filter-select-matchmode-menu-panel select-menu-panel"
+                      >
+                        <mat-option value="all" class="select-option">
+                          {{
+                            "CORE.GRID.FilterMatchConditions.MatchAll"
+                              | translate
+                          }}</mat-option
+                        >
+                        <mat-option value="any" class="select-option">
+                          {{
+                            "CORE.GRID.FilterMatchConditions.MatchAny"
+                              | translate
+                          }}</mat-option
+                        >
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="grid-filter-rules-block filter-rules-div">
+                    @for (rule of filterState.rules; let i = $index; track i) {
+                    <div
+                      style="
+                        padding-bottom: 8px;
+                        display: flex;
+                        flex-direction: column;
+                      "
+                      [class.border-bottom]="
+                        filterState.rules.length > 1 && !$last
+                      "
+                    >
+                      <mat-form-field
+                        appearance="outline"
+                        class="small grid-filter-rule-select"
+                        style="width: 100%; margin-bottom: 8px"
+                      >
+                        <mat-select
+                          [(ngModel)]="rule.condition"
+                          panelClass="select-menu-panel"
+                        >
+                          @for (cond of getColumnFilterRuleOptions(column);
+                          track cond.value) {
+                          <mat-option
+                            [value]="cond.value"
+                            class="select-option"
+                            >{{ cond.display | translate }}</mat-option
+                          >
+                          }
+                        </mat-select>
+                      </mat-form-field>
+
+                      @if(columnobj?.editorType === '3'){
+                      <mat-form-field
+                        appearance="outline"
+                        class="small grid-filter-rule-value"
+                        style="width: 100%; margin-bottom: 8px"
+                      >
+                        <input
+                          matInput
+                          [matDatepicker]="filterPicker"
+                          [(ngModel)]="rule.value"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="filterPicker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #filterPicker></mat-datepicker>
+                      </mat-form-field>
+                      } @else {
+                      <mat-form-field
+                        appearance="outline"
+                        class="small grid-filter-rule-value"
+                        style="width: 100%; margin-bottom: 8px"
+                      >
+                        <input
+                          matInput
+                          [(ngModel)]="rule.value"
+                          (keyup.enter)="applyFilter()"
+                        />
+                      </mat-form-field>
+                      } @if(filterState.rules.length > 1){
+                      <acty-button
+                        type="text"
+                        severity="danger"
+                        leftIcon="delete"
+                        text="CORE.GRID.FilterMatchConditions.RemoveRule"
+                        btnClass="grid-filter-rule-delete"
+                        (clicked)="removeRule(column, i)"
+                      />
+                      }
+                    </div>
+                    }
+                  </div>
+
+                  @if(filterState.rules.length < 2){
+                  <acty-button
+                    type="text"
+                    severity="primary"
+                    leftIcon="add"
+                    [text]="
+                      'CORE.GRID.FilterMatchConditions.AddRule' | translate
+                    "
+                    btnClass="grid-filter-rule-add"
+                    (clicked)="addRule(column)"
+                  />
+                  } }
+                  <div class="grid-filter-bottom-btn-container">
+                    <acty-button
+                      [text]="
+                        'CORE.GRID.FilterMatchConditions.Clear' | translate
+                      "
+                      type="outlined"
+                      severity="primary"
+                      class="grid-filter-rules-clear"
+                      (clicked)="
+                        clearFilterAndCloseMenu(column, filterMenuTrigger)
+                      "
+                    />
+                    <acty-button
+                      [text]="'CORE.GRID.ApplyBtn' | translate"
+                      type="filled"
+                      severity="primary"
+                      class="grid-filter-rules-apply"
+                      (clicked)="applyFilterAndCloseMenu(filterMenuTrigger)"
+                    />
+                  </div>
+                </div>
+              </mat-menu>
+              }
+            </div>
+            }
+          </div>
+          @if(resizableCols()){
+          <div
+            class="resizer"
+            (mousedown)="onColumnResizeStart($event, column)"
+          ></div>
+          }
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row; let i = index"
+          [class.selected-cell]="isSelectedCell(i, column) && !editableGrid()"
+          (mousedown)="onCellClick(row, column, i, $event)"
+          (mouseenter)="onCellMouseEnter(i, column)"
+          [class]="
+            'grid-cell mat-column-{{ column }}' +
+            (isEditableColumn(column) ? ' editable-column' : '') +
+            (isCellUpdated(column, row) ? ' updatedCell' : '') +
+            (hasColumnError(column, row) ? ' errorCell' : '')
+          "
+          [ngStyle]="getTHStyleForTD(column)"
+        >
+          @switch (getColumnConfig(column)?.editorType) { @case ('1') {
+          <!-- String -->
+          @if (editableMap[column] && selection.isSelected(row.rowid) && !isAutoGenerateColumn(column)) {
+          <acty-textinput class="grid-field x-small" actySelectOnFocus [style]="'text-align :' +getItemAlign(column)"
+            [style]="'width : ' + getColumnWidth(column)"
+            [(ngModel)]="row[column]" (valueChange)="row[column] = $event; onRowDataUpdate(row, column)"
+            [maxLengthData]="{
+              tableName: getTableNameByColumn(column),
+              columnName: column
+            }"
+            (click)="$event.stopPropagation()"
+            (change)="onInputFinished(row, column)"
+          >
+            @if(isReferenceScreenAvailable(column)){
+            <acty-reference-screen-button
+              suffix-button
+              [refTableName]="getReferencesTableName(column)"
+              [rowId]="row.rowid"
+              class="icons reference-button"
+              [refTitleCaption]="getReferenceTitleCaption(column)"
+              [refForColumn]="column"
+              [selectedValue]="row[column]"
+              [refColumns]="getReferencesColumns(column) ?? []"
+              [formId]="formId()"
+              [userId]="userId()"
+              [gridRefData]="refScreenOnRowData()"
+              [queryID]="getQueryIdForReferenceScreen(column)"
+              (referenceSelected)="onReferenceDataSelected($event)"
+            />
+            }
+          </acty-textinput>
+          } @else {
+          <div
+            class="text-nowrap"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+            "
+          >
+            <span [style.text-align]="getItemAlign(column)" style="flex: 1">
+              {{ row[column] }}
+            </span>
+            @if(isReferenceScreenAvailable(column)  && !isAutoGenerateColumn(column) && editableGrid()){
+            <acty-reference-screen-button suffix-button [refTableName]="getReferencesTableName(column)"
+              [rowId]="row.rowid" class="icons reference-button" [refTitleCaption]="getReferenceTitleCaption(column)"
+              [refForColumn]="column" [selectedValue]="row[column]" [refColumns]="getReferencesColumns(column) ?? []"
+              [formId]="formId()" [userId]="userId()" [queryID]="getQueryIdForReferenceScreen(column)"
+              (referenceSelected)="onReferenceDataSelected($event)" style="margin-left: 8px;" />
+            }
+          </div>
+
+          } } @case ('2') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <acty-textinput
+            class="grid-field x-small"
+            actySelectOnFocus
+            [style.text-align]="getItemAlign(column)"
+            [style]="'width : ' + getColumnWidth(column)"
+            [(ngModel)]="row[column]"
+            (valueChange)="row[column] = $event; onRowDataUpdate(row, column)"
+            [maxLengthData]="{
+              tableName: getTableNameByColumn(column),
+              columnName: column
+            }"
+            (click)="$event.stopPropagation()"
+          >
+          </acty-textinput>
+          }@else {
+          <div class="text-nowrap" [style.text-align]="getItemAlign(column)">
+            {{ row[column] }}
+          </div>
+          } } @case ('3') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <acty-date-time
+            type="date"
+            [showTime]="false"
+            [hourFormat]="24"
+            [required]="false"
+            [style]="'width : ' + getColumnWidth(column)"
+            displayFormat="dd/MM/yyyy"
+            class="flex gap-2"
+            [(ngModel)]="row[column]"
+            (ngModelChange)="
+              onEditChange(row, column, $event); onRowDataUpdate(row, column)
+            "
+            [appMaxLength]="{
+              tableName: getTableNameByColumn(column),
+              columnName: column
+            }"
+            (click)="$event.stopPropagation()"
+          >
+          </acty-date-time>
+          }@else {
+          <div class="text-nowrap" [style.text-align]="getItemAlign(column)">
+            {{ row[column] | actyDate : translate.currentLang }}
+          </div>
+          } } @case ('4') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <acty-dropdown
+            [style]="'width : ' + getColumnWidth(column)"
+            [dataSource]="getColumnConfig(column)?.memberList || []"
+            [displayExpr]="'caption'"
+            [valueExpr]="'code'"
+            [isNullable]="false"
+            [isSearch]="false"
+            [required]="false"
+            [disabled]="false"
+            [selectedValue]="row[column]"
+            (selectionChange)="
+              onEditChange(row, column, $event); onRowDataUpdate(row, column)
+            "
+          >
+          </acty-dropdown>
+
+          }@else {
+          <div class="text-nowrap" [style.text-align]="getItemAlign(column)">
+            {{ getKBNNmUsingKey(row[column], column) }}
+          </div>
+          <!-- <div class="text-nowrap">{{ row[column] }}</div> -->
+          } } @case ('5') { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <acty-check-box
+            [align]="'before'"
+            [showParent]="false"
+            [isChecked]="row[column] === '1' ? true : false"
+            (change)="
+              onEditChange(row, column, $event === true ? '1' : '0'); onRowDataUpdate(row, column)
+            "
+            (click)="$event.stopPropagation()"
+          >
+          </acty-check-box>
+          } @else {
+          <acty-check-box
+            [align]="'before'"
+            [showParent]="false"
+            [disabled]="!editableGrid()"
+            [isChecked]="row[column] === '1' ? true : false"
+            (change)="onEditChange(row, column, $event === true ? '1' : '0'); onRowDataUpdate(row, column); handleRowClick($event, row)"
+            (click)="$event.stopPropagation()"
+          />
+          }} @default { @if (editableMap[column] &&
+          selection.isSelected(row.rowid)) {
+          <acty-textinput
+            class="grid-field x-small"
+            actySelectOnFocus
+            [style.input]="'text-align :' + getItemAlign(column)"
+            [style]="'width : ' + getColumnWidth(column)"
+            [(ngModel)]="row[column]"
+            (valueChange)="row[column] = $event; onRowDataUpdate(row, column)"
+            [maxLengthData]="{
+              tableName: getTableNameByColumn(column),
+              columnName: column
+            }"
+            (click)="$event.stopPropagation()"
+          >
+          </acty-textinput>
+          } @else {
+          <div class="text-nowrap" [style.text-align]="getItemAlign(column)">
+            {{ row[column] }}
+          </div>
+          } } }
+        </td>
+      </ng-container>
+      } }@else { @if(selectionMode() === 'multiple'){
+      <ng-container matColumnDef="select" sticky>
+        <td mat-cell *matCellDef="let row" class="grid-cell">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            [checked]="selection.isSelected(row.rowid)"
+            (change)="onCheckboxChange(row.rowid, $event.checked)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      }
+      <ng-container matColumnDef="no" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="grid-cell grid-header indexColumn"
+          sticky
+        >
+          No.
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row; let i = index"
+          class="grid-cell indexColumn"
+        >
+          @if(selectionMode() === 'single' && selection.isSelected(row.rowid)){
+          <mat-icon>label_important</mat-icon>
+          } @else { @if(showPaginator()){
+          {{ paginator.pageIndex * paginator.pageSize + i + 1 }}
+          }@else {
+          {{ i + 1 }}
+          } }
+        </td>
+      </ng-container>
+      @if(editableGrid()){
+      <ng-container matColumnDef="status" sticky>
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="tabular-grid-cellp grid-cell tabular-grid-headerp statusColumn"
+          sticky
+        >
+          <span>{{ "\u2007" }}</span>
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row; let i = index"
+          [class]="'tabular-grid-cellp grid-cell statusColumn' + getRowStatusClass(row)"
+          [matTooltip]="getRowStatusTooltip(row)"
+          matTooltipPosition="right"
+          matTooltipClass="multiline-tooltip"
+        >
+          <span>
+            @if(hasRowError(row)){
+            <mat-icon style="color: var(--theme-danger)">error</mat-icon>
+            }@else{
+            {{ getRowStatusChar(row) }}
+            }
+          </span>
+        </td>
+      </ng-container>
+      } @for (groupNo of getColumnGroups(); track groupNo) {
+      <ng-container [matColumnDef]="'group_' + groupNo">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="tabular-grid-cell tabular-grid-header"
+          sticky
+        >
+          <div class="group-container">
+            <div class="group-section">
+              @for (rowIndex of getRowsForGroup(groupNo); track rowIndex) {
+              <div class="group-row">
+                @for (field of getFieldsForRow(rowIndex, groupNo); track
+                field.field; let first = $first) {
+                <div class="group-field">
+                  <div
+                    class="header-label" [class.header-field-label]="first"
+                    [style]="
+                      'width : ' + getColumnMaxlengthWidth(field.dataField)
+                    "
+                  >
+                    <mat-label [class]="
+                        isRequiredColumn(field.dataField)
+                          ? ' required-column-header'
+                          : ''
+                      "
+                      [matTooltip]="getColumnTooltip(field.dataField)"
+                      matTooltipPosition="above"
+                      matTooltipClass="multiline-tooltip">{{ field.caption | translate }}</mat-label>
+                  </div>
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let row" class="tabular-grid-cell tabular-grid-tabColumn">
+          <div class="group-container">
+            <div class="group-section">
+              @for (rowIndex of getRowsForGroup(groupNo); track rowIndex) {
+              <div class="group-row">
+                @for (field of getFieldsForRow(rowIndex, groupNo); track
+                field.field; let first = $first) {
+                <div
+                  [class]="
+                    'group-field' +
+                    (isCellUpdated(field.dataField, row)
+                      ? ' updatedField'
+                      : '') +
+                    (hasColumnError(field.dataField, row) ? ' errorField' : '')
+                  "
+                >
+                  <div [class]="'field-label'" [class.first-field-label]="first" >
+                    <mat-label
+                      [class]="
+                        isRequiredColumn(field.dataField)
+                          ? ' required-column-header'
+                          : ''
+                      "
+                      [matTooltip]="getColumnTooltip(field.dataField)"
+                      matTooltipPosition="above"
+                      matTooltipClass="multiline-tooltip"
+                      >{{ field.caption | translate }}:</mat-label
+                    >
+                    @if(isRequiredColumn(field.dataField)){
+                    <span style="color: var(--theme-danger)"></span>
+                    }
+                  </div>
+                  <div [class]="'field-value'">
+                    <!-- Render field types dynamically -->
+                    @switch(getColumnConfig(field.dataField)?.editorType) {
+                    @case('1') { @if(editableMap[field.dataField]) {
+                    <acty-textinput
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      [(ngModel)]="row[field.dataField]"
+                      [maxLengthData]="{
+                        tableName: field.tableName,
+                        columnName: field.dataField
+                      }"
+                      (valueChange)="
+                        row[field.dataField] = $event;
+                        onRowDataUpdate(row, field.dataField)
+                      "
+                    />
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                      style="white-space: nowrap"
+                    >
+                      {{ row[field.dataField] }}
+                    </div>
+                    } } @case('2') { @if(editableMap[field.dataField]) {
+                    <acty-textinput
+                      [(ngModel)]="row[field.dataField]"
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      [maxLengthData]="{
+                        tableName: field.tableName,
+                        columnName: field.dataField
+                      }"
+                      (valueChange)="
+                        row[field.dataField] = $event;
+                        onRowDataUpdate(row, field.dataField)
+                      "
+                    ></acty-textinput>
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                      style="white-space: nowrap"
+                    >
+                      {{ row[field.dataField] }}
+                    </div>
+                    } } @case('3') { @if(editableMap[field.dataField]) {
+                    <acty-date-time
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      type="date"
+                      [showTime]="false"
+                      displayFormat="dd/MM/yyyy"
+                      [(ngModel)]="row[field.dataField]"
+                    ></acty-date-time>
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                    >
+                      {{
+                        row[field.dataField] | actyDate : translate.currentLang
+                      }}
+                    </div>
+                    } } @case('4') { @if(editableMap[field.dataField]) {
+                    <acty-dropdown
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      [dataSource]="
+                        getColumnConfig(field.dataField)?.memberList || []
+                      "
+                      [displayExpr]="'caption'"
+                      [valueExpr]="'code'"
+                      [isNullable]="false"
+                      [isSearch]="false"
+                      [required]="false"
+                      [disabled]="false"
+                      [selectedValue]="row[field.dataField]"
+                    >
+                    </acty-dropdown>
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                    >
+                      {{
+                        getKBNNmUsingKey(row[field.dataField], field.dataField)
+                      }}
+                    </div>
+                    } } @case('5') { @if(editableMap[field.dataField]) {
+                    <acty-check-box
+                      [label]="row[field.dataField]"
+                      (change)="onEditChange(row, field.dataField, $event)"
+                    >
+                    </acty-check-box>
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                    >
+                      {{ row[field.dataField] }}
+                    </div>
+                    } } @default { @if(editableMap[field.dataField]) {
+                    <acty-textinput
+                      [(ngModel)]="row[field.dataField]"
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      [maxLengthData]="{
+                        tableName: field.tableName,
+                        columnName: field.dataField
+                      }"
+                    ></acty-textinput>
+                    } @else {
+                    <div
+                      [style]="
+                        'width : ' + getColumnMaxlengthWidth(field.dataField)
+                      "
+                      class="field-value-readonly"
+                    >
+                      {{ row[field.dataField] }}
+                    </div>
+                    } } }
+                  </div>
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      } } @if(rowFormat()){
+      <tr mat-header-row *matHeaderRowDef="renderedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        class="grid-dataRow"
+        *matRowDef="let row; columns: renderedColumns"
+        (click)="handleRowClick($event, row)"
+        (dblclick)="onRowDoubleClick(row)"
+        [class.selected-row]="selection.isSelected(row.rowid)"
+      ></tr>
+      } @else {
+      <!--<tr mat-header-row *matHeaderRowDef="renderedColumns; sticky: true"></tr>-->
+      <tr
+        mat-row
+        class="tabular-grid-dataRow"
+        *matRowDef="let row; columns: renderedColumns"
+        (click)="handleRowClick($event, row)"
+        (dblclick)="onRowDoubleClick(row)"
+        [class.selected-row]="selection.isSelected(row.rowid)"
+      ></tr>
+      }
+    </table>
+  </div>
+  <!-- DetailView -->
+  <div #detailViewContainer class="detailViewTabContainer">
+    @if(selectedRows.length !== 0 && showDetailView){
+    <acty-tab-control
+      [tabLabels]="DetailViewTabList"
+      (tabChange)="onDetailViewTabChange($event)"
+    >
+      @for(tabs of detailViewTab(); track tabs){
+      <div #tab class="acty-tab">
+        <div
+          class="detailview-custom-grid"
+          [style.gridTemplateColumns]="'repeat(' + tabs.tabColumns + ', 1fr)'"
+        >
+          @for (column of displayedColumns; track column;) {
+          <!-- show column in which tab -->
+          @if(isColumnInDetailViewTab(column,tabs.tabCaption)){
+          <div
+            class="detailview-column-span"
+            [style.gridColumn]="
+              'span ' +
+              getSizeofSpan(column) +
+              ' / span ' +
+              getSizeofSpan(column)
+            "
+          >
+            <div class="detailview-container">
+              <span class="detailview-label">{{
+                getColumnDisplayName(column) | translate
+              }}</span>
+              @switch (getColumnConfig(column)?.editorType) {
+              <!-- String -->
+              @case ('1') {
+              <acty-textinput
+                type="string"
+                [required]="false"
+                [isVisible]="true"
+                [isNullable]="false"
+                [disabled]="!editableGrid()"
+                [(ngModel)]="selectedRows[0][column]"
+              >
+              </acty-textinput>
+              }
+              <!-- Number -->
+              @case ('2') {
+              <acty-numberinput
+                [required]="false"
+                [disabled]="false"
+                [minValue]="0"
+                [disabled]="!editableGrid()"
+                [(ngModel)]="selectedRows[0][column]"
+              >
+              </acty-numberinput>
+              }
+              <!-- Date -->
+              @case ('3') {
+              <acty-date-time
+                [(ngModel)]="selectedRows[0][column]"
+                [showTime]="true"
+                [disabled]="!editableGrid()"
+                displayFormat="yyyy/MM/dd"
+              >
+              </acty-date-time>
+              }
+              <!-- KBN: dropdown -->
+              @case ('4'){
+              <mat-form-field
+                class="grid-field small"
+                (click)="$event.stopPropagation()"
+              >
+                <mat-select
+                  [disabled]="!editableGrid()"
+                  [(ngModel)]="selectedRows[0][column]"
+                  (selectionChange)="
+                    onEditChange(selectedRows[0], column, $event.value)
+                  "
+                >
+                  @for (opt of getColumnConfig(column)?.memberList || []; track
+                  opt.code) {
+                  <mat-option [value]="opt.code">{{ opt.caption }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              }
+              <!-- Checkbox -->
+              @case('5'){
+              <acty-check-box
+                formControlName="termsAccepted"
+                [disabled]="!editableGrid()"
+                [label]="selectedRows[0][column]"
+                [align]="'before'"
+              >
+              </acty-check-box>
+              } @default {
+              <acty-textinput
+                type="string"
+                [required]="false"
+                [isVisible]="true"
+                [isNullable]="false"
+                [disabled]="!editableGrid()"
+                [(ngModel)]="selectedRows[0][column]"
+              >
+              </acty-textinput>
+              } }
+            </div>
+          </div>
+          } }
+        </div>
+      </div>
+      }
+    </acty-tab-control>
+    }
+  </div>
+  @if(showPaginator()){
+  <div #paginatorContainer class="paginator-wrapper relative">
+    <mat-paginator
+      #paginator
+      class="grid-paginator"
+      [pageSizeOptions]="pageSizes()"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+
+    @if(isBackgroundLoadingOn()){
+    <div class="background-loader">
+      <mat-progress-spinner
+        strokeWidth="4"
+        [diameter]="25"
+        mode="indeterminate"
+      />
+      <div style="margin-left: 0.2rem">
+        {{ "CORE.GRID.BackgroundLoading" | translate }}
+      </div>
+    </div>
+    }
+  </div>
+  } @if(showColumnSwapdialog){
+  <acty-swap-column
+    [userId]="userId()"
+    [formId]="formId()"
+    [displayInp]="showColumnSwapdialog"
+    [gridColumnList]="gridColumnNameAndDisplayNameListAll()"
+    [formLoaderKey]="formLoaderKey()"
+    (closeTriggered)="closeSwapColumn()"
+    (swapDataUpdated)="onSwapDataUpdate($event)"
+  ></acty-swap-column>
+  } @if(showSortDatadialog){
+  <acty-sort-data
+    [displayDialogInp]="showSortDatadialog"
+    [sortOptionsInp]="gridColumnNameAndDisplayNameList()"
+    [formId]="formId()"
+    [userId]="userId()"
+    [formLoaderKey]="formLoaderKey()"
+    (sortDataChanged)="onSortDataChange()"
+    (closeSortDataTrigger)="closeSortData()"
+  />
+  } @if(showExportDatadialog){
+  <acty-export
+    [displayInp]="showExportDatadialog"
+    [exportURL]="exportURL()"
+    [exportData]="searchList()"
+    [gridColumnList]="gridColumnNameAndDisplayNameList()"
+    [formId]="formId()"
+    [userId]="userId()"
+    [formLoaderKey]="formLoaderKey()"
+    (closeTriggered)="closeExportData()"
+    [formTitle]="formTitle()"
+  >
+  </acty-export>
+  }
+</div>

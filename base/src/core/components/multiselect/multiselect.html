@@ -1,0 +1,60 @@
+<button
+  [disabled]="disabled()"
+  matButton="outlined"
+  class="multiselect"
+  [ngClass]="styleClass()"
+  [class]="disabled()? 'disabled-multiselect ' : '' + severity() + '-multiselect'"
+  [matMenuTriggerFor]="optionsMenu"
+>
+  @if(leftIcon()){
+  <mat-icon class="acty-button-left-icon">{{ leftIcon() }}</mat-icon>
+  } @if(fixedPlaceholder()) {
+  {{ (fixedPlaceholder() | translate) ?? "" }}
+  } @else {
+  {{ getSelectedText() }}
+  }<mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
+</button>
+
+<mat-menu #optionsMenu="matMenu" class="multiselect-menu">
+  @if(filter() || showToggleAll()){
+  <div class="multiselect-header">
+    @if(showToggleAll()){
+    <div (click)="$event.stopPropagation()">
+      <mat-checkbox
+        [checked]="isAllSelected()"
+        (click)="toggleAllSelection()"
+      />
+    </div>
+    } @if(filter()){
+    <div
+      (click)="$event.stopPropagation()"
+      [style.padding-left]="showToggleAll() ? '0px' : '8px'"
+    >
+      <mat-form-field appearance="outline" class="small" style="width: 100%">
+        <input matInput [(ngModel)]="filterValue" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    }
+  </div>
+  }
+  <div
+    [style.max-height]="scrollHeight()"
+    style="overflow-y: auto"
+    class="multiselect-options"
+  >
+    @if(filteredOptions().length > 0){ @for (option of filteredOptions(); track
+    option.key) {
+    <div (click)="$event.stopPropagation()" class="multiselect-option">
+      <mat-checkbox
+        [checked]="internalValue().includes(option.key)"
+        (click)="toggleOption(option.key)"
+      >
+        {{ option.label | translate }}
+      </mat-checkbox>
+    </div>
+    } } @else {
+    <div style="padding: 4px 8px 0px 12px">No Results Found</div>
+    }
+  </div>
+</mat-menu>

@@ -1,0 +1,578 @@
+<div #mainDiv class="mainDiv">
+  <div #titleBar class="title-bar">
+    <div class="title-left">
+      <mat-icon class="screen-icon" (click)="test()">{{ screenIcon }}</mat-icon>
+      <mat-icon class="screen-icon" style="color: var(--theme-primary);">{{ 'article' }}</mat-icon>
+      <nav class="breadcrumb">
+        <span class="breadcrumb-item">Home</span>
+        <span class="breadcrumb-separator">/</span>
+        @if(currentModule){
+        <span class="breadcrumb-item">{{ currentModule | translate }}</span>
+        } @if(currentParent){
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-item">{{ currentParent | translate }}</span>
+        } @if(screenName){
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-item">{{
+          "SCREEN." + screenName | translate
+        }}</span>
+        }
+      </nav>
+    </div>
+    <!-- <acty-button [type]="'outlined'" [text]="'CORE.GRID.Add' | translate" [severity]="'primary'" /> -->
+  </div>
+  
+  <acty-splitter
+    #splitter
+    direction="vertical"
+    class="custom-splitter"
+  >
+  <div split-left class="entry-content">
+    <ng-template #EntryForm let-tab>
+      <!--<form
+        [formGroup]="form"
+        [style.--fields-per-row]="tab != null ? tab?.tabColumns : FormColumns()"
+      >
+        <div class="fields-grid">
+          @for(field of getTabFields(tab?.tabCaption); track field){
+          @if(field.IsVisible === true){
+          <div
+            class="field-container"
+            [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+            [class.full-width]="IsOccupyFullWidth"
+          >
+            @if(field.editorType != 6){
+            <div style="display: flex; gap: var(--theme-spacing-medium)">
+              <label
+                class="filter-label"
+                [class]="
+                  isRequiredColumn(field.dataField)
+                    ? ' required-field-label'
+                    : ''
+                "
+                [matTooltip]="getColumnTooltip(field.dataField)"
+                matTooltipPosition="right"
+                matTooltipClass="multiline-tooltip"
+                >{{ field.caption | translate }}</label
+              >
+            </div>
+            }
+            <div class="inputWrapper">
+              @if(field.editorType == 1){ @if(field.isEditable &&
+              !readonlyForm){
+              <acty-textinput
+                [formControlName]="field.dataField"
+                [disabled]="!field.isEditable"
+                [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+              >
+                @if(field.isReferenceScreen === true){
+                <acty-reference-screen-button
+                  suffix-button
+                  [refTableName]="field.refTableName"
+                  [disabled]="!field.isEditable"
+                  class="icons reference-button"
+                  [refTitleCaption]="field.caption"
+                  refForColumn="{{ field.dataField }}"
+                  [refColumns]="field.refColumns"
+                  [selectedValue]="form.value[field.dataField]"
+                  [formId]="formId"
+                  [userId]="userId"
+                  [queryID]="field.queryID"
+                  (referenceSelected)="onReferenceSelected($event)"
+                />
+                }
+              </acty-textinput>
+              }@else {
+              <div class="readonly-value">
+                {{ form.value[field.dataField] }}
+              </div>
+              } } @if(field.editorType == 2){ @if(field.isEditable &&
+              !readonlyForm){
+              <div style="display: flex; gap: var(--theme-spacing-medium); align-items: center;">
+                <acty-textinput
+                  [formControlName]="field.dataField"
+                  [disabled]="!field.isEditable"
+                  [style]="
+                    'width : ' + getColumnMaxlengthWidth(field.dataField)
+                  "
+                >
+                </acty-textinput>
+                @if(field.dataField == "Jancd"){
+                <mat-icon
+                  style="color: var(--theme-danger)"
+                  [matTooltip]="getRowStatusTooltip()"
+                  matTooltipPosition="right"
+                  matTooltipClass="multiline-tooltip"
+                  >error</mat-icon
+                >
+
+                }
+              </div>
+              }@else {
+              <div class="readonly-value">
+                {{ form.value[field.dataField] }}
+              </div>
+              } } @if(field.editorType == 3){ @if(field.isEditable &&
+              !readonlyForm){
+              <acty-date-time
+                type="date"
+                [showTime]="false"
+                [required]="false"
+                [formControlName]="field.dataField"
+                displayFormat="dd/MM/yyyy"
+                [disabled]="!field.isEditable"
+                [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+              ></acty-date-time>
+              }@else {
+              <div class="readonly-value">
+                {{ form.value[field.dataField] }}
+              </div>
+              } } @if(field.editorType == 4){ @if(field.isEditable &&
+              !readonlyForm){
+              <acty-dropdown
+                [dataSource]="field.memberList"
+                [displayExpr]="'caption'"
+                [valueExpr]="'code'"
+                [formControlName]="field.dataField"
+                [isSearch]="false"
+                [required]="false"
+                [disabled]="!field.isEditable"
+                [selectedValue]="form.get(field.dataField)?.value"
+                [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                (selectionChange)="form.get(field.dataField)?.setValue($event)"
+              ></acty-dropdown>
+              }@else {
+              <div class="readonly-value">
+                {{ form.value[field.dataField] }}
+              </div>
+              } } @if(field.editorType == 6){
+              <acty-check-box
+                [formControlName]="field.dataField"
+                [label]="field.caption | translate"
+                [children]="field.editorOption?.children || []"
+                [showParent]="true"
+                [disabled]="!field.isEditable"
+              ></acty-check-box>
+              }
+            </div>
+          </div>
+          } }
+        </div>
+      </form>-->
+<form [formGroup]="form" style="height: 100%;">
+  <div class="group-container">
+    @for (groupNo of getColumnGroups(); track groupNo) {
+      <div class="tabular-grid-cell tabular-grid-tabColumn">
+        <div class="group-section">
+          @for (rowIndex of getRowsForGroup(groupNo); track rowIndex) {
+            <div class="group-row">
+              @for (field of getFieldsForRow(rowIndex, groupNo); track field.dataField; let first = $first) {
+                @if(field.IsVisible === true){
+                  <div [class]="'group-field' + 
+                      (isCellUpdated(field.dataField, form.value) ? ' updatedField' : '') +
+                      (hasColumnError(field.dataField, form.value) ? ' errorField' : '') +
+                      (first ? ' first-group-field' : ' other-group-field')">
+                    
+                    @if(field.editorType != 6 ){
+                      <div [class]="'field-label'" 
+                           [class.first-field-label]="first"
+                           [class.required-column-header]="isRequiredColumn(field.dataField)">
+                        <mat-label
+                          [class]="isRequiredColumn(field.dataField) ? ' required-column-header' : ''"
+                          [matTooltip]="getColumnTooltip(field.dataField)"
+                          matTooltipPosition="above"
+                          matTooltipClass="multiline-tooltip"
+                        >
+                          {{ field.caption | translate }}
+                        </mat-label>
+                        @if(isRequiredColumn(field.dataField)){
+                          <span style="color: var(--theme-danger)"></span>
+                        }
+                      </div>
+                    }@else{
+                      <div [class]="'field-label'" 
+                           [class.first-field-label]="first"
+                           [class.required-field-label]="isRequiredColumn(field.dataField)">
+                        <mat-label
+                          [class]="isRequiredColumn(field.dataField) ? ' required-column-header' : ''"
+                          [matTooltip]="getColumnTooltip(field.dataField)"
+                          matTooltipPosition="above"
+                          matTooltipClass="multiline-tooltip"
+                        >
+                        </mat-label>
+                      </div>
+                    }
+                    
+                    <div [class]="'field-value'">
+                      <!-- Render field types dynamically -->
+                      @switch(field.editorType) {
+                        @case('1') { 
+                          @if(field.isEditable && !readonlyForm){
+                            <acty-textinput
+                              [formControlName]="field.dataField"
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                            >
+                              @if(field.isReferenceScreen === true){
+                                <acty-reference-screen-button
+                                  suffix-button
+                                  [refTableName]="field.refTableName"
+                                  [disabled]="!field.isEditable"
+                                  class="icons reference-button"
+                                  [refTitleCaption]="field.caption"
+                                  refForColumn="{{ field.dataField }}"
+                                  [refColumns]="field.refColumns"
+                                  [selectedValue]="form.value[field.dataField]"
+                                  [formId]="formId"
+                                  [userId]="userId"
+                                  [queryID]="field.queryID"
+                                  (referenceSelected)="onReferenceSelected($event)"
+                                />
+                              }
+                            </acty-textinput>
+                          } @else {
+                            <div
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              class="field-value-readonly"
+                              style="white-space: nowrap"
+                            >
+                              {{ form.value[field.dataField] }}
+                            </div>
+                          } 
+                        } 
+                        
+                        @case('2') { 
+                          @if(field.isEditable && !readonlyForm){
+                            <div class="jan-code-container">
+                              <acty-textinput
+                                [formControlName]="field.dataField"
+                                [disabled]="!field.isEditable"
+                                [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              >
+                              </acty-textinput>
+                              @if(field.dataField == "Jancd" && false){
+                                <mat-icon
+                                  style="color: var(--theme-danger)"
+                                  [matTooltip]="getRowStatusTooltip()"
+                                  matTooltipPosition="right"
+                                  matTooltipClass="multiline-tooltip"
+                                >error</mat-icon>
+                              }
+                            </div>
+                          } @else {
+                            <div
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              class="field-value-readonly"
+                              style="white-space: nowrap"
+                            >
+                              {{ form.value[field.dataField] }}
+                            </div>
+                          } 
+                        } 
+                        
+                        @case('3') { 
+                          @if(field.isEditable && !readonlyForm){
+                            <acty-date-time
+                              type="date"
+                              [showTime]="false"
+                              [required]="false"
+                              [formControlName]="field.dataField"
+                              displayFormat="dd/MM/yyyy"
+                              [disabled]="!field.isEditable"
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                            ></acty-date-time>
+                          } @else {
+                            <div
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              class="field-value-readonly"
+                            >
+                              {{ form.value[field.dataField] | actyDate : translate.currentLang }}
+                            </div>
+                          } 
+                        } 
+                        
+                        @case('4') { 
+                          @if(field.isEditable && !readonlyForm){
+                            <acty-dropdown
+                              [dataSource]="field.memberList"
+                              [displayExpr]="'caption'"
+                              [valueExpr]="'code'"
+                              [formControlName]="field.dataField"
+                              [isSearch]="false"
+                              [required]="false"
+                              [disabled]="!field.isEditable"
+                              [selectedValue]="form.get(field.dataField)?.value"
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              (selectionChange)="form.get(field.dataField)?.setValue($event)"
+                            ></acty-dropdown>
+                          } @else {
+                            <div
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              class="field-value-readonly"
+                            >
+                              {{ getKBNNmUsingKey(form.value[field.dataField], field.dataField) }}
+                            </div>
+                          } 
+                        } 
+                        
+                        @case ('5') { 
+                          @if (field.isEditable && !readonlyForm) {
+                            <acty-check-box
+                              [align]="'before'"
+                              [showParent]="false"
+                              [isChecked]="form.value[field.dataField] === '1' ? true : false"
+                              (change)="onEditChange(form.value, field.dataField, $event === true ? '1' : '0')"
+                              (click)="$event.stopPropagation()"
+                            >
+                            </acty-check-box>
+                          } @else {
+                            <acty-check-box
+                              [align]="'before'"
+                              [showParent]="false"
+                              [disabled]="true"
+                              [isChecked]="form.value[field.dataField] === '1' ? true : false"
+                              (click)="$event.stopPropagation()"
+                            />
+                          }
+                        } 
+                        
+                        @case('6') {
+                          <acty-check-box
+                            [formControlName]="field.dataField"
+                            [label]="field.caption | translate"
+                            [children]="field.editorOption?.children || []"
+                            [showParent]="true"
+                            [disabled]="!field.isEditable"
+                          ></acty-check-box>
+                        }
+                        
+                        @default { 
+                          @if(field.isEditable && !readonlyForm){
+                            <acty-textinput
+                              [formControlName]="field.dataField"
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                            ></acty-textinput>
+                          } @else {
+                            <div
+                              [style]="'width : ' + getColumnMaxlengthWidth(field.dataField)"
+                              class="field-value-readonly"
+                            >
+                              {{ form.value[field.dataField] }}
+                            </div>
+                          } 
+                        } 
+                      }
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</form>
+      <acty-reference-screen-dialog></acty-reference-screen-dialog>
+    </ng-template>
+    @if(formConfig?.gridInfo?.IsEntryTabFormat){
+    <acty-tab-control #TabControl [tabLabels]="TabLables" class="tabControl">
+      @for(tab of entryScreenTabs(); track tab){
+      <div
+        #tab
+        class="acty-tab"
+        (keydown)="onTabKeydown($event, tabControl.activeIndex)"
+      >
+        <ng-container
+          *ngTemplateOutlet="EntryForm; context: { $implicit: tab }"
+        ></ng-container>
+      </div>
+      }
+    </acty-tab-control>
+    <acty-reference-screen-dialog></acty-reference-screen-dialog>
+    } @else{
+    <ng-container *ngTemplateOutlet="EntryForm"></ng-container>
+    }
+  </div>
+  <div split-right class="dataDiv" style="height: 100%;">
+    <acty-tab-control #TabControl [tabLabels]="bottomTabLabel" class="tabControl">
+      <div
+        #tab
+        class="acty-tab"
+        style="height: 100%;"
+        (keydown)="onTabKeydown($event, tabControl.activeIndex)"
+      >
+        <acty-grid
+        #gridComponent
+        [formId]="formId"
+        [userId]="userId"
+        [formTitle]="'formName'"
+        [GridMenuBtns]="GridMenuBtns()"
+        [dataGrid]="dataGrid()"
+        [editableGrid]="false"
+        [selectionMode]="'single'"
+        [getDataUrl]="getDataUrl"
+        [saveDataUrl]="'saveDataUrl'"
+        [searchList]="gridFilters"
+        [isCellSummary]="isCellSummary()"
+        [showExport]="showExport()"
+        [exportURL]="'exportUrl'"
+        [showSortData]="showSortData()"
+        [showSwapColumns]="showSwapColumns()"
+        [resizableCols]="true"
+        [pageSizes]="pageSizes()"
+        [formLoaderKey]="'formLoaderKey'"
+        [rowFormat]="true"
+      />
+      </div>
+      <div
+        #tab
+        class="acty-tab"
+        style="height: 100%;"
+        (keydown)="onTabKeydown($event, tabControl.activeIndex)"
+      >
+        <acty-grid
+        #gridComponent
+        [formId]="formId"
+        [userId]="userId"
+        [formTitle]="'formName'"
+        [GridMenuBtns]="GridMenuBtns()"
+        [dataGrid]="dataGrid()"
+        [editableGrid]="true"
+        [selectionMode]="'single'"
+        [getDataUrl]="getDataUrl"
+        [saveDataUrl]="'saveDataUrl'"
+        [searchList]="gridFilters"
+        [isCellSummary]="isCellSummary()"
+        [showExport]="showExport()"
+        [exportURL]="'exportUrl'"
+        [showSortData]="showSortData()"
+        [showSwapColumns]="showSwapColumns()"
+        [resizableCols]="true"
+        [pageSizes]="pageSizes()"
+        [formLoaderKey]="'formLoaderKey'"
+        [rowFormat]="true"
+      />
+      </div>
+      <div
+        #tab
+        class="acty-tab"
+        style="height: 100%;"
+        (keydown)="onTabKeydown($event, tabControl.activeIndex)"
+      >
+        <acty-grid
+        #gridComponent
+        [formId]="formId"
+        [userId]="userId"
+        [formTitle]="'formName'"
+        [GridMenuBtns]="GridMenuBtns()"
+        [dataGrid]="dataGrid()"
+        [editableGrid]="false"
+        [selectionMode]="'single'"
+        [getDataUrl]="getDataUrl"
+        [saveDataUrl]="'saveDataUrl'"
+        [searchList]="gridFilters"
+        [isCellSummary]="isCellSummary()"
+        [showExport]="showExport()"
+        [exportURL]="'exportUrl'"
+        [showSortData]="showSortData()"
+        [showSwapColumns]="showSwapColumns()"
+        [resizableCols]="true"
+        [pageSizes]="pageSizes()"
+        [formLoaderKey]="'formLoaderKey'"
+        [rowFormat]="true"
+      />
+      </div>
+    </acty-tab-control>
+  </div>
+  </acty-splitter>
+  <div class="screen-buttons">
+    <div class="left-buttons-container">
+      @for(btn of VisibleScreenBtns; track $index){ @if(btn?.position == 'left')
+      {
+      <ng-container
+        *ngTemplateOutlet="ScreenButtons; context: { $implicit: btn }"
+      ></ng-container>
+      } }
+    </div>
+    <div class="right-buttons-container">
+      @for(btn of VisibleScreenBtns; track $index){ @if(btn?.position ==
+      'right') {
+      <ng-container
+        *ngTemplateOutlet="ScreenButtons; context: { $implicit: btn }"
+      ></ng-container>
+      } }
+    </div>
+
+    <ng-template #ScreenButtons let-btn>
+      @if(btn.buttonType === 'multiSelect'){
+      <acty-multiselect
+        [options]="btn.options"
+        [maxSelectedLabels]="btn.maxSelectedLabels"
+        [filter]="btn.filter"
+        [leftIcon]="btn.leftIcon"
+        [showToggleAll]="btn.showToggleAll"
+        [severity]="btn.severity"
+      />
+      } @else if(btn.buttonType === 'splitButton'){
+      <acty-splitbutton
+        [type]="btn.type"
+        [text]="btn.name | translate"
+        [disabled]="btn.disabled"
+        [leftIcon]="btn.leftIcon"
+        [menuItems]="btn.splitButtonMenu ?? []"
+        [severity]="btn.severity"
+      />
+      } @else if(btn?.buttonType === 'menuButton'){
+      <acty-menubutton
+        [type]="btn.type"
+        [text]="btn.name | translate"
+        [disabled]="btn.disabled"
+        [leftIcon]="btn.leftIcon"
+        [rightIcon]="btn.rightIcon"
+        [menuItems]="btn.menuItems ?? []"
+        [severity]="btn.severity"
+      />
+      } @else{
+      <acty-button
+        [type]="btn.type"
+        [text]="btn.name | translate"
+        [leftIcon]="btn.leftIcon"
+        [disabled]="btn.disabled"
+        [btnClass]="btn.btnClass"
+        [severity]="btn.severity"
+        [rightIcon]="btn.rightIcon"
+        (clicked)="btnClicked(btn.name)"
+      />
+      }
+    </ng-template>
+  </div>
+  <acty-dialog-box
+    #RefScreen
+    [title]="'Confirm' | translate"
+    [showTitle]="true"
+    [showIcon]="false"
+    [showClose]="true"
+    [showFooterButton]="false"
+    [width]="'340px'"
+    [isDraggable]="true"
+    [backgroundAccess]="false"
+  >
+    <div class="autoheightadj-dialog-body">
+      Your data has been changed. Do you want to save it?
+    </div>
+    <div dialog-footer>
+      <acty-button
+        text="{{ 'Cancel' | translate }}"
+        [type]="'outlined'"
+      ></acty-button>
+      <acty-button
+        text="{{ 'No' | translate }}"
+        [type]="'outlined'"
+      ></acty-button>
+      <acty-button
+        text="{{ 'Yes' | translate }}"
+        [type]="'outlined'"
+      ></acty-button>
+    </div>
+  </acty-dialog-box>
+</div>
